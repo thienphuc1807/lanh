@@ -12,6 +12,7 @@ const config: Config = {
                 lanhHeader: "url(/images/banner/Header.png)",
                 lanhFooter: "url(/images/banner/Footer.png)",
                 lanhBanner: "url(/images/banner/Banner.png)",
+                lanhBackground: "url(/images/banner/Background2.png)",
             },
             colors: {
                 lanh_green: "#97ba79",

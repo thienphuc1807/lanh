@@ -120,7 +120,7 @@ export default function Example() {
                                         src="/images/Icon/Logo.png"
                                         alt="Lanh Logo"
                                         fill={true}
-                                        objectFit="contain"
+                                        className="object-contain"
                                     />
                                 </div>
                                 <div className="hidden lg:block">
