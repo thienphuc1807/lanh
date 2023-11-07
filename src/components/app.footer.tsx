@@ -93,8 +93,9 @@ function Footer() {
                                 <Image
                                     src="/images/Icon/Button Gửii.png"
                                     width={92}
-                                    height={0}
+                                    height={92}
                                     alt="send_button"
+                                    className="w-auto h-auto"
                                 />
                             </button>
                         </div>
@@ -102,18 +103,25 @@ function Footer() {
                             Tải ứng dụng
                         </h6>
                         <div className="flex md:flex-col gap-4">
-                            <Image
-                                src="/images/Icon/CHPlay.png"
-                                alt="AppStore"
-                                width={130}
-                                height={0}
-                            />
-                            <Image
-                                src="/images/Icon/App Store.png"
-                                alt="AppStore"
-                                width={130}
-                                height={0}
-                            />
+                            <div className="w-auto h-auto">
+                                <Image
+                                    src="/images/Icon/CHPlay.png"
+                                    alt="AppStore"
+                                    width={80}
+                                    height={80}
+                                    className="w-auto h-auto"
+                                />
+                            </div>
+
+                            <div className="w-auto h-auto">
+                                <Image
+                                    src="/images/Icon/App Store.png"
+                                    alt="AppStore"
+                                    width={80}
+                                    height={80}
+                                    className="w-auto h-auto"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

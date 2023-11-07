@@ -4,7 +4,6 @@ import BreadCrumbs from "@/components/app.breadcrumbs";
 import useSWR from "swr";
 import Image from "next/image";
 import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
 import { useState } from "react";
 
 const productCategory = [
@@ -55,11 +54,13 @@ function Products() {
 
     return (
         <main className="bg-lanhBackground bg-no-repeat bg-cover">
-            <div className="container mx-auto px-5 gap-6 pt-[200px]">
-                <BreadCrumbs breadcrumbs={breadcrumbs} />
-                <div className="flex gap-10">
-                    <aside className="flex-[20%]">
-                        <h2 className="bg-lanh_green text-center py-3 text-white">
+            <div className="container mx-auto px-5 gap-6 lg:pt-[200px] pt-[100px]">
+                <div className="flex">
+                    <BreadCrumbs breadcrumbs={breadcrumbs} />
+                </div>
+                <div className="lg:flex lg:flex-nowrap flex-wrap gap-10">
+                    <aside className="md:flex-[20%] lg:block hidden">
+                        <h2 className="bg-lanh_green text-center py-3 px-2 text-white">
                             DANH MỤC SẢN PHẨM
                         </h2>
                         <ul>
@@ -79,6 +80,7 @@ function Products() {
                         <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
                             {data.map(
                                 (item: {
+                                    id: number;
                                     name: string;
                                     url: string;
                                     price: string;
@@ -86,15 +88,16 @@ function Products() {
                                 }) => (
                                     <Link
                                         href={item.name}
-                                        key={item.name}
+                                        key={item.id}
                                         className="bg-white border-[1px]"
                                     >
-                                        <div className="relative  w-auto h-44">
+                                        <div className="relative mt-5 w-auto h-52">
                                             <Image
                                                 fill={true}
                                                 src={item.url}
                                                 alt={item.name}
                                                 className="object-contain"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             />
                                         </div>
                                         <div className="text-center py-4">

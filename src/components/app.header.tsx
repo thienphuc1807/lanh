@@ -54,22 +54,26 @@ export default function Example() {
                                                 <ul>
                                                     <li className="py-1">
                                                         <Link href="/">
-                                                            <Image
-                                                                src="/images/Icon/CHPlay.png"
-                                                                alt="AppStore"
-                                                                width={130}
-                                                                height={0}
-                                                            />
+                                                            <div className="w-auto h-auto">
+                                                                <Image
+                                                                    src="/images/Icon/CHPlay.png"
+                                                                    alt="AppStore"
+                                                                    width={130}
+                                                                    height={130}
+                                                                />
+                                                            </div>
                                                         </Link>
                                                     </li>
                                                     <li className="py-1">
                                                         <Link href="/">
-                                                            <Image
-                                                                src="/images/Icon/App Store.png"
-                                                                alt="AppStore"
-                                                                width={130}
-                                                                height={0}
-                                                            />
+                                                            <div className="w-auto h-auto">
+                                                                <Image
+                                                                    src="/images/Icon/App Store.png"
+                                                                    alt="AppStore"
+                                                                    width={130}
+                                                                    height={130}
+                                                                />
+                                                            </div>
                                                         </Link>
                                                     </li>
                                                 </ul>
@@ -121,6 +125,7 @@ export default function Example() {
                                         alt="Lanh Logo"
                                         fill={true}
                                         className="object-contain"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                 </div>
                                 <div className="hidden lg:block">

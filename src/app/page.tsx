@@ -90,9 +90,9 @@ function Home() {
                         <Image
                             src="/images/Icon/Bông.png"
                             alt="heading_background"
-                            width={80}
-                            height={80}
-                            className="absolute"
+                            width={70}
+                            height={70}
+                            className="absolute w-auto h-auto"
                         />
                         <h2 className="md:text-2xl text-xl font-bold">
                             SẢN PHẨM
@@ -134,6 +134,7 @@ function Home() {
                                                     alt={item.name}
                                                     fill={true}
                                                     className="object-contain"
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                                 />
                                             </div>
                                             <p className="mt-2">{item.name}</p>
@@ -168,9 +169,9 @@ function Home() {
                             <Image
                                 src="/images/Icon/Bông.png"
                                 alt="heading_background"
-                                width={80}
-                                height={80}
-                                className="absolute"
+                                width={70}
+                                height={70}
+                                className="absolute w-auto h-auto"
                             />
                             <h2 className="md:text-2xl text-xl font-bold">
                                 SẢN PHẨM MỚI
@@ -196,13 +197,14 @@ function Home() {
                                                 fill={true}
                                                 className="object-contain"
                                                 alt={item.name}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             />
                                         </div>
                                         <div className="flex justify-center gap-4 mt-6 items-center">
                                             <span className="text-[#f35a69]">
                                                 {item.sale_price}
                                             </span>
-                                            <span className="text-xs text-gray-600 line-through">
+                                            <span className="text-xs text-gray-800 line-through">
                                                 {item.price}
                                             </span>
                                         </div>
