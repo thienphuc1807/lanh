@@ -84,18 +84,18 @@ function Footer() {
                         </label>
                         <div className="relative">
                             <input
-                                className="block w-full rounded-full pl-6 py-3 placeholder:text-sm focus:outline-none                                  "
+                                className="block w-full rounded-full pl-6 py-4 placeholder:text-sm focus:outline-none                                  "
                                 type="email"
                                 id="email"
                                 placeholder="Nhập email của bạn"
                             />
-                            <button className="absolute inset-y-0 right-0 mr-0.5 ">
+                            <button className="absolute inset-y-0 right-0 mr-0.5 py-0.5">
                                 <Image
                                     src="/images/Icon/Button Gửii.png"
-                                    width={92}
-                                    height={92}
+                                    width={100}
+                                    height={100}
                                     alt="send_button"
-                                    className="w-auto h-auto"
+                                    className="w-full h-full"
                                 />
                             </button>
                         </div>
