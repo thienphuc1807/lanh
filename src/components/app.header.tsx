@@ -15,8 +15,8 @@ import { usePathname } from "next/navigation";
 const navigation = [
     { name: "TRANG CHỦ", href: "/" },
     { name: "MENU", href: "/products" },
-    { name: "CÂU CHUYỆN THƯƠNG HIỆU", href: "/brand" },
     { name: "TIN TỨC", href: "/news" },
+    { name: "LIÊN HỆ", href: "/contact" },
 ];
 
 export default function Example() {
