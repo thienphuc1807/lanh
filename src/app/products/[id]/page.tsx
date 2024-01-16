@@ -1,20 +1,21 @@
-"use client";
 import Image from "next/image";
-import useSWR, { Fetcher } from "swr";
 import BreadCrumbs from "@/components/app.breadcrumbs";
+import { getProduct } from "@/lib/data";
 
-function ProductDetail({ params }: { params: { id: number } }) {
-    const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const generateMetadata = async ({
+    params,
+}: {
+    params: { id: number };
+}) => {
+    const data = await getProduct(params.id);
 
-    const { data, error, isLoading } = useSWR(
-        `http://localhost:8000/product/${params.id}`,
-        fetcher
-    );
+    return {
+        title: data.name,
+    };
+};
 
-    if (isLoading) {
-        return <div className="my-4">Loading ...</div>;
-    }
-
+async function ProductDetail({ params }: { params: { id: number } }) {
+    const data = await getProduct(params.id);
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
         { name: "Sản phẩm", path: "/products" },
@@ -28,7 +29,7 @@ function ProductDetail({ params }: { params: { id: number } }) {
             <div className="grid lg:grid-cols-2 grid-cols-1">
                 <div className="relative lg:w-auto lg:h-[400px] h-72 w-full">
                     <Image
-                        src={data.url}
+                        src={data.img}
                         alt={data.name}
                         fill={true}
                         className="object-contain"
@@ -42,7 +43,7 @@ function ProductDetail({ params }: { params: { id: number } }) {
                             {data.price}
                         </p>
                         <p className="text-2xl font-bold text-lanh_green">
-                            {data.sale_price}
+                            {data.salePrice}
                         </p>
                     </div>
                     <p className="my-5">Nguyên liệu: {data.ingredient}</p>
