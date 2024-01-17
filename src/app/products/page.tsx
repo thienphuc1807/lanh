@@ -6,8 +6,22 @@ export const metadata = {
     title: "Sản phẩm",
 };
 
+const getData = async () => {
+    const data = await fetch("http://localhost:3000/api/products", {
+        cache: "no-store",
+    });
+    if (!data.ok) {
+        throw new Error("Something went wrong");
+    }
+    return data.json();
+};
+
 const Products = async () => {
-    const data = await getProducts();
+    // Fetch Data Without API
+    // const data = await getProducts();
+
+    // Fetch Data with API
+    const data = await getData();
     return (
         <main className="bg-lanhBackground bg-no-repeat bg-cover">
             <div className="container mx-auto px-5 gap-6 lg:pt-[200px] pt-[100px]">

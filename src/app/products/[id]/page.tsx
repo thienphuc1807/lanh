@@ -2,26 +2,41 @@ import Image from "next/image";
 import BreadCrumbs from "@/components/app.breadcrumbs";
 import { getProduct } from "@/lib/data";
 
+// Fetch Data With AN API
+
+export const getData = async (id: number) => {
+    const data = await fetch(`http://localhost:3000/api/products/${id}`, {
+        cache: "no-store",
+    });
+    if (!data.ok) {
+        throw new Error("Something went wrong");
+    }
+    return data.json();
+};
+
 export const generateMetadata = async ({
     params,
 }: {
     params: { id: number };
 }) => {
-    const data = await getProduct(params.id);
+    // Fetch Data Without API
+    // const data = await getProduct(id);
 
+    // Fetch Data With An API
+    const data = await getData(params.id);
     return {
         title: data.name,
     };
 };
-
 async function ProductDetail({ params }: { params: { id: number } }) {
-    const data = await getProduct(params.id);
+    const { id } = params;
+
+    const data = await getData(id);
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
         { name: "Sản phẩm", path: "/products" },
-        { name: `${data.name}`, path: `/products/${params.id}` },
+        { name: `${data.name}`, path: `/products/${id}` },
     ];
-
     return (
         <div className="container mx-auto lg:pt-[200px] pt-[120px] md:px-5 px-6">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
