@@ -1,5 +1,5 @@
 import Image from "next/image";
-import BreadCrumbs from "@/components/app.breadcrumbs";
+import BreadCrumbs from "@/components/Breadcrumbs";
 import { getProduct } from "@/lib/data";
 
 // Fetch Data With AN API

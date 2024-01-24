@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import BreadCrumbs from "@/components/app.breadcrumbs";
+import BreadCrumbs from "@/components/Breadcrumbs";
 import useSWR from "swr";
 import Image from "next/image";
 import Pagination from "@mui/material/Pagination";

@@ -1,4 +1,7 @@
-// "use server";
+"use server";
+
+import { signIn } from "./auth";
+
 // import { revalidatePath } from "next/cache"
 // import { Products } from "./models"
 // import { connectToDb } from "./utils"
@@ -33,3 +36,8 @@
 //         console.error("Something went wrong:", error);
 //     }
 // };
+
+export const handleGithubLogin = async () => {
+    "use server";
+    await signIn("github");
+};

@@ -1,4 +1,4 @@
-import BreadCrumbs from "@/components/app.breadcrumbs";
+import BreadCrumbs from "@/components/Breadcrumbs";
 import Image from "next/image";
 import Link from "next/link";
 
