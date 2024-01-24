@@ -4,7 +4,7 @@ import { getProduct } from "@/lib/data";
 
 // Fetch Data With AN API
 
-export const getData = async (id: number) => {
+export const getData = async (id: string) => {
     const data = await fetch(`http://localhost:3000/api/products/${id}`, {
         cache: "no-store",
     });
@@ -17,7 +17,7 @@ export const getData = async (id: number) => {
 export const generateMetadata = async ({
     params,
 }: {
-    params: { id: number };
+    params: { id: string };
 }) => {
     // Fetch Data Without API
     // const data = await getProduct(id);
@@ -28,7 +28,7 @@ export const generateMetadata = async ({
         title: data.name,
     };
 };
-async function ProductDetail({ params }: { params: { id: number } }) {
+async function ProductDetail({ params }: { params: { id: string } }) {
     const { id } = params;
 
     const data = await getData(id);
