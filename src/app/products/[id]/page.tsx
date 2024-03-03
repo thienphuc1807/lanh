@@ -4,7 +4,7 @@ import { getProduct } from "@/lib/data";
 
 // Fetch Data With AN API
 
-export const getData = async (id: string) => {
+const getData = async (id: string) => {
     const data = await fetch(
         `http://${process.env.DOMAIN}/api/products/${id}`,
         {
