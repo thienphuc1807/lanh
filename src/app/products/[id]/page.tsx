@@ -1,13 +1,16 @@
 import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
-// import { getProduct } from "@/lib/data";
+import { getProduct } from "@/lib/data";
 
 // Fetch Data With AN API
 
-const getData = async (id: string) => {
-    const data = await fetch(`../api/products/${id}`, {
-        cache: "no-store",
-    });
+export const getData = async (id: string) => {
+    const data = await fetch(
+        `http://${process.env.DOMAIN}/api/products/${id}`,
+        {
+            cache: "no-store",
+        }
+    );
     if (!data.ok) {
         throw new Error("Something went wrong");
     }
