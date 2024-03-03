@@ -4,7 +4,7 @@ import BreadCrumbs from "@/components/Breadcrumbs";
 
 // Fetch Data With AN API
 
-export const getData = async (id: string) => {
+const getData = async (id: string) => {
     const data = await fetch(`${process.env.DOMAIN}/api/products/${id}`, {
         cache: "no-store",
     });
