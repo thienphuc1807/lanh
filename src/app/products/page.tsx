@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 const getData = async () => {
-    const data = await fetch("http://localhost:3000/api/products", {
+    const data = await fetch(`${process.env.DOMAIN}/api/products`, {
         cache: "no-store",
     });
     if (!data.ok) {

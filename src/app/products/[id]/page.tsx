@@ -1,11 +1,11 @@
 import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
-import { getProduct } from "@/lib/data";
+// import { getProduct } from "@/lib/data";
 
 // Fetch Data With AN API
 
 export const getData = async (id: string) => {
-    const data = await fetch(`http://localhost:3000/api/products/${id}`, {
+    const data = await fetch(`${process.env.DOMAIN}/api/products/${id}`, {
         cache: "no-store",
     });
     if (!data.ok) {
