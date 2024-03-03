@@ -11,9 +11,13 @@ const breadcrumbs = [
     },
 ];
 
+export const metadata = {
+    title: "Liên hệ",
+};
+
 function Contact() {
     return (
-        <main className="container mx-auto px-5 gap-6 lg:pt-[200px] pt-[100px] lg:mb-10">
+        <main className="container mx-auto px-5 gap-6 lg:mb-10">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
                 <section>

@@ -13,9 +13,13 @@ const breadcrumbs = [
     },
 ];
 
+export const metadata = {
+    title: "Tin tức",
+};
+
 function News() {
     return (
-        <main className="container mx-auto px-5 gap-6 lg:pt-[200px] pt-[100px]">
+        <main className="container mx-auto px-5 gap-6">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
             <div className="flex gap-5">
                 <div className="flex-[80%]">

@@ -38,7 +38,7 @@ async function ProductDetail({ params }: { params: { id: string } }) {
         { name: `${data.name}`, path: `/products/${id}` },
     ];
     return (
-        <div className="container mx-auto lg:pt-[200px] pt-[120px] md:px-5 px-6">
+        <div className="container mx-auto md:px-5 px-6">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
 
             <div className="grid lg:grid-cols-2 grid-cols-1">

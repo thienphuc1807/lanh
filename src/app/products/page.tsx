@@ -24,7 +24,7 @@ const Products = async () => {
     const data = await getData();
     return (
         <main className="bg-lanhBackground bg-no-repeat bg-cover">
-            <div className="container mx-auto px-5 gap-6 lg:pt-[200px] pt-[100px]">
+            <div className="container mx-auto px-5 gap-6">
                 <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
                     {data.map((item: Products) => (
                         <Link

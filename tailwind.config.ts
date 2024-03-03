@@ -9,10 +9,10 @@ const config: Config = {
     theme: {
         extend: {
             backgroundImage: {
-                lanhHeader: "url(/images/banner/Header.png)",
-                lanhFooter: "url(/images/banner/Footer.png)",
-                lanhBanner: "url(/images/banner/Banner.png)",
-                lanhBackground: "url(/images/banner/Background2.png)",
+                lanhHeader: "url('/bgHeader.png')",
+                lanhFooter: "url('/bgFooter.png')",
+                lanhBanner: "url('/Banner.png')",
+                lanhBackground: "url('/background.png')",
             },
             colors: {
                 lanh_green: "#97ba79",

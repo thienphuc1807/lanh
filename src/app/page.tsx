@@ -5,44 +5,44 @@ import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import Link from "next/link";
-import Phone from "../../public/images/Icon/Phone.png";
-import Location from "../../public/images/Icon/Chi nhánh.png";
-import Shipper from "../../public/images/Icon/Shipper.png";
-import bannerImage from "../../public/images/banner/Banner.png";
+import Phone from "/public/Phone.png";
+import Location from "/public/location.png";
+import Shipper from "/public/Shipper.png";
+import bannerImage from "/public/Banner.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 
-const slider = [
-    {
-        name: "Nước ép",
-        url: "/images/Icon/Nước ép.png",
-    },
-    {
-        name: "Sinh tố xanh",
-        url: "/images/Icon/Sinh tố.png",
-    },
-    {
-        name: "Salad",
-        url: "/images/Icon/Salad.png",
-    },
-    {
-        name: "Bánh ngọt",
-        url: "/images/Icon/Bánh ngọt.png",
-    },
-    {
-        name: "Kem trái cây",
-        url: "/images/Icon/Kem.png",
-    },
-    {
-        name: "Thuần chay",
-        url: "/images/Icon/Thuần chay.png",
-    },
-    {
-        name: "Lành",
-        url: "/images/banner/Lành.png",
-    },
-];
+// const slider = [
+//     {
+//         name: "Nước ép",
+//         url: "/juice.png",
+//     },
+//     {
+//         name: "Sinh tố xanh",
+//         url: "/smoothie.png",
+//     },
+//     {
+//         name: "Salad",
+//         url: "/Salad.png",
+//     },
+//     {
+//         name: "Bánh ngọt",
+//         url: "/Bánh ngọt.png",
+//     },
+//     {
+//         name: "Kem trái cây",
+//         url: "/Kem.png",
+//     },
+//     {
+//         name: "Thuần chay",
+//         url: "/Thuần chay.png",
+//     },
+//     {
+//         name: "Lành",
+//         url: "/Lành.png",
+//     },
+// ];
 
 const product = [
     {
@@ -81,14 +81,14 @@ function Home() {
     }, []);
     return (
         <main>
-            <div className="relative z-0 md:mt-0 pt-10">
+            <div className="relative z-0 xl:mt-[-250px] lg:mt-[-180px] md:mt-[-130px] mt-[-60px]">
                 <Image src={bannerImage} alt="banner_lanh" />
             </div>
             <div className="lg:mt-10 mt-8 container mx-auto px-5">
                 <div data-aos="fade-down">
                     <div className="flex justify-center items-center">
                         <Image
-                            src="/images/Icon/Bông.png"
+                            src="/leaf.png"
                             alt="heading_background"
                             width={70}
                             height={70}
@@ -98,7 +98,7 @@ function Home() {
                             SẢN PHẨM
                         </h2>
                     </div>
-                    <div className="pt-10">
+                    {/* <div className="pt-10">
                         <Swiper
                             modules={[Autoplay, Navigation]}
                             spaceBetween={10}
@@ -145,7 +145,7 @@ function Home() {
                             <div className="flex justify-end gap-6 mt-8">
                                 <button className="prev-button">
                                     <Image
-                                        src="/images/Icon/Before.png"
+                                        src="/Before.png"
                                         width={40}
                                         height={40}
                                         alt="next_btn"
@@ -153,7 +153,7 @@ function Home() {
                                 </button>
                                 <button className="next-button">
                                     <Image
-                                        src="/images/Icon/Next (6).png"
+                                        src="/Next (6).png"
                                         width={40}
                                         height={40}
                                         alt="next_btn"
@@ -161,13 +161,13 @@ function Home() {
                                 </button>
                             </div>
                         </Swiper>
-                    </div>
+                    </div> */}
                 </div>
                 <div data-aos="fade-up">
                     <div className="lg:py-10 py-5">
                         <div className="flex justify-center items-center">
                             <Image
-                                src="/images/Icon/Bông.png"
+                                src="/leaf.png"
                                 alt="heading_background"
                                 width={70}
                                 height={70}
@@ -186,7 +186,7 @@ function Home() {
                         </p>
                         <div className="lg:pt-5 pt-2">
                             <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 lg:gap-8 md:gap-4 gap-2">
-                                {product.map((item) => (
+                                {/* {product.map((item) => (
                                     <div
                                         key={item.name}
                                         className="pt-5 group/item cursor-pointer"
@@ -220,7 +220,7 @@ function Home() {
                                             </button>
                                         </div>
                                     </div>
-                                ))}
+                                ))} */}
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,15 @@
 "use server";
 
-import { signIn } from "./auth";
+import { signIn, signOut } from "./auth";
+
+
+export const handleGithubLogin = async () => {
+    await signIn("github");
+};
+
+export const handleGithubLogout = async () => {
+    await signOut();
+}
 
 // import { revalidatePath } from "next/cache"
 // import { Products } from "./models"
@@ -37,7 +46,3 @@ import { signIn } from "./auth";
 //     }
 // };
 
-export const handleGithubLogin = async () => {
-    "use server";
-    await signIn("github");
-};

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({
@@ -11,7 +11,11 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-    title: "Lành",
+    title: {
+        default: "Lành",
+        template: "%s Lành",
+    },
+    description: "Ăn lành website",
 };
 
 export default function RootLayout({
