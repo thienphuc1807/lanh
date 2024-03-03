@@ -5,7 +5,7 @@ import BreadCrumbs from "@/components/Breadcrumbs";
 // Fetch Data With AN API
 
 const getData = async (id: string) => {
-    const data = await fetch(`${process.env.DOMAIN}/api/products/${id}`, {
+    const data = await fetch(`../api/products/${id}`, {
         cache: "no-store",
     });
     if (!data.ok) {
