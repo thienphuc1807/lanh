@@ -10,7 +10,7 @@ function Footer() {
                         <div className="md:flex items-center gap-6">
                             <Link href="/">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/Logo.png"
                                     width={120}
                                     height={100}
                                     alt="lanh_Logo"
@@ -32,7 +32,7 @@ function Footer() {
                         <div className="flex md:justify-start justify-around pt-4 md:pt-5 md:gap-6">
                             <Link href="/" className="w-10 md:w-20">
                                 <Image
-                                    src="/images/Icon/Facebook (1).png"
+                                    src="/facebookicon.png"
                                     width={50}
                                     height={50}
                                     alt="facebook"
@@ -40,26 +40,26 @@ function Footer() {
                             </Link>
                             <Link href="/" className="w-10 md:w-20">
                                 <Image
-                                    src="/images/Icon/Instagram (1).png"
+                                    src="/Instagram.png"
                                     width={50}
                                     height={50}
-                                    alt="facebook"
+                                    alt="instagram"
                                 />
                             </Link>
                             <Link href="/" className="w-10 md:w-20">
                                 <Image
-                                    src="/images/Icon/Tweeter.png"
+                                    src="/Tweeter.png"
                                     width={50}
                                     height={50}
-                                    alt="facebook"
+                                    alt="tweeter"
                                 />
                             </Link>
                             <Link href="/" className="w-10 md:w-20">
                                 <Image
-                                    src="/images/Icon/Youtube (1).png"
+                                    src="/Youtube.png"
                                     width={50}
                                     height={50}
-                                    alt="facebook"
+                                    alt="youtube"
                                 />
                             </Link>
                         </div>
@@ -91,7 +91,7 @@ function Footer() {
                             />
                             <button className="absolute inset-y-0 right-0 mr-0.5 py-0.5">
                                 <Image
-                                    src="/images/Icon/Button Gửii.png"
+                                    src="/send.png"
                                     width={100}
                                     height={100}
                                     alt="send_button"
@@ -105,8 +105,8 @@ function Footer() {
                         <div className="flex md:flex-col gap-4">
                             <div className="w-auto h-auto">
                                 <Image
-                                    src="/images/Icon/CHPlay.png"
-                                    alt="AppStore"
+                                    src="/CHPlay.png"
+                                    alt="CHPlay"
                                     width={80}
                                     height={80}
                                     className="w-auto h-auto"
@@ -115,7 +115,7 @@ function Footer() {
 
                             <div className="w-auto h-auto">
                                 <Image
-                                    src="/images/Icon/App Store.png"
+                                    src="/AppStore.png"
                                     alt="AppStore"
                                     width={80}
                                     height={80}
