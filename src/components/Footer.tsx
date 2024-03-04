@@ -56,7 +56,7 @@ function Footer() {
                             </Link>
                             <Link href="/" className="w-10 md:w-20">
                                 <Image
-                                    src="/Youtube.png"
+                                    src="/YouTube.png"
                                     width={50}
                                     height={50}
                                     alt="youtube"
