@@ -1,14 +1,6 @@
 import { connectToDb } from "./utils";
 import { Products } from "./models";
 
-// interface product {
-//     id: number
-//     name: string
-//     sale_price: number
-//     price: number
-//     ingredient: string
-//     image: string
-// }
 
 export const getProducts = async () => {
     try {
@@ -21,10 +13,10 @@ export const getProducts = async () => {
     }
 }
 
-export const getProduct = async (id: number) => {
+export const getProduct = async (id: string) => {
     try {
         connectToDb()
-        const product = await Products.findById(id)
+        const product = await Products.findById({ id })
         return product
     } catch (error) {
         console.log(error);

@@ -1,8 +1,9 @@
 interface Products {
-    _id: number;
+    _id: string;
     name: string;
-    price: string;
-    ingredient: string;
+    salePrice: number;
+    price: number;
     img: string;
-    salePrice: string;
+    ingredient: string;
+    slug: string;
 }

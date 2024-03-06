@@ -1,6 +1,5 @@
 import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
-import { getProduct } from "@/lib/data";
 
 // Fetch Data With AN API
 
@@ -17,29 +16,20 @@ const getData = async (id: string) => {
     return data.json();
 };
 
-export const generateMetadata = async ({
-    params,
-}: {
-    params: { id: string };
-}) => {
-    // Fetch Data Without API
-    // const data = await getProduct(id);
-
-    // Fetch Data With An API
-    const data = await getData(params.id);
-    return {
-        title: data.name,
-    };
+export const metadata = {
+    title: "Sản phẩm",
 };
+
 async function ProductDetail({ params }: { params: { id: string } }) {
     const { id } = params;
-
     const data = await getData(id);
+
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
         { name: "Sản phẩm", path: "/products" },
         { name: `${data.name}`, path: `/products/${id}` },
     ];
+
     return (
         <div className="container mx-auto md:px-5 px-6">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
@@ -47,7 +37,7 @@ async function ProductDetail({ params }: { params: { id: string } }) {
             <div className="grid lg:grid-cols-2 grid-cols-1">
                 <div className="relative lg:w-auto lg:h-[400px] h-72 w-full">
                     <Image
-                        src={data.img}
+                        src={`/${data.img}`}
                         alt={data.name}
                         fill={true}
                         className="object-contain"
@@ -58,10 +48,16 @@ async function ProductDetail({ params }: { params: { id: string } }) {
                     <h1 className="text-3xl mb-5">{data.name}</h1>
                     <div className="flex items-end py-2 gap-4">
                         <p className="line-through text-gray-600 text-md ">
-                            {data.price}
+                            {Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                            }).format(data.price)}
                         </p>
                         <p className="text-2xl font-bold text-lanh_green">
-                            {data.salePrice}
+                            {Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                            }).format(data.salePrice)}
                         </p>
                     </div>
                     <p className="my-5">Nguyên liệu: {data.ingredient}</p>

@@ -1,30 +1,36 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getProducts } from "@/lib/data";
+import BreadCrumbs from "@/components/Breadcrumbs";
 
 export const metadata = {
     title: "Sản phẩm",
 };
 
 const getData = async () => {
-    const data = await fetch(`http://${process.env.DOMAIN}/api/products`, {
+    const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
         cache: "no-store",
     });
-    if (!data.ok) {
+
+    if (!res.ok) {
         throw new Error("Something went wrong");
     }
-    return data.json();
+
+    return res.json();
 };
 
-const Products = async () => {
-    // Fetch Data Without API
-    // const data = await getProducts();
+const breadcrumbs = [
+    { name: "Trang chủ", path: "/" },
+    { name: "Sản phẩm", path: "/products" },
+];
 
+const Products = async () => {
     // Fetch Data with API
     const data = await getData();
     return (
         <main className="bg-lanhBackground bg-no-repeat bg-cover">
             <div className="container mx-auto px-5 gap-6">
+                <BreadCrumbs breadcrumbs={breadcrumbs} />
+
                 <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
                     {data.map((item: Products) => (
                         <Link
@@ -35,7 +41,7 @@ const Products = async () => {
                             <div className="relative mt-5 w-auto h-52">
                                 <Image
                                     fill={true}
-                                    src={item.img}
+                                    src={`/${item.img}`}
                                     alt={item.name}
                                     className="object-contain"
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -47,12 +53,18 @@ const Products = async () => {
                                 </p>
                             </div>
                             <div className="flex justify-center">
-                                <div className="border-y-2 flex gap-2">
+                                <div className="border-y-2 flex gap-2 items-center">
                                     <p className="font-bold">
-                                        {item.salePrice}
+                                        {Intl.NumberFormat("vi-VN", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        }).format(item.salePrice)}
                                     </p>
                                     <p className="text-[red] font-bold text-sm line-through">
-                                        {item.price}
+                                        {Intl.NumberFormat("vi-VN", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        }).format(item.price)}
                                     </p>
                                 </div>
                             </div>
