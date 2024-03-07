@@ -46,13 +46,13 @@ const ProductsSwiper = () => {
     }, []);
     return (
         <div className="container mx-auto px-5" data-aos="fade-right">
-            <div className="flex justify-center items-center ">
+            <div className="flex justify-center items-center relative">
                 <Image
                     src="/leaf.png"
                     alt="heading_background"
-                    width={70}
-                    height={70}
-                    className="absolute w-auto h-auto"
+                    width={100}
+                    height={100}
+                    className="absolute"
                 />
                 <h2 className="md:text-2xl text-xl font-bold">SẢN PHẨM</h2>
             </div>

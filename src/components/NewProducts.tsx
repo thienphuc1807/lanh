@@ -17,19 +17,19 @@ const NewProducts = (props: Props) => {
     return (
         <div className="container mx-auto px-5" data-aos="fade-up">
             <div className="lg:py-10 py-5">
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center relative">
                     <Image
                         src="/leaf.png"
                         alt="heading_background"
-                        width={70}
-                        height={70}
-                        className="absolute w-auto h-auto"
+                        width={100}
+                        height={100}
+                        className="absolute"
                     />
                     <h2 className="md:text-2xl text-xl font-bold">
                         SẢN PHẨM MỚI
                     </h2>
                 </div>
-                <p className="lg:px-48 px-2 text-center mt-6 md:text-xl text-sm">
+                <p className="lg:px-48 px-2 text-center mt-6 md:text-md text-sm">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id
                     temporibus rem cum. Voluptate molestiae placeat minima
                     corporis! Ipsum facere obcaecati iure, voluptatibus optio
