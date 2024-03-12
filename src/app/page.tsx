@@ -6,8 +6,9 @@ import bannerImage from "/public/Banner.png";
 import ProductsSwiper from "@/components/Swiper";
 import NewProducts from "@/components/NewProducts";
 import Introduction from "@/components/Introduction";
+import FeaturedNews from "@/components/FeaturedNews";
 
-const getData = async () => {
+const getProducts = async () => {
     const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
         cache: "no-store",
     });
@@ -17,9 +18,19 @@ const getData = async () => {
     return res.json();
 };
 
+const getNews = async () => {
+    const res = await fetch(`http://${process.env.DOMAIN}/api/news`, {
+        cache: "no-store",
+    });
+    if (!res.ok) {
+        throw new Error("Something went wrong");
+    }
+    return res.json();
+};
+
 async function Home() {
-    const data = await getData();
-    console.log(data);
+    const products = await getProducts();
+    const news = await getNews();
 
     return (
         <main>
@@ -29,7 +40,8 @@ async function Home() {
             <div className="lg:mt-10 mt-8 ">
                 <ProductsSwiper />
                 <Introduction />
-                <NewProducts products={data} />
+                <NewProducts products={products} />
+                <FeaturedNews news={news}/>
                 <div
                     className="lg:py-10 container mx-auto px-5"
                     data-aos="fade-left"

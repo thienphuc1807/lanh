@@ -3,14 +3,13 @@ import { connectToDb } from "@/lib/utils"
 import { NextResponse } from "next/server";
 
 export const GET = async (request: any, { params }: any) => {
-    const { id } = params;
+    const { name } = params;
 
     try {
         connectToDb()
-        const product = await Products.findById(id)
+        const product = await Products.findOne({ name })
         return NextResponse.json(product)
     } catch (error) {
-        console.log("Check log >>>", id);
         console.log(error);
     }
 }

@@ -39,8 +39,8 @@ const NewProducts = (props: Props) => {
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 lg:gap-8 md:gap-4 gap-2">
                         {products.map((item) => (
                             <Link
-                                href={`products/${item._id}`}
-                                key={item._id}
+                                href={`products/${item.name}`}
+                                key={item.name}
                                 className="pt-5 group/item cursor-pointer"
                             >
                                 <div className="relative w-full h-64 bg-[#f7f8fa] ">

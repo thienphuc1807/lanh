@@ -3,9 +3,9 @@ import BreadCrumbs from "@/components/Breadcrumbs";
 
 // Fetch Data With AN API
 
-const getData = async (id: string) => {
+const getData = async (name: string) => {
     const data = await fetch(
-        `http://${process.env.DOMAIN}/api/products/${id}`,
+        `http://${process.env.DOMAIN}/api/products/${name}`,
         {
             cache: "no-store",
         }
@@ -20,14 +20,14 @@ export const metadata = {
     title: "Sản phẩm",
 };
 
-async function ProductDetail({ params }: { params: { id: string } }) {
-    const { id } = params;
-    const data = await getData(id);
+async function ProductDetail({ params }: { params: { name: string } }) {
+    const { name } = params;
+    const data = await getData(name);
 
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
         { name: "Sản phẩm", path: "/products" },
-        { name: `${data.name}`, path: `/products/${id}` },
+        { name: `${data.name}`, path: `/products/${data.name}` },
     ];
 
     return (

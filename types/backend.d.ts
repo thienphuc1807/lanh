@@ -7,3 +7,12 @@ interface Products {
     ingredient: string;
     slug: string;
 }
+
+interface News {
+    _id: string;
+    title: string;
+    desc: string;
+    img: string;
+    slug: string;
+    createdAt: Date;
+}

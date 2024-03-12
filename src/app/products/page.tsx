@@ -34,8 +34,8 @@ const Products = async () => {
                 <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
                     {data.map((item: Products) => (
                         <Link
-                            href={`products/${item._id}`}
-                            key={item._id}
+                            href={`products/${item.name}`}
+                            key={item.name}
                             className="bg-white border-[1px] px-2"
                         >
                             <div className="relative mt-5 w-auto h-52">
