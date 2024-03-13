@@ -21,12 +21,8 @@ const Introduction = () => {
                 className="container mx-auto px-5 grid grid-cols-1 lg:grid-cols-2 py-5 xl:space-x-10 xl:min-h-[600px]"
                 data-aos="fade-down"
             >
-                <div className="relative">
-                    <Image
-                        src={"/productImg5.png"}
-                        alt="productimg"
-                        fill={true}
-                    />
+                <div className="relative lg:block hidden">
+                    <Image src={"/productImg5.png"} alt="productimg" fill />
                 </div>
                 <div className="flex flex-col justify-center">
                     <h2 className={dancingScript.className}>
