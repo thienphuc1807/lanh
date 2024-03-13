@@ -99,6 +99,41 @@ const NavBar = ({ session }: any) => {
                                     {link.name}
                                 </Link>
                             ))}
+                            {session?.user ? (
+                                <>
+                                    <h1 className="text-white uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left">
+                                        {session.user.name}
+                                    </h1>
+                                    <form action={handleGithubLogout}>
+                                        <button className="text-white uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left">
+                                            ĐĂNG XUẤT
+                                        </button>
+                                    </form>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        className={` ${
+                                            pathName === "/login"
+                                                ? "text-black"
+                                                : "text-white"
+                                        } uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left `}
+                                        href={"/login"}
+                                    >
+                                        ĐĂNG NHẬP
+                                    </Link>
+                                    <Link
+                                        className={` ${
+                                            pathName === "/regiter"
+                                                ? "text-black"
+                                                : "text-white"
+                                        } uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left `}
+                                        href={"/register"}
+                                    >
+                                        ĐĂNG KÝ
+                                    </Link>
+                                </>
+                            )}
                         </div>
                         <div className="bg-black z-0 h-screen flex-1 opacity-50"></div>
                     </div>

@@ -3,10 +3,10 @@ import Link from "next/link";
 
 function Footer() {
     return (
-        <footer className="flex items-end justify-center bg-no-repeat bg-lanhFooter md:bg-[length:100%_100%] bg-[length:150%_100%] h-[490px]">
-            <div className="container md:pb-8 pb-5 mx-auto px-5">
+        <footer className="flex items-end justify-center bg-lanh_green mt-10">
+            <div className="container mx-auto lg:px-0 px-6 py-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-                    <div>
+                    <>
                         <div className="md:flex items-center gap-6">
                             <Link href="/">
                                 <Image
@@ -63,7 +63,7 @@ function Footer() {
                                 />
                             </Link>
                         </div>
-                    </div>
+                    </>
                     <div className="hidden md:block md:mx-auto text-white">
                         <h6 className="mb-4">SẢN PHẨM</h6>
                         <ul className="flex flex-col gap-3">
@@ -78,50 +78,46 @@ function Footer() {
                     <div className="md:pt-0 pt-3">
                         <label
                             htmlFor="email"
-                            className="block text-white text-sm md:pb-4 pb-2"
+                            className="block text-white md:pb-4 pb-2"
                         >
                             Nhận ưu đãi từ chúng tôi
                         </label>
                         <div className="relative">
                             <input
-                                className="block w-full rounded-full pl-6 py-4 placeholder:text-sm focus:outline-none                                  "
+                                className="block w-full rounded-full pl-6 py-4 focus:outline-none                                  "
                                 type="email"
                                 id="email"
-                                placeholder="Nhập email của bạn"
+                                placeholder="Email của bạn"
                             />
-                            <button className="absolute inset-y-0 right-0 mr-0.5 py-0.5">
+                            <button className="absolute inset-y-1 right-0 mr-1 lg:w-28 md:w-20 w-28">
                                 <Image
                                     src="/send.png"
-                                    width={100}
-                                    height={100}
+                                    fill
                                     alt="send_button"
-                                    className="w-full h-full"
                                 />
                             </button>
                         </div>
-                        <h6 className="md:pt-6 py-2 md:pb-4 text-white text-sm">
+                        <h6 className="md:pt-6 py-2 md:pb-4 text-white">
                             Tải ứng dụng
                         </h6>
-                        <div className="flex md:flex-col gap-4">
-                            <div className="w-auto h-auto">
+                        <div className="flex gap-4">
+                            <button>
                                 <Image
                                     src="/CHPlay.png"
                                     alt="CHPlay"
-                                    width={80}
-                                    height={80}
-                                    className="w-auto h-auto"
+                                    width={140}
+                                    height={140}
                                 />
-                            </div>
-
-                            <div className="w-auto h-auto">
+                            </button>
+                            <button>
                                 <Image
                                     src="/AppStore.png"
                                     alt="AppStore"
-                                    width={80}
-                                    height={80}
-                                    className="w-auto h-auto"
+                                    width={140}
+                                    height={140}
+                                
                                 />
-                            </div>
+                            </button>
                         </div>
                     </div>
                 </div>

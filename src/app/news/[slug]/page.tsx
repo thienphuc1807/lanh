@@ -28,7 +28,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
             <BreadCrumbs breadcrumbs={breadcrumbs} />
             <div className="flex gap-4">
                 <div className="flex-[80%] space-y-5">
-                    <h1 className="text-4xl">{data.title}</h1>
+                    <h1 className="md:text-4xl text-2xl">{data.title}</h1>
                     <p>Ngày đăng: {data.createdAt.slice(0, 10)}</p>
                     <div className="mx-auto w-full relative h-[400px]">
                         {data.img ? (
@@ -47,7 +47,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
                             />
                         )}
                     </div>
-                    <p>{data.desc}</p>
+                    <p className="text-justify">{data.desc}</p>
                 </div>
 
                 <aside className="flex-[20%] lg:block hidden">
@@ -82,7 +82,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/Logo.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -99,7 +99,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/Logo.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -116,7 +116,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/Logo.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -138,7 +138,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/Logo.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -155,7 +155,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/Logo.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -172,7 +172,7 @@ async function NewsDetail({ params }: { params: { slug: string } }) {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/Logo.png"
                                     alt="news img"
                                     width={100}
                                     height={100}

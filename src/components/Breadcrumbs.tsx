@@ -9,7 +9,6 @@ interface Props {
     breadcrumbs: BreadCrumbs[];
 }
 
-
 function BreadCrumbs(props: Props) {
     const { breadcrumbs } = props;
     return (
