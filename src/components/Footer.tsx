@@ -6,7 +6,7 @@ function Footer() {
         <footer className="flex items-end justify-center bg-lanh_green mt-10">
             <div className="container mx-auto lg:px-0 px-6 py-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-                    <>
+                    <div>
                         <div className="md:flex items-center gap-6">
                             <Link href="/">
                                 <Image
@@ -63,7 +63,7 @@ function Footer() {
                                 />
                             </Link>
                         </div>
-                    </>
+                    </div>
                     <div className="hidden md:block md:mx-auto text-white">
                         <h6 className="mb-4">SẢN PHẨM</h6>
                         <ul className="flex flex-col gap-3">
