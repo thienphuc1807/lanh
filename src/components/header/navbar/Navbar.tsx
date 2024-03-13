@@ -83,7 +83,7 @@ const NavBar = ({ session }: any) => {
                         <div className="flex flex-col h-screen flex-1 bg-lanh_green md:p-6 p-3">
                             <div className="flex justify-end">
                                 <button onClick={() => setOpen(!open)}>
-                                    <XMarkIcon className="md:w-10 w-6 text-white" />
+                                    <XMarkIcon className="md:w-10 w-8 text-white" />
                                 </button>
                             </div>
                             {links.map((link) => (
@@ -117,7 +117,7 @@ const NavBar = ({ session }: any) => {
                                             pathName === "/login"
                                                 ? "text-black"
                                                 : "text-white"
-                                        } uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left `}
+                                        } uppercase px-5 md:text-lg text-sm flex flex-col gap-5 py-5 text-left `}
                                         href={"/login"}
                                     >
                                         ĐĂNG NHẬP
@@ -127,7 +127,7 @@ const NavBar = ({ session }: any) => {
                                             pathName === "/regiter"
                                                 ? "text-black"
                                                 : "text-white"
-                                        } uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left `}
+                                        } uppercase px-5 md:text-lg text-sm flex flex-col gap-5 py-5 text-left `}
                                         href={"/register"}
                                     >
                                         ĐĂNG KÝ
