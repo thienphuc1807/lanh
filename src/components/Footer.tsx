@@ -90,11 +90,7 @@ function Footer() {
                                 placeholder="Email của bạn"
                             />
                             <button className="absolute inset-y-1 right-0 mr-1 lg:w-28 md:w-20 w-28">
-                                <Image
-                                    src="/send.png"
-                                    fill
-                                    alt="send_button"
-                                />
+                                <Image src="/send.png" fill alt="send_button" />
                             </button>
                         </div>
                         <h6 className="md:pt-6 py-2 md:pb-4 text-white">
@@ -115,7 +111,6 @@ function Footer() {
                                     alt="AppStore"
                                     width={140}
                                     height={140}
-                                
                                 />
                             </button>
                         </div>

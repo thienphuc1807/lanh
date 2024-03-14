@@ -135,7 +135,10 @@ const NavBar = ({ session }: any) => {
                                 </>
                             )}
                         </div>
-                        <div className="bg-black z-0 h-screen flex-1 opacity-50"></div>
+                        <div
+                            className="bg-black z-0 h-screen flex-1 opacity-50"
+                            onClick={() => setOpen(!open)}
+                        ></div>
                     </div>
                 )}
             </div>
