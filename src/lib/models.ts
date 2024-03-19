@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { title } from "process";
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -49,5 +48,30 @@ const newsSchema = new mongoose.Schema(
     { timestamps: true }
 )
 
-export const Products = mongoose.models.Products || mongoose.model('Products', productSchema);
-export const News = mongoose.models.News || mongoose.model('News', newsSchema);
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    img: {
+        type: String,
+    },
+    password: {
+        type: String
+    }
+},
+    { timestamps: true })
+
+export const Products = mongoose.models.Products || mongoose.model('Products', productSchema)
+export const News = mongoose.models.News || mongoose.model('News', newsSchema)
+export const User = mongoose.models.User || mongoose.model('User', userSchema)
