@@ -13,19 +13,26 @@ export const handleGithubLogout = async () => {
     await signOut();
 }
 
-export const handleRegister = async (fromData: any) => {
+export const handleRegister = async (previousState: any, fromData: any) => {
     const { username, email, password, confirmPassword } = Object.fromEntries(fromData)
 
     if (password !== confirmPassword) {
-        return "Password do not match"
+        return { error: "Password do not match" }
     }
 
     try {
         connectToDb()
         const user = await User.findOne({ username })
         if (user) {
-            return "Username already exists"
+            return { error: "Username already exists!" }
         }
+
+        const userEmail = await User.findOne({ email })
+        if (userEmail) {
+            return { error: "Email already exists!" }
+        }
+
+
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
         const newUser = new User({
@@ -35,6 +42,7 @@ export const handleRegister = async (fromData: any) => {
         })
         await newUser.save()
         console.log("save to DB");
+        return { success: true }
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong!" }
@@ -48,7 +56,7 @@ export const handleLogin = async (formData: any) => {
         await signIn("credentials", { username, password })
     } catch (error) {
         console.log(error);
-        return { error: "Something went wrong!" }
+        return { error: "Something went wrong" }
     }
 }
 

@@ -18,12 +18,12 @@ const LoginPage = async () => {
                         <input
                             type="text"
                             className="py-2 px-5 border-2 border-lanh_green rounded-full"
-                            placeholder="Tên đăng nhập"
+                            placeholder="Username"
                             name="username"
                         />
                         <input
                             type="password"
-                            placeholder="Mật khẩu"
+                            placeholder="Password"
                             className="py-2 px-5 border-2 border-lanh_green rounded-full"
                             name="password"
                         />
