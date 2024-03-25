@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { handleRegister } from "@/lib/serveraction";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 function RegiterForm() {
     const [state, formAction] = useFormState(handleRegister, undefined);
+
     const router = useRouter();
+
     useEffect(() => {
         state?.success && router.push("/login");
     }, [state?.success, router]);

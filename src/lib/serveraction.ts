@@ -49,14 +49,17 @@ export const handleRegister = async (previousState: any, fromData: any) => {
     }
 }
 
-export const handleLogin = async (formData: any) => {
+export const handleLogin = async (previousState: any, formData: any) => {
     const { username, password } = Object.fromEntries(formData)
 
     try {
         await signIn("credentials", { username, password })
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
-        return { error: "Something went wrong" }
+        if (error.type?.includes("CredentialsSignin")) {
+            return { error: "Invalid username or password" }
+        }
+        throw error
     }
 }
 

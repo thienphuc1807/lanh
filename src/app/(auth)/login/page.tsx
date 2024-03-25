@@ -1,6 +1,6 @@
+import LoginForm from "@/components/LoginForm";
 import { handleGithubLogin } from "@/lib/serveraction";
 import Image from "next/image";
-import { handleLogin } from "@/lib/serveraction";
 const LoginPage = async () => {
     return (
         <div className="xl:px-0 px-6 md:flex md:justify-center">
@@ -14,23 +14,7 @@ const LoginPage = async () => {
                             fill
                         />
                     </div>
-                    <form action={handleLogin} className="flex flex-col gap-6">
-                        <input
-                            type="text"
-                            className="py-2 px-5 border-2 border-lanh_green rounded-full"
-                            placeholder="Username"
-                            name="username"
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            className="py-2 px-5 border-2 border-lanh_green rounded-full"
-                            name="password"
-                        />
-                        <button className="p-2 font-bold bg-lanh_green border-2 border-lanh_green rounded-full text-white hover:bg-white hover:text-lanh_green">
-                            Đăng nhập
-                        </button>
-                    </form>
+                    <LoginForm />
                     <p className="font-bold text-lanh_green">
                         Hoặc đăng nhập bằng:
                     </p>

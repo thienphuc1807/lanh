@@ -41,7 +41,7 @@ async function Home() {
                 <ProductsSwiper />
                 <Introduction />
                 <NewProducts products={products} />
-                <FeaturedNews news={news}/>
+                <FeaturedNews news={news} />
                 <div
                     className="lg:py-10 container mx-auto px-5"
                     data-aos="fade-left"
