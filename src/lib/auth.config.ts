@@ -5,9 +5,14 @@ export const authConfig = {
     providers: [],
     callbacks: {
         async jwt({ token, user }: { token: any; user: any }) {
+            // console.log("This is user", user);
+            // console.log("This is token", token);
+
             if (user) {
                 token.id = user.id;
                 token.isAdmin = user.isAdmin;
+                token.name = user.username;
+                token.image = user.image;
             }
             return token;
         },
@@ -15,8 +20,13 @@ export const authConfig = {
             if (token) {
                 session.user.id = token.id;
                 session.user.isAdmin = token.isAdmin;
+                session.user.name = token.name;
+                session.user.image = token.image;
             }
+            console.log("this is token session >>>", session);
+
             return session;
+
         },
         authorized({
             auth,
@@ -25,9 +35,10 @@ export const authConfig = {
             auth: any;
             request: { nextUrl?: any };
         }) {
+
             const user = auth?.user;
             const isOnAdminPanel =
-                request.nextUrl?.pathname.startsWith("/admin");
+                request.nextUrl?.pathname.startsWith("/dashboard");
             const isOnBlogPage = request.nextUrl?.pathname.startsWith("/blog");
             const isOnLoginPage =
                 request.nextUrl?.pathname.startsWith("/login");

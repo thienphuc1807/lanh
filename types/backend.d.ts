@@ -16,3 +16,11 @@ interface News {
     slug: string;
     createdAt: Date;
 }
+
+interface Users {
+    _id: string,
+    username: string,
+    email: string,
+    isAdmin: boolean,
+    img: string
+}

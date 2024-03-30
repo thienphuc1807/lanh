@@ -10,6 +10,7 @@ const login = async (credentials: any) => {
     try {
         connectToDb();
         const user = await User.findOne({ username: credentials.username });
+
         if (!user) {
             throw new Error("Wrong Username")
         }
@@ -20,7 +21,6 @@ const login = async (credentials: any) => {
 
         if (!isPasswordCorrect) {
             throw new Error("Wrong Password")
-
         }
         return user;
     } catch (error) {
@@ -39,6 +39,16 @@ export const {
         GitHub({
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
+            async profile(profile) {
+                const user = await User.findOne({ email: profile?.email });
+                return {
+                    id: profile.id.toString(),
+                    username: profile.login,
+                    email: profile.email,
+                    image: profile.avatar_url,
+                    isAdmin: user?.isAdmin ? user.isAdmin : false
+                }
+            }
         }),
         CredentialsProvider({
             async authorize(credentials) {
@@ -54,7 +64,6 @@ export const {
     ],
     callbacks: {
         async signIn({ user, account, profile }) {
-            console.log(profile);
             if (account?.provider === "github") {
                 connectToDb();
                 try {

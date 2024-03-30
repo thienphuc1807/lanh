@@ -15,7 +15,6 @@ const getNews = async (slug: string) => {
 async function NewsDetail({ params }: { params: { slug: string } }) {
     const { slug } = params;
     const data = await getNews(slug);
-    console.log(data);
 
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },

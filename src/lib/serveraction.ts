@@ -1,9 +1,9 @@
 "use server";
-
+import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "./auth";
-import { User } from "./models";
+import { Products, User } from "./models";
 import { connectToDb } from "./utils";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 
 export const handleGithubLogin = async () => {
     await signIn("github");
@@ -11,55 +11,78 @@ export const handleGithubLogin = async () => {
 
 export const handleGithubLogout = async () => {
     await signOut();
-}
+};
 
 export const handleRegister = async (previousState: any, fromData: any) => {
-    const { username, email, password, confirmPassword } = Object.fromEntries(fromData)
+    const { username, email, img, password, confirmPassword } =
+        Object.fromEntries(fromData);
 
     if (password !== confirmPassword) {
-        return { error: "Password do not match" }
+        return { error: "Password do not match" };
     }
 
     try {
-        connectToDb()
-        const user = await User.findOne({ username })
+        connectToDb();
+        const user = await User.findOne({ username });
         if (user) {
-            return { error: "Username already exists!" }
+            return { error: "Username already exists!" };
         }
 
-        const userEmail = await User.findOne({ email })
+        const userEmail = await User.findOne({ email });
         if (userEmail) {
-            return { error: "Email already exists!" }
+            return { error: "Email already exists!" };
         }
 
-
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = new User({
             username,
             email,
-            password: hashedPassword
-        })
-        await newUser.save()
+            password: hashedPassword,
+        });
+        await newUser.save();
         console.log("save to DB");
-        return { success: true }
+        return { success: true };
     } catch (error) {
         console.log(error);
-        return { error: "Something went wrong!" }
+        return { error: "Something went wrong!" };
     }
-}
+};
 
 export const handleLogin = async (previousState: any, formData: any) => {
-    const { username, password } = Object.fromEntries(formData)
+    const { username, password } = Object.fromEntries(formData);
 
     try {
-        await signIn("credentials", { username, password })
+        await signIn("credentials", { username, password });
     } catch (error: any) {
         console.log(error);
         if (error.type?.includes("CredentialsSignin")) {
-            return { error: "Invalid username or password" }
+            return { error: "Invalid username or password" };
         }
-        throw error
+        throw error;
     }
-}
+};
 
+export const handleRemoveProduct = async (id: string) => {
+    try {
+        connectToDb();
+        await Products.deleteOne({ _id: id });
+        console.log("deleted from db");
+        revalidatePath("/dashboard/products");
+    } catch (error) {
+        console.log(error);
+        return { error: "Something went wrong!" };
+    }
+};
+
+export const handleRemoveUser = async (id: string) => {
+    try {
+        connectToDb();
+        await User.deleteOne({ _id: id });
+        console.log("deleted from db");
+        revalidatePath("/dashboard/users");
+    } catch (error) {
+        console.log(error);
+        return { error: "Something went wrong!" };
+    }
+};

@@ -14,8 +14,7 @@ const links = [
 ];
 
 const NavBar = ({ session }: any) => {
-    console.log(session);
-
+    console.log("This is session:", session);
     const pathName = usePathname();
     const [open, setOpen] = useState(false);
     return (
