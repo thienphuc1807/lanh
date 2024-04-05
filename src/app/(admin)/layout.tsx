@@ -23,12 +23,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
-            <body className={montserrat.className}>
-                <div className="flex min-h-screen">
-                    <Sidebar />
-                    <div className="flex-1">{children}</div>
-                </div>
+        <html lang="en" suppressHydrationWarning>
+            <body className={`relative min-h-screen ${montserrat.className}`}>
+                <Sidebar>{children}</Sidebar>
             </body>
         </html>
     );

@@ -1,4 +1,5 @@
 import UserList from "@/components/UserList";
+import Link from "next/link";
 const getUsers = async () => {
     const res = await fetch(`http://${process.env.DOMAIN}/api/users`, {
         cache: "no-store",
@@ -13,9 +14,12 @@ const UsersPage = async () => {
     return (
         <div className="p-5">
             <div className="pb-5">
-                <button className="py-2 px-4 bg-lanh_green text-white">
+                <Link
+                    href={"/dashboard/users"}
+                    className="py-2 px-4 bg-lanh_green text-white"
+                >
                     Add new User
-                </button>
+                </Link>
             </div>
             <UserList users={users} />
         </div>

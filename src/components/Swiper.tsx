@@ -46,17 +46,16 @@ const ProductsSwiper = () => {
     }, []);
     return (
         <div className="container mx-auto px-5" data-aos="fade-right">
-            <div className="flex justify-center items-center relative">
+            <div className="flex justify-center items-center relative h-24">
                 <Image
                     src="/leaf.png"
                     alt="heading_background"
-                    width={100}
-                    height={100}
-                    className="absolute"
+                    fill
+                    className="object-contain"
                 />
-                <h2 className="md:text-2xl text-xl font-bold">SẢN PHẨM</h2>
+                <h2 className="md:text-2xl text-xl font-bold">TIN NỔI BẬT</h2>
             </div>
-            <div className="pt-10">
+            <div className="pt-6">
                 <Swiper
                     modules={[Autoplay, Navigation]}
                     spaceBetween={10}
@@ -85,7 +84,7 @@ const ProductsSwiper = () => {
                     {slider.map((item) => (
                         <SwiperSlide key={item.name}>
                             <Link href="/" className="block my-1 mx-1">
-                                <div className="flex flex-col justify-center items-center rounded-3xl shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)] py-4">
+                                <div className="flex flex-col justify-center items-center rounded-3xl shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)] py-4 bg-white">
                                     <div className="relative w-24 h-24">
                                         <Image
                                             src={item.url}

@@ -16,14 +16,13 @@ const NewProducts = (props: Props) => {
     }, []);
     return (
         <div className="container mx-auto px-5" data-aos="fade-up">
-            <div className="lg:py-10 py-5">
-                <div className="flex justify-center items-center relative">
+            <div className="lg:py-6 py-4">
+                <div className="flex justify-center items-center relative h-24">
                     <Image
                         src="/leaf.png"
                         alt="heading_background"
-                        width={100}
-                        height={100}
-                        className="absolute"
+                        fill
+                        className="object-contain"
                     />
                     <h2 className="md:text-2xl text-xl font-bold">
                         SẢN PHẨM MỚI
@@ -41,9 +40,9 @@ const NewProducts = (props: Props) => {
                             <Link
                                 href={`products/${item.name}`}
                                 key={item.name}
-                                className="pt-5 group/item cursor-pointer"
+                                className="group/item cursor-pointer rounded-lg overflow-hidden shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]"
                             >
-                                <div className="relative w-full h-64 bg-[#f7f8fa] ">
+                                <div className="relative w-full h-64 bg-white overflow-hidden">
                                     <Image
                                         src={`/${item.img}`}
                                         fill={true}
@@ -52,28 +51,32 @@ const NewProducts = (props: Props) => {
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                 </div>
-                                <div className="flex justify-center gap-4 mt-6 items-center">
-                                    <span className="text-[#f35a69]">
-                                        {Intl.NumberFormat("vi-VN", {
-                                            style: "currency",
-                                            currency: "VND",
-                                        }).format(item.salePrice)}
-                                    </span>
-                                    <span className="text-xs text-gray-800 line-through">
-                                        {Intl.NumberFormat("vi-VN", {
-                                            style: "currency",
-                                            currency: "VND",
-                                        }).format(item.price)}
-                                    </span>
-                                </div>
-                                <p className="mt-2 text-center">{item.name}</p>
-                                <div className="lg:invisible visible text-center group-hover/item:visible">
-                                    <p className="text-sm text-gray-600">
-                                        {item.ingredient}
+                                <div className="bg-white p-6">
+                                    <div className="flex justify-center gap-4 items-center ">
+                                        <span className="text-[#f35a69]">
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(item.salePrice)}
+                                        </span>
+                                        <span className="text-xs text-gray-800 line-through">
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(item.price)}
+                                        </span>
+                                    </div>
+                                    <p className="mt-2 text-center">
+                                        {item.name}
                                     </p>
-                                    <button className="bg-[#f35a69] text-white rounded-full py-2 md:px-10 px-5 md:mt-5 mt-2">
-                                        Thêm vào giỏ
-                                    </button>
+                                    <div className="lg:invisible visible text-center group-hover/item:visible">
+                                        <p className="text-sm text-gray-600">
+                                            {item.ingredient}
+                                        </p>
+                                        <button className="bg-[#f35a69] text-white rounded-full py-2 md:px-10 px-5 md:mt-5 mt-2">
+                                            Thêm vào giỏ
+                                        </button>
+                                    </div>
                                 </div>
                             </Link>
                         ))}

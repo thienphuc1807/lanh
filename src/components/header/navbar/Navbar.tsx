@@ -43,11 +43,16 @@ const NavBar = ({ session }: any) => {
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <div className="relative w-28 h-20">
-                        <Link href="/">
-                            <Image src="/Logo.png" alt="LanhLogo" fill />
-                        </Link>
-                    </div>
+                    <Link href="/">
+                        <div className="relative w-28 h-20">
+                            <Image
+                                src="/Logo.png"
+                                alt="LanhLogo"
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                        </div>
+                    </Link>
                     <div className="flex gap-4">
                         {links.map((item) => (
                             <Link
@@ -76,7 +81,12 @@ const NavBar = ({ session }: any) => {
                         </button>
                     </div>
                     <div className="relative md:w-28 md:h-20 w-16 h-12 mx-auto">
-                        <Image src="/Logo.png" alt="logo" fill />
+                        <Image
+                            src="/Logo.png"
+                            alt="logo"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                     </div>
                 </div>
                 {open && (

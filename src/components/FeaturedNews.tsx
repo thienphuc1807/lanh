@@ -9,24 +9,23 @@ const FeaturedNews = (props: Props) => {
     const { news } = props;
     return (
         <div className="container mx-auto px-5" data-aos="fade-up">
-            <div className="lg:py-10 py-5">
-                <div className="flex justify-center items-center relative">
+            <div className="lg:py-6 py-4">
+                <div className="flex justify-center items-center relative h-24">
                     <Image
                         src="/leaf.png"
                         alt="heading_background"
-                        width={100}
-                        height={100}
-                        className="absolute"
+                        fill
+                        className="object-contain"
                     />
                     <h2 className="md:text-2xl text-xl font-bold">
                         TIN NỔI BẬT
                     </h2>
                 </div>
-                <div className="lg:pt-20 pt-10 ">
+                <div className="lg:pt-10 pt-8">
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-6 md:gap-4 gap-2 ">
                         {news?.map((item) => (
                             <Link href={`news/${item.slug}`} key={item._id}>
-                                <div className="rounded-lg overflow-hidden">
+                                <div className="rounded-lg overflow-hidden shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]">
                                     <div className="w-full h-64 relative text-center border-2 border-[#f7f8fa]">
                                         {item.img ? (
                                             <Image
@@ -42,7 +41,7 @@ const FeaturedNews = (props: Props) => {
                                             />
                                         )}
                                     </div>
-                                    <div className="bg-[#f7f8fa] py-6 px-4 flex flex-col gap-2">
+                                    <div className="bg-white py-6 px-4 flex flex-col gap-2">
                                         <p className="text-[#999999] text-sm">
                                             Ngày đăng:
                                             <br />

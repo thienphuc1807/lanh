@@ -1,4 +1,6 @@
+import FormProduct from "@/components/FormProduct";
 import ProductList from "@/components/ProductList";
+import Link from "next/link";
 
 const getProducts = async () => {
     const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
@@ -15,9 +17,12 @@ const AdminProducts = async () => {
     return (
         <div className="p-5">
             <div className="pb-5">
-                <button className="py-2 px-4 bg-lanh_green text-white">
+                <Link
+                    href={"/dashboard/products/formproduct"}
+                    className="py-2 px-4 bg-lanh_green text-white"
+                >
                     Add new Product
-                </button>
+                </Link>
             </div>
             <ProductList products={products} />
         </div>

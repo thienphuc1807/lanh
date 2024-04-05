@@ -1,7 +1,9 @@
 const FormProduct = () => {
-  return (
-    <div>FormProduct</div>
-  )
-}
+    return (
+        <div className="p-5">
+            <h1>Add new Products</h1>
+        </div>
+    );
+};
 
-export default FormProduct
+export default FormProduct;

@@ -47,7 +47,7 @@ async function Home() {
                     data-aos="fade-left"
                 >
                     <div className="grid md:grid-cols-3 grid-cols-1 gap-6">
-                        <div className="bg-[#f7f8fa] h-56 py-10">
+                        <div className="bg-white rounded-lg overflow-hidden h-56 py-10 shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]">
                             <h2 className="text-center font-semibold pb-10">
                                 HOTLINE ĐẶT HÀNG
                             </h2>
@@ -62,7 +62,7 @@ async function Home() {
                                 </span>
                             </p>
                         </div>
-                        <div className="bg-[#f7f8fa] py-10 h-56">
+                        <div className="bg-white rounded-lg overflow-hidden py-10 h-56 shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]">
                             <h2 className="font-semibold text-center pb-10">
                                 CHI NHÁNH
                             </h2>
@@ -74,7 +74,7 @@ async function Home() {
                                 />
                             </p>
                         </div>
-                        <div className="bg-[#f7f8fa] py-10 h-56">
+                        <div className="bg-white rounded-lg overflow-hidden py-10 h-56 shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]">
                             <h2 className="font-semibold text-center">
                                 GIAO HÀNG MIỄN PHÍ
                             </h2>

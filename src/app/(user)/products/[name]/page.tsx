@@ -34,7 +34,7 @@ async function ProductDetail({ params }: { params: { name: string } }) {
         <div className="container mx-auto md:px-5 px-6">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
 
-            <div className="grid lg:grid-cols-2 grid-cols-1">
+            <div className="grid lg:grid-cols-2 grid-cols-1 bg-white rounded-lg">
                 <div className="relative lg:w-auto lg:h-[400px] h-72 w-full">
                     <Image
                         src={`/${data.img}`}
@@ -44,7 +44,7 @@ async function ProductDetail({ params }: { params: { name: string } }) {
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </div>
-                <div className="lg:mx-0 mx-auto">
+                <div className="lg:mx-0 mx-auto p-10">
                     <h1 className="text-3xl mb-5">{data.name}</h1>
                     <div className="flex items-end py-2 gap-4">
                         <p className="line-through text-gray-600 text-md ">
