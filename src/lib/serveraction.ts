@@ -8,6 +8,13 @@ import path from "path";
 import fs from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 import os from "os";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const handleGithubLogin = async () => {
     await signIn("github");
@@ -53,7 +60,7 @@ export const handleRegister = async (previousState: any, fromData: any) => {
     }
 };
 
-export const handleLogin = async (previousState: any, formData: any) => {
+export const handleLogin = async (previousState: any, formData: FormData) => {
     const { username, password } = Object.fromEntries(formData);
 
     try {
@@ -100,7 +107,7 @@ const saveImageToLocal = async (formData: FormData) => {
             const name = uuidv4();
             const ext = file.type.split("/")[1];
 
-            // Not working in vercel
+            // Not working on vercel
             // const uploadDir = path.join(
             //     process.cwd(),
             //     "public/upload",
@@ -120,10 +127,21 @@ const saveImageToLocal = async (formData: FormData) => {
     return await Promise.all(multipleBuffersPromise);
 };
 
+const uploadImagesToCloudinary = async (
+    newFiles: { filepath: string; filename: string }[]
+) => {
+    const multipleImagesPromise = newFiles.map((file) =>
+        cloudinary.uploader.upload(file.filepath, { folder: "lanh_images" })
+    );
+    return await Promise.all(multipleImagesPromise);
+};
+
 export const uploadPhoto = async (formData: FormData) => {
     try {
         const newFiles = await saveImageToLocal(formData);
-        console.log(newFiles);
+        const images = await uploadImagesToCloudinary(newFiles);
+        newFiles.map((file) => fs.unlink(file.filepath));
+        revalidatePath("/dashboard/products");
         // connectToDb();
         // const newProduct = new Products({
         //     name,
