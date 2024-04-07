@@ -37,7 +37,7 @@ async function ProductDetail({ params }: { params: { name: string } }) {
             <div className="grid lg:grid-cols-2 grid-cols-1 bg-white rounded-lg">
                 <div className="relative lg:w-auto lg:h-[400px] h-72 w-full">
                     <Image
-                        src={`/${data.img}`}
+                        src={data.img}
                         alt={data.name}
                         fill={true}
                         className="object-contain"

@@ -9,6 +9,7 @@ import fs from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 import os from "os";
 import { v2 as cloudinary } from "cloudinary";
+import { redirect } from "next/navigation";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -136,24 +137,27 @@ const uploadImagesToCloudinary = async (
     return await Promise.all(multipleImagesPromise);
 };
 
-export const uploadPhoto = async (formData: FormData) => {
+export const uploadProduct = async (formData: FormData) => {
+    const { name, price, salePrice, ingredient } = Object.fromEntries(formData);
     try {
         const newFiles = await saveImageToLocal(formData);
         const images = await uploadImagesToCloudinary(newFiles);
+        const imgUrl = images.map((image) => image.secure_url);
         newFiles.map((file) => fs.unlink(file.filepath));
         revalidatePath("/dashboard/products");
-        // connectToDb();
-        // const newProduct = new Products({
-        //     name,
-        //     price,
-        //     salePrice,
-        //     ingredient,
-        //     image,
-        //     slug,
-        // });
-        // await newProduct.save();
+        connectToDb();
+        const newProduct = new Products({
+            name,
+            price,
+            salePrice,
+            ingredient,
+            img: imgUrl[0],
+        });
+        console.log(newProduct);
+        await newProduct.save();
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" };
     }
+    redirect("/dashboard/products");
 };

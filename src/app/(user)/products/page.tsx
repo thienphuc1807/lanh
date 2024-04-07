@@ -40,7 +40,7 @@ const Products = async () => {
                         <div className="relative mt-5 w-auto h-52">
                             <Image
                                 fill={true}
-                                src={`/${item.img}`}
+                                src={item.img}
                                 alt={item.name}
                                 className="object-contain"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -58,7 +58,7 @@ const ProductList = (props: Props) => {
                                     <Image
                                         src={
                                             product.img
-                                                ? `/${product.img}`
+                                                ? product.img
                                                 : "/defaultImg.png"
                                         }
                                         alt="product_img"

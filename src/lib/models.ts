@@ -1,30 +1,30 @@
 import mongoose from "mongoose";
+import { unique } from "next/dist/build/utils";
 
-const productSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
+const productSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        salePrice: {
+            type: Number,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+        img: {
+            type: String,
+        },
+        ingredient: {
+            type: String,
+        },
     },
-    salePrice: {
-        type: Number,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    img: {
-        type: String,
-    },
-    ingredient: {
-        type: String,
-    },
-    slug: {
-        type: String,
-        unique: true,
-        required: true,
-    },
-});
+    { timestamps: true }
+);
 
 const newsSchema = new mongoose.Schema(
     {

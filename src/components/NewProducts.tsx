@@ -44,7 +44,7 @@ const NewProducts = (props: Props) => {
                             >
                                 <div className="relative w-full h-64 bg-white overflow-hidden">
                                     <Image
-                                        src={`/${item.img}`}
+                                        src={item.img}
                                         fill={true}
                                         className="object-contain"
                                         alt={item.name}

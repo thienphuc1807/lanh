@@ -1,5 +1,5 @@
 "use client";
-import { uploadPhoto } from "@/lib/serveraction";
+import { uploadProduct } from "@/lib/serveraction";
 import { useRef, useState } from "react";
 import Image from "next/image";
 const AddProduct = () => {
@@ -44,7 +44,7 @@ const AddProduct = () => {
             formData.append("files", file);
         });
 
-        const res = await uploadPhoto(formData);
+        const res = await uploadProduct(formData);
     };
 
     return (
