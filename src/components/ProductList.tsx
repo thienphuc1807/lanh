@@ -3,10 +3,7 @@ import { handleRemoveProduct } from "@/lib/serveraction";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Swal from "sweetalert2";
-
-interface Props {
-    products: Products[];
-}
+import PaginationControl from "./PaginationControl";
 
 const handleRemove = (id: string) => {
     Swal.fire({
@@ -24,13 +21,38 @@ const handleRemove = (id: string) => {
                 title: "Deleted!",
                 text: "Your product has been deleted.",
                 icon: "success",
+                showConfirmButton: false,
+                timer: 1000,
             });
         }
     });
 };
 
+interface Props {
+    products: Products[];
+    searchParams: { [key: string]: string | string[] | undefined };
+}
+
+const handleEdit = async (id: string) => {
+    const data = await fetch(
+        `http://${process.env.DOMAIN}/api/products/${id}`,
+        {
+            cache: "no-store",
+        }
+    );
+    if (!data.ok) {
+        throw new Error("Something went wrong");
+    }
+    return data.json();
+};
+
 const ProductList = (props: Props) => {
-    const { products } = props;
+    const { products, searchParams } = props;
+    const page = searchParams["page"] ?? "1";
+    const per_page = searchParams["per_page"] ?? "8";
+    const start = (Number(page) - 1) * Number(per_page);
+    const end = start + Number(per_page);
+    const entries = products.slice(start, end);
     return (
         <>
             <div className="lg:block hidden border-2 border-gray-200 shadow-md rounded-md bg-white">
@@ -38,7 +60,6 @@ const ProductList = (props: Props) => {
                 <table className="w-full text-center border-separate border-spacing-4">
                     <thead>
                         <tr>
-                            <th>STT</th>
                             <th>Name</th>
                             <th>Price</th>
                             <th>Sale Price</th>
@@ -48,9 +69,8 @@ const ProductList = (props: Props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product: Products, index: number) => (
+                        {entries.map((product: Products) => (
                             <tr key={product._id} className="even:bg-gray-100">
-                                <td>{index + 1}</td>
                                 <td>{product.name}</td>
                                 <td>{product.price}</td>
                                 <td>{product.salePrice}</td>
@@ -62,6 +82,7 @@ const ProductList = (props: Props) => {
                                                 : "/defaultImg.png"
                                         }
                                         alt="product_img"
+                                        className="object-contain"
                                         fill
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
@@ -89,7 +110,7 @@ const ProductList = (props: Props) => {
                 </table>
             </div>
             <div className="lg:hidden grid grid-cols-1 gap-2">
-                {products.map((product) => (
+                {entries.map((product) => (
                     <div
                         className="p-5 border-2 bg-white rounded-lg shadow-lg overflow-hidden"
                         key={product._id}
@@ -102,9 +123,10 @@ const ProductList = (props: Props) => {
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         src={
                                             product.img
-                                                ? `/${product.img}`
+                                                ? product.img
                                                 : "/defaultImg.png"
                                         }
+                                        className="object-contain"
                                         alt="product_image"
                                     />
                                 </div>
@@ -142,6 +164,11 @@ const ProductList = (props: Props) => {
                     </div>
                 ))}
             </div>
+            <PaginationControl
+                hasNextPage={end < products.length}
+                hasPrevPage={start > 0}
+                dataLength={products.length}
+            />
         </>
     );
 };

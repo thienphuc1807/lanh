@@ -4,8 +4,20 @@ import { ReactElement, useState, ChangeEvent } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import FormInput from "@/components/FormInput";
+const getData = async (id: string) => {
+    const data = await fetch(
+        `http://${process.env.DOMAIN}/api/products/${id}`,
+        {
+            cache: "no-store",
+        }
+    );
+    if (!data.ok) {
+        throw new Error("Something went wrong");
+    }
+    return data.json();
+};
 
-const AddProduct = (): ReactElement => {
+const EditProduct = ({ params }: { params: { id: string } }) => {
     const [values, setValues] = useState<Values>({
         name: "",
         ingredient: "",
@@ -185,4 +197,4 @@ const AddProduct = (): ReactElement => {
     );
 };
 
-export default AddProduct;
+export default EditProduct;

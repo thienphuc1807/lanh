@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
+import PaginationControl from "@/components/PaginationControl";
 
 export const metadata = {
     title: "Sản phẩm",
@@ -23,15 +24,27 @@ const breadcrumbs = [
     { name: "Sản phẩm", path: "/products" },
 ];
 
-const Products = async () => {
+const Products = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined };
+}) => {
     // Fetch Data with API
     const data = await getData();
+
+    // PaginationControl
+    const page = searchParams["page"] ?? "1";
+    const per_page = searchParams["per_page"] ?? "8";
+    const start = (Number(page) - 1) * Number(per_page);
+    const end = start + Number(per_page);
+    const entries = data.slice(start, end);
+
     return (
-        <div className="container mx-auto px-5 gap-6">
+        <div className="container mx-auto md:px-5 px-2">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
 
             <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
-                {data.map((item: Products) => (
+                {entries.map((item: Products) => (
                     <Link
                         href={`products/${item.name}`}
                         key={item.name}
@@ -51,22 +64,22 @@ const Products = async () => {
                                 {item.name}
                             </p>
                         </div>
-                        <div className="flex justify-center">
-                            <div className="border-y-2 flex gap-2 items-center">
-                                <p className="font-bold">
-                                    {Intl.NumberFormat("vi-VN", {
-                                        style: "currency",
-                                        currency: "VND",
-                                    }).format(item.salePrice)}
-                                </p>
-                                <p className="text-[red] font-bold text-sm line-through">
-                                    {Intl.NumberFormat("vi-VN", {
-                                        style: "currency",
-                                        currency: "VND",
-                                    }).format(item.price)}
-                                </p>
-                            </div>
+
+                        <div className="flex md:flex-row flex-col gap-2 items-center justify-center">
+                            <p className="font-bold">
+                                {Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                }).format(item.salePrice)}
+                            </p>
+                            <p className="text-[red] font-bold text-xs line-through">
+                                {Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                }).format(item.price)}
+                            </p>
                         </div>
+
                         <div className="py-4 text-center">
                             <button className="py-2 px-2 text-white bg-lanh_green hover:opacity-60 rounded-md">
                                 Thêm vào giỏ hàng
@@ -75,6 +88,11 @@ const Products = async () => {
                     </Link>
                 ))}
             </div>
+            <PaginationControl
+                hasNextPage={end < data.length}
+                hasPrevPage={start > 0}
+                dataLength={data.length}
+            />
         </div>
     );
 };

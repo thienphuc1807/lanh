@@ -8,9 +8,9 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-const Sidebar = ({ children }: { children: any }) => {
+const Sidebar = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(true);
     return (
         <div className="flex min-h-screen">

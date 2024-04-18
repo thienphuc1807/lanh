@@ -23,6 +23,7 @@ export const metadata = {
 async function ProductDetail({ params }: { params: { name: string } }) {
     const { name } = params;
     const data = await getData(name);
+    
 
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },

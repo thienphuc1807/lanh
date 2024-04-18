@@ -1,4 +1,3 @@
-import FormProduct from "@/components/FormProduct";
 import ProductList from "@/components/ProductList";
 import Link from "next/link";
 
@@ -12,8 +11,13 @@ const getProducts = async () => {
     return res.json();
 };
 
-const AdminProducts = async () => {
+const AdminProducts = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined };
+}) => {
     const products = await getProducts();
+
     return (
         <div className="p-5">
             <div className="pb-5">
@@ -24,7 +28,8 @@ const AdminProducts = async () => {
                     Add new Product
                 </Link>
             </div>
-            <ProductList products={products} />
+
+            <ProductList searchParams={searchParams} products={products} />
         </div>
     );
 };
