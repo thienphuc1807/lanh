@@ -22,7 +22,12 @@ const Introduction = () => {
                 data-aos="fade-down"
             >
                 <div className="relative lg:block hidden">
-                    <Image src={"/productImg5.png"} alt="productimg" fill />
+                    <Image
+                        src={"/productImg5.png"}
+                        alt="productimg"
+                        fill
+                        className="object-contain"
+                    />
                 </div>
                 <div className="flex flex-col justify-center">
                     <h2 className={dancingScript.className}>

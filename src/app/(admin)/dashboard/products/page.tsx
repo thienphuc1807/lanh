@@ -23,7 +23,7 @@ const AdminProducts = async ({
             <div className="pb-5">
                 <Link
                     href={"/dashboard/products/formproduct"}
-                    className="py-2 px-4 bg-lanh_green text-white"
+                    className="py-2 px-4 bg-lanh_green text-white rounded-md"
                 >
                     Add new Product
                 </Link>

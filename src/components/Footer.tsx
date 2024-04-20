@@ -90,27 +90,34 @@ function Footer() {
                                 placeholder="Email của bạn"
                             />
                             <button className="absolute inset-y-1 right-0 mr-1 lg:w-28 md:w-20 w-28">
-                                <Image src="/send.png" fill alt="send_button" />
+                                <Image
+                                    src="/send.png"
+                                    fill
+                                    alt="send_button"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
                             </button>
                         </div>
                         <h6 className="md:pt-6 py-2 md:pb-4 text-white">
                             Tải ứng dụng
                         </h6>
-                        <div className="flex gap-4">
-                            <button>
+                        <div className="flex gap-2">
+                            <button className="relative w-32 h-10">
                                 <Image
+                                    fill
                                     src="/CHPlay.png"
                                     alt="CHPlay"
-                                    width={140}
-                                    height={140}
+                                    className="object-contain"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                             </button>
-                            <button>
+                            <button className="relative w-32 h-10">
                                 <Image
+                                    fill
                                     src="/AppStore.png"
                                     alt="AppStore"
-                                    width={140}
-                                    height={140}
+                                    className="object-contain"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                             </button>
                         </div>

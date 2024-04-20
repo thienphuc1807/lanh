@@ -78,8 +78,6 @@ const ProductsSwiper = () => {
                             spaceBetween: 30,
                         },
                     }}
-                    onSlideChange={() => console.log("slide change")}
-                    onSwiper={(swiper) => console.log(swiper)}
                 >
                     {slider.map((item) => (
                         <SwiperSlide key={item.name}>

@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`relative min-h-screen ${montserrat.className}`}>
+            <body className={`${montserrat.className} relative min-h-screen`}>
                 <Sidebar>{children}</Sidebar>
             </body>
         </html>
