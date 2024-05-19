@@ -11,11 +11,22 @@ interface Props {
     min?: string;
     accept?: string;
     onChange: any;
+    className: string;
+    value?: any;
 }
 
 const FormInput = (props: Props) => {
     const [focused, setFocused] = useState(false);
-    const { name, label, errorMess, onChange, id, ...inputProps } = props;
+    const {
+        name,
+        label,
+        errorMess,
+        onChange,
+        id,
+        className,
+        value,
+        ...inputProps
+    } = props;
     const handleFocused = () => {
         setFocused(true);
     };
@@ -23,11 +34,12 @@ const FormInput = (props: Props) => {
         <>
             <label htmlFor={name}>{label}</label>
             <input
-                className="md:px-6 px-3 w-full md:py-4 py-2 border-2 border-lanh_green rounded-md peer"
                 name={name}
                 {...inputProps}
                 onBlur={handleFocused}
                 onChange={onChange}
+                className={className}
+                value={value}
             />
             <span
                 data-focused={focused}

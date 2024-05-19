@@ -4,69 +4,26 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import PaginationControl from "./PaginationControl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import _ from "lodash";
-import { FunnelIcon } from "@heroicons/react/24/outline";
-
-const handleRemove = (id: string) => {
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            handleRemoveProduct(id);
-            Swal.fire({
-                title: "Deleted!",
-                text: "Your product has been deleted.",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1000,
-            });
-        }
-    });
-};
+import { FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 interface Props {
     products: Products[];
     searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const handleEdit = async (id: string) => {
-    const data = await fetch(
-        `http://${process.env.DOMAIN}/api/products/${id}`,
-        {
-            cache: "no-store",
-        }
-    );
-    if (!data.ok) {
-        throw new Error("Something went wrong");
-    }
-    return data.json();
-};
-
 const ProductList = (props: Props) => {
     const { products, searchParams } = props;
-    const [listProducts, setListProducts] = useState<Products[]>(products);
+    const [listProducts, setListProducts] = useState<Products[]>([]);
     const [sortBy, setSortBy] = useState("asc");
     const [sortField, setSortField] = useState("");
     const [openSort, setOpenSort] = useState(false);
 
-    const handleSearch = _.debounce((value: string) => {
-        if (value) {
-            let cloneListProducts = _.cloneDeep(products);
-            cloneListProducts = cloneListProducts.filter((product) =>
-                product.name.toLowerCase().includes(value.toLowerCase())
-            );
-            setListProducts(cloneListProducts);
-        } else {
-            setListProducts(products);
-        }
-    }, 1000);
+    useEffect(() => {
+        setListProducts(products);
+    }, [products]);
 
     const sortList = [
         {
@@ -91,6 +48,41 @@ const ProductList = (props: Props) => {
         },
     ];
 
+    const handleRemove = (id: string | undefined) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleRemoveProduct(id);
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your product has been deleted.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            }
+        });
+    };
+
+    const handleSearch = _.debounce((value: string) => {
+        if (value) {
+            let cloneListProducts = _.cloneDeep(products);
+            cloneListProducts = cloneListProducts.filter((product) =>
+                product.name.toLowerCase().includes(value.toLowerCase())
+            );
+            setListProducts(cloneListProducts);
+        } else {
+            setListProducts(products);
+        }
+    }, 1000);
+
     const handleSort = (sort: any, field: string) => {
         if (sort && field) {
             setSortBy(sort);
@@ -106,6 +98,7 @@ const ProductList = (props: Props) => {
     const start = (Number(page) - 1) * Number(per_page);
     const end = start + Number(per_page);
     const entries = listProducts.slice(start, end);
+
     return (
         <>
             <div className="flex lg:flex-row flex-col lg:items-center gap-3 pb-3">
@@ -146,51 +139,78 @@ const ProductList = (props: Props) => {
             {entries.length > 0 ? (
                 <>
                     <div className="lg:block hidden border-2 border-gray-200 shadow-md rounded-md bg-white">
-                        <h1 className="font-bold p-5">Products</h1>
+                        <h1 className="font-bold p-5">Sản phẩm Lành</h1>
                         <table className="w-full text-center border-separate border-spacing-4">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Sale Price</th>
-                                    <th>Image</th>
-                                    <th>Ingredient</th>
-                                    <th>Edit/Remove</th>
+                                    <th>Tên</th>
+                                    <th>Giá</th>
+                                    <th>Giảm giá</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Nguyên liệu</th>
+                                    <th>Số lượng</th>
+                                    <th>Chỉnh sửa/Xoá</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {entries.map((product: Products) => (
+                                {entries.map((product) => (
                                     <tr
                                         key={product._id}
                                         className="even:bg-gray-100"
                                     >
                                         <td>{product.name}</td>
-                                        <td>{product.price}</td>
-                                        <td>{product.salePrice}</td>
-                                        <td className="relative w-28 h-28">
-                                            <Image
-                                                src={
-                                                    product.img
-                                                        ? product.img
-                                                        : "/defaultImg.png"
-                                                }
-                                                alt="product_img"
-                                                className="object-contain"
-                                                fill
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            />
+                                        <td>
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(product.price)}
+                                        </td>
+                                        <td>
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(product.salePrice)}
+                                        </td>
+                                        <td className="flex">
+                                            {product.imgs.length > 0 ? (
+                                                product.imgs.map((image) => (
+                                                    <div
+                                                        key={image._id}
+                                                        className="relative w-full h-32"
+                                                    >
+                                                        <Image
+                                                            src={image.url}
+                                                            alt="product_img"
+                                                            className="object-contain"
+                                                            fill
+                                                        />
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div className="relative w-full h-32">
+                                                    <Image
+                                                        src="/defaultImg.png"
+                                                        alt="product_img"
+                                                        className="object-contain"
+                                                        fill
+                                                    />
+                                                </div>
+                                            )}
                                         </td>
                                         <td>{product.ingredient}</td>
+                                        <td>{product.inStock}</td>
                                         <td>
                                             <div className="flex gap-4 justify-center">
-                                                <button className="px-4 py-2 text-white bg-lanh_green rounded-md">
+                                                <Link
+                                                    href={`/dashboard/products/${product._id}`}
+                                                    className="px-4 py-2 text-white bg-lanh_green rounded-md"
+                                                >
                                                     Edit
-                                                </button>
-
+                                                </Link>
                                                 <button
                                                     onClick={() =>
                                                         handleRemove(
-                                                            product._id
+                                                            product?._id
                                                         )
                                                     }
                                                     className="px-4 py-2 text-white bg-lanh_green rounded-md"
@@ -204,6 +224,7 @@ const ProductList = (props: Props) => {
                             </tbody>
                         </table>
                     </div>
+                    {/* tablet and mobile */}
                     <div className="lg:hidden grid grid-cols-1 gap-2">
                         {entries.map((product) => (
                             <div
@@ -213,28 +234,37 @@ const ProductList = (props: Props) => {
                                 <div className="space-y-5">
                                     <div className="flex justify-between">
                                         <div className="relative w-24 h-24">
-                                            <Image
-                                                fill
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                src={
-                                                    product.img
-                                                        ? product.img
-                                                        : "/defaultImg.png"
-                                                }
-                                                className="object-contain"
-                                                alt="product_image"
-                                            />
+                                            {product.imgs?.map((image) => (
+                                                <div
+                                                    className="relative w-28 h-28"
+                                                    key={image._id}
+                                                >
+                                                    <Image
+                                                        fill
+                                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                        src={
+                                                            image
+                                                                ? image.url
+                                                                : "/defaultImg.png"
+                                                        }
+                                                        className="object-contain"
+                                                        alt="product_image"
+                                                    />
+                                                </div>
+                                            ))}
                                         </div>
-                                        <div className="space-x-4">
-                                            <button>
-                                                <PencilSquareIcon className="w-6 h-6 text-lanh_green" />
-                                            </button>
+                                        <div className="flex items-center gap-5">
+                                            <Link
+                                                href={`/dashboard/products/${product._id}`}
+                                            >
+                                                <PencilSquareIcon className="w-8 h-8 text-lanh_green" />
+                                            </Link>
                                             <button
                                                 onClick={() =>
-                                                    handleRemove(product._id)
+                                                    handleRemove(product?._id)
                                                 }
                                             >
-                                                <TrashIcon className="w-6 h-6 text-lanh_green" />
+                                                <TrashIcon className="w-8 h-8 text-lanh_green" />
                                             </button>
                                         </div>
                                     </div>

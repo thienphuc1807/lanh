@@ -1,15 +1,15 @@
 "use server";
-import { revalidatePath } from "next/cache";
+
 import { signIn, signOut } from "./auth";
-import { Products, User } from "./models";
+import { File, Products, User } from "./models";
 import { connectToDb } from "./utils";
 import bcrypt from "bcryptjs";
-import path from "path";
-import fs from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
+import path from "path";
 import os from "os";
+import fs from "fs/promises";
 import { v2 as cloudinary } from "cloudinary";
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -75,12 +75,12 @@ export const handleLogin = async (previousState: any, formData: FormData) => {
     }
 };
 
-export const handleRemoveProduct = async (id: string) => {
+export const handleRemoveProduct = async (id: string | undefined) => {
     try {
         connectToDb();
         await Products.deleteOne({ _id: id });
         console.log("deleted from db");
-        revalidatePath("/dashboard/products");
+        revalidatePath("/(admin)/dashboard/products");
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong!" };
@@ -92,34 +92,23 @@ export const handleRemoveUser = async (id: string) => {
         connectToDb();
         await User.deleteOne({ _id: id });
         console.log("deleted from db");
-        revalidatePath("/dashboard/users");
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong!" };
     }
+    revalidatePath("/dashboard/users");
 };
 
 const saveImageToLocal = async (formData: FormData) => {
     const files: File[] = formData.getAll("files") as File[];
-
+    console.log(files);
     const multipleBuffersPromise = files.map((file) =>
         file.arrayBuffer().then((data) => {
             const buffer = Buffer.from(data);
             const name = uuidv4();
             const ext = file.type.split("/")[1];
-
-            // Not working on vercel
-            // const uploadDir = path.join(
-            //     process.cwd(),
-            //     "public/upload",
-            //     `/${name}.${ext}`
-            // );
-
             const tmpDir = os.tmpdir();
-            console.log(tmpDir);
-
             const uploadDir = path.join(tmpDir, `/${name}.${ext}`);
-
             fs.writeFile(uploadDir, buffer);
             return { filepath: uploadDir, filename: file.name };
         })
@@ -138,26 +127,30 @@ const uploadImagesToCloudinary = async (
 };
 
 export const uploadProduct = async (formData: FormData) => {
-    const { name, price, salePrice, ingredient } = Object.fromEntries(formData);
+    const { name, price, salePrice, ingredient, inStock, quantity } =
+        Object.fromEntries(formData);
     try {
         const newFiles = await saveImageToLocal(formData);
-        const images = await uploadImagesToCloudinary(newFiles);
-        const imgUrl = images.map((image) => image.secure_url);
-        newFiles.map((file) => fs.unlink(file.filepath));
-        revalidatePath("/dashboard/products");
+        const files = await uploadImagesToCloudinary(newFiles);
         connectToDb();
+        const fileDocs = [];
+        for (const file of files) {
+            const newFile = new File({ url: file.secure_url });
+            fileDocs.push(await newFile.save());
+        }
+        newFiles.map((file) => fs.unlink(file.filepath));
         const newProduct = new Products({
             name,
             price,
             salePrice,
+            imgs: fileDocs,
             ingredient,
-            img: imgUrl[0],
+            inStock,
+            quantity,
         });
-        console.log(newProduct);
         await newProduct.save();
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" };
     }
-    redirect("/dashboard/products");
 };

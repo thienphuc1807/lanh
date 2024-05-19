@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@/components/Sidebar";
-
-const montserrat = Montserrat({
-    weight: "400",
-    subsets: ["latin"],
-    display: "swap",
-});
 
 export const metadata: Metadata = {
     title: {
@@ -24,7 +17,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${montserrat.className} relative min-h-screen`}>
+            <body>
                 <Sidebar>{children}</Sidebar>
             </body>
         </html>

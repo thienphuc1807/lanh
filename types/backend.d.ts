@@ -3,9 +3,10 @@ interface Products {
     name: string;
     salePrice: number;
     price: number;
-    img: string;
+    imgs: any[];
     ingredient: string;
-    slug: string;
+    quantity: number;
+    inStock: number;
 }
 
 interface News {
@@ -40,9 +41,11 @@ interface Input {
 interface Values {
     name: string;
     ingredient: string;
-    price: string;
-    salePrice: string;
-    images: File[];
+    price: Number;
+    salePrice: Number;
+    imgs: File[];
+    quantity: Number;
+    inStock: Number;
 }
 
 interface PaginationControl {

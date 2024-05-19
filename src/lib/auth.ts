@@ -12,7 +12,7 @@ const login = async (credentials: any) => {
         const user = await User.findOne({ username: credentials.username });
 
         if (!user) {
-            throw new Error("Wrong Username")
+            throw new Error("Wrong Username");
         }
         const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
@@ -20,11 +20,11 @@ const login = async (credentials: any) => {
         );
 
         if (!isPasswordCorrect) {
-            throw new Error("Wrong Password")
+            throw new Error("Wrong Password");
         }
         return user;
     } catch (error) {
-        throw new Error("Fail to Login!")
+        throw new Error("Fail to Login!");
     }
 };
 
@@ -46,20 +46,20 @@ export const {
                     username: profile.login,
                     email: profile.email,
                     image: profile.avatar_url,
-                    isAdmin: user?.isAdmin ? user.isAdmin : false
-                }
-            }
+                    isAdmin: user?.isAdmin ? user.isAdmin : false,
+                };
+            },
         }),
         CredentialsProvider({
             async authorize(credentials) {
                 try {
-                    const user = await login(credentials)
-                    return user
+                    const user = await login(credentials);
+                    return user;
                 } catch (error) {
                     console.log(error);
-                    return null
+                    return null;
                 }
-            }
+            },
         }),
     ],
     callbacks: {
@@ -83,6 +83,6 @@ export const {
             }
             return true;
         },
-        ...authConfig.callbacks
+        ...authConfig.callbacks,
     },
 });

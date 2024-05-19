@@ -11,7 +11,9 @@ export const connectToDb = async () => {
     try {
         const mongo = process.env.MONGO ?? "";
         const db = await mongoose.connect(mongo);
-        isConnected = db.connections[0].readyState === mongoose.ConnectionStates.connected;
+        isConnected =
+            db.connections[0].readyState ===
+            mongoose.ConnectionStates.connected;
         console.log("Connected to the database");
     } catch (e) {
         console.error("Error connecting to the database:", e);

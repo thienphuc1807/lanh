@@ -11,6 +11,8 @@ interface Props {
 
 const NewProducts = (props: Props) => {
     const { products } = props;
+
+    const data = products.slice(0, 8);
     useEffect(() => {
         AOS.init();
     }, []);
@@ -36,20 +38,30 @@ const NewProducts = (props: Props) => {
                 </p>
                 <div className="lg:pt-5 pt-2">
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 lg:gap-8 md:gap-4 gap-2">
-                        {products.map((item) => (
+                        {data.map((item) => (
                             <Link
                                 href={`products/${item.name}`}
                                 key={item.name}
                                 className="group/item cursor-pointer rounded-lg overflow-hidden shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]"
                             >
                                 <div className="relative w-full h-64 bg-white overflow-hidden">
-                                    <Image
-                                        src={item.img}
-                                        fill={true}
-                                        className="object-contain"
-                                        alt={item.name}
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    />
+                                    {item?.imgs ? (
+                                        <Image
+                                            key={item.imgs[0]?._id}
+                                            src={item.imgs[0]?.url}
+                                            fill={true}
+                                            className="object-contain"
+                                            alt={item.name}
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src="/defaultImg.png"
+                                            alt="product_img"
+                                            className="object-contain"
+                                            fill
+                                        />
+                                    )}
                                 </div>
                                 <div className="bg-white p-6">
                                     <div className="flex justify-center gap-4 items-center ">

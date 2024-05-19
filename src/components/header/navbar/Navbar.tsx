@@ -3,8 +3,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+    Bars3Icon,
+    ShoppingCartIcon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { handleGithubLogout } from "@/lib/serveraction";
+import { useSelector } from "react-redux";
 
 const links = [
     { name: "Trang chủ", path: "/" },
@@ -14,9 +19,10 @@ const links = [
 ];
 
 const NavBar = ({ session }: any) => {
-    console.log("This is session:", session);
+    // console.log("This is session:", session);
     const pathName = usePathname();
     const [open, setOpen] = useState(false);
+    const cart = useSelector((state: { cart: Products[] }) => state.cart);
     return (
         <div className="w-full">
             <div className="text-white lg:block hidden">
@@ -68,8 +74,11 @@ const NavBar = ({ session }: any) => {
                             </Link>
                         ))}
                     </div>
-                    <div>
-                        <button>Giỏ hàng</button>
+                    <div className="px-4 py-2 border-2 border-white rounded-full">
+                        <Link href={"/cart"} className="flex gap-2">
+                            <ShoppingCartIcon className="h-6 w-6"></ShoppingCartIcon>
+                            <span>Giỏ hàng: {cart.length}</span>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -110,6 +119,18 @@ const NavBar = ({ session }: any) => {
                                     {link.name}
                                 </Link>
                             ))}
+
+                            <Link
+                                href={"/cart"}
+                                className={` ${
+                                    pathName === "/cart"
+                                        ? "text-black"
+                                        : "text-white"
+                                } uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left `}
+                            >
+                                <span>Giỏ hàng: {cart.length}</span>
+                            </Link>
+
                             {session?.user ? (
                                 <>
                                     <h1 className="text-white uppercase px-5 md:text-lg text-xs flex flex-col gap-5 py-5 text-left">

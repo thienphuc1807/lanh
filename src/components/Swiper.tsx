@@ -53,7 +53,7 @@ const ProductsSwiper = () => {
                     fill
                     className="object-contain"
                 />
-                <h2 className="md:text-2xl text-xl font-bold">TIN NỔI BẬT</h2>
+                <h2 className="md:text-2xl text-xl font-bold">SẢN PHẨM</h2>
             </div>
             <div className="pt-6">
                 <Swiper

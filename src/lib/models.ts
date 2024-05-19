@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import { unique } from "next/dist/build/utils";
 
+const fileSchema = new mongoose.Schema({
+    url: { type: String },
+});
+
 const productSchema = new mongoose.Schema(
     {
         name: {
@@ -16,11 +20,15 @@ const productSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        img: {
-            type: String,
-        },
+        imgs: [fileSchema],
         ingredient: {
             type: String,
+        },
+        quantity: {
+            type: Number,
+        },
+        inStock: {
+            type: Number,
         },
     },
     { timestamps: true }
@@ -36,7 +44,7 @@ const newsSchema = new mongoose.Schema(
             type: String,
             require: true,
         },
-        img: {
+        imgs: {
             type: String,
         },
         slug: {
@@ -76,5 +84,6 @@ const userSchema = new mongoose.Schema(
 
 export const Products =
     mongoose.models.Products || mongoose.model("Products", productSchema);
+export const File = mongoose.models.File || mongoose.model("File", fileSchema);
 export const News = mongoose.models.News || mongoose.model("News", newsSchema);
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

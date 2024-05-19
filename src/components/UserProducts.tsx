@@ -3,9 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
 import PaginationControl from "@/components/PaginationControl";
-import _ from "lodash";
+import _, { add } from "lodash";
 import { useState } from "react";
 import { FunnelIcon } from "@heroicons/react/24/outline";
+import { useDispatch } from "react-redux";
+import { addCart } from "@/app/Redux/cartSlice";
 interface Props {
     data: Products[];
     searchParams: { [key: string]: string | string[] | undefined };
@@ -16,6 +18,7 @@ const UserProducts = (props: Props) => {
     const [sortBy, setSortBy] = useState("asc");
     const [sortField, setSortField] = useState("");
     const [openSort, setOpenSort] = useState(false);
+    const dispatch = useDispatch();
 
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
@@ -117,47 +120,62 @@ const UserProducts = (props: Props) => {
                 <>
                     <div className="grid md:grid-cols-4 grid-cols-2 gap-2">
                         {entries.map((item: Products) => (
-                            <Link
-                                href={`products/${item.name}`}
+                            <div
                                 key={item.name}
                                 className="bg-white rounded-lg shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)] border-[1px] px-2"
                             >
-                                <div className="relative mt-5 w-auto h-52">
-                                    <Image
-                                        fill={true}
-                                        src={item.img}
-                                        alt={item.name}
-                                        className="object-contain"
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    />
-                                </div>
-                                <div className="text-center py-4">
-                                    <p className="whitespace-nowrap overflow-hidden text-ellipsis">
-                                        {item.name}
-                                    </p>
-                                </div>
+                                <Link href={`products/${item.name}`}>
+                                    <div className="relative mt-5 w-auto h-52">
+                                        {item.imgs.length > 0 ? (
+                                            item.imgs.map((img) => (
+                                                <Image
+                                                    key={img._id}
+                                                    fill={true}
+                                                    src={img.url}
+                                                    alt={item.name}
+                                                    className="object-contain"
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                />
+                                            ))
+                                        ) : (
+                                            <Image
+                                                src="/defaultImg.png"
+                                                alt="product_img"
+                                                className="object-contain"
+                                                fill
+                                            />
+                                        )}
+                                    </div>
+                                    <div className="text-center py-4">
+                                        <p className="whitespace-nowrap overflow-hidden text-ellipsis">
+                                            {item.name}
+                                        </p>
+                                    </div>
 
-                                <div className="flex md:flex-row flex-col gap-2 items-center justify-center">
-                                    <p className="font-bold">
-                                        {Intl.NumberFormat("vi-VN", {
-                                            style: "currency",
-                                            currency: "VND",
-                                        }).format(item.salePrice)}
-                                    </p>
-                                    <p className="text-[red] font-bold text-xs line-through">
-                                        {Intl.NumberFormat("vi-VN", {
-                                            style: "currency",
-                                            currency: "VND",
-                                        }).format(item.price)}
-                                    </p>
-                                </div>
-
+                                    <div className="flex md:flex-row flex-col gap-2 items-center justify-center">
+                                        <p className="font-bold">
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(item.salePrice)}
+                                        </p>
+                                        <p className="text-[red] font-bold text-xs line-through">
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(item.price)}
+                                        </p>
+                                    </div>
+                                </Link>
                                 <div className="py-4 text-center">
-                                    <button className="py-2 px-2 text-white bg-lanh_green hover:opacity-60 rounded-md">
+                                    <button
+                                        className="py-2 px-2 text-white bg-lanh_green hover:opacity-60 rounded-md"
+                                        onClick={() => dispatch(addCart(item))}
+                                    >
                                         Thêm vào giỏ hàng
                                     </button>
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                     <PaginationControl
