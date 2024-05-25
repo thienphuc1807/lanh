@@ -36,6 +36,7 @@ interface Input {
     required?: boolean;
     min?: string;
     accept?: string;
+    pattern?: string;
 }
 
 interface Values {

@@ -14,9 +14,7 @@ const cartSlice = createSlice({
                 (item) => item._id === action.payload._id
             );
             if (existingItem) {
-                if (existingItem.inStock > existingItem.quantity) {
-                    existingItem.quantity += 1;
-                }
+                existingItem.quantity += 1;
             } else {
                 state.push(action.payload);
             }

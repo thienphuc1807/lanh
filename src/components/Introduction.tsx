@@ -16,7 +16,7 @@ const Introduction = () => {
         AOS.init();
     }, []);
     return (
-        <div className="bg-lanhBackground bg-cover bg-lanh_green my-5">
+        <div className="bg-lanhBackground bg-cover bg-lanh_green mt-5">
             <div
                 className="container mx-auto px-5 grid grid-cols-1 lg:grid-cols-2 py-5 xl:space-x-10 xl:min-h-[600px]"
                 data-aos="fade-down"

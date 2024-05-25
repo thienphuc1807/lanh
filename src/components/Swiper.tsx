@@ -46,7 +46,7 @@ const ProductsSwiper = () => {
     }, []);
     return (
         <div className="container mx-auto px-5" data-aos="fade-right">
-            <div className="flex justify-center items-center relative h-24">
+            <div className="flex justify-center items-center relative h-20">
                 <Image
                     src="/leaf.png"
                     alt="heading_background"
@@ -83,7 +83,7 @@ const ProductsSwiper = () => {
                         <SwiperSlide key={item.name}>
                             <Link href="/" className="block my-1 mx-1">
                                 <div className="flex flex-col justify-center items-center rounded-3xl shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)] py-4 bg-white">
-                                    <div className="relative w-24 h-24">
+                                    <div className="relative md:w-24 md:h-24 h-16 w-16">
                                         <Image
                                             src={item.url}
                                             alt={item.name}

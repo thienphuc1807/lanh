@@ -17,10 +17,8 @@ const DetailProduct = (props: Props) => {
         { name: "Sản phẩm", path: "/products" },
         { name: `${data.name}`, path: `/products/${data.name}` },
     ];
-    const [quantity, setQuantity] = useState(1);
+    // const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
-
-    console.log(quantity);
 
     return (
         <div className="container mx-auto md:px-5 px-6">
@@ -53,27 +51,29 @@ const DetailProduct = (props: Props) => {
                         </p>
                     </div>
                     <p className="my-5">Nguyên liệu: {data.ingredient}</p>
-                    <label htmlFor="quantity">Số lượng: </label>
+                    {/* <label htmlFor="quantity">Số lượng: </label>
                     <input
                         type="number"
                         id="quantity"
                         name="quantity"
                         className="border-2 px-3"
                         min="1"
-                        max="10"
+                        max={data.inStock}
                         inputMode="numeric"
                         value={quantity}
                         onChange={(e) => setQuantity(Number(e.target.value))}
-                    />
+                    /> */}
+
+                    <span>
+                        Còn <b>{data.inStock}</b> suất
+                    </span>
                     <div className="flex md:flex-row flex-col gap-5 mt-10">
                         <button className="bg-lanh_green text-white px-5 py-2 rounded-full hover:opacity-80">
                             MUA NGAY
                         </button>
                         <button
                             className="bg-lanh_green text-white px-5 py-2 rounded-full hover:opacity-80"
-                            onClick={() =>
-                                dispatch(addCart({ ...data, quantity }))
-                            }
+                            onClick={() => dispatch(addCart(data))}
                         >
                             THÊM VÀO GIỎ
                         </button>

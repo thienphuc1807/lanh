@@ -26,23 +26,17 @@ export const handleGithubLogout = async () => {
 };
 
 export const handleRegister = async (previousState: any, fromData: any) => {
-    const { username, email, img, password, confirmPassword } =
-        Object.fromEntries(fromData);
-
-    if (password !== confirmPassword) {
-        return { error: "Password do not match" };
-    }
-
+    const { username, email, password } = Object.fromEntries(fromData);
     try {
         connectToDb();
         const user = await User.findOne({ username });
         if (user) {
-            return { error: "Username already exists!" };
+            return { error: "Tên đăng nhập đã tồn tại!" };
         }
 
         const userEmail = await User.findOne({ email });
         if (userEmail) {
-            return { error: "Email already exists!" };
+            return { error: "Email đã được đăng ký!" };
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -69,7 +63,7 @@ export const handleLogin = async (previousState: any, formData: FormData) => {
     } catch (error: any) {
         console.log(error);
         if (error.type?.includes("CredentialsSignin")) {
-            return { error: "Invalid username or password" };
+            return { error: "Sai tên đăng nhập hoặc mật khẩu" };
         }
         throw error;
     }

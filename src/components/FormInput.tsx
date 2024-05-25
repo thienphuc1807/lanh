@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 
 interface Props {
     id: number;
@@ -10,9 +10,10 @@ interface Props {
     required?: boolean;
     min?: string;
     accept?: string;
-    onChange: any;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     className: string;
     value?: any;
+    pattern?: string;
 }
 
 const FormInput = (props: Props) => {

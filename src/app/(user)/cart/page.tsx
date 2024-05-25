@@ -1,119 +1,233 @@
 "use client";
 import { addCart, removeCart, clearItem } from "@/app/Redux/cartSlice";
-import {
-    HeartIcon,
-    MinusIcon,
-    PlusIcon,
-    TrashIcon,
-} from "@heroicons/react/24/solid";
+import BreadCrumbs from "@/components/Breadcrumbs";
+import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
+    const breadcrumbs = [
+        { name: "Trang chủ", path: "/" },
+        { name: "Giỏ hàng", path: "/cart" },
+    ];
     const cart = useSelector((state: { cart: Products[] }) => state.cart);
     const dispatch = useDispatch();
     const price = cart.map((item: Products) => item.salePrice * item.quantity);
     return (
-        <div className="container mx-auto flex lg:flex-row flex-col my-5 gap-4 xl:px-0 px-5 min-h-screen">
+        <div className="container mx-auto my-5 gap-4 ">
+            <div className="px-5">
+                <BreadCrumbs breadcrumbs={breadcrumbs} />
+            </div>
+
             {cart.length > 0 ? (
-                <div className=" bg-white rounded-xl flex flex-1 flex-col h-fit">
-                    <h1 className="text-xl font-bold md:px-10 px-4 py-5 text-lanh_green">
-                        Giỏ hàng
-                    </h1>
-                    {cart.map((item: Products) => (
-                        <div
-                            className="border-t-2 md:px-10 px-4 py-5"
-                            key={item._id}
-                        >
-                            <div className="flex md:gap-10 gap-4">
-                                <div className="flex md:flex-row flex-col-reverse gap-2 items-center">
-                                    <div>
-                                        <button
-                                            onClick={() =>
-                                                dispatch(clearItem(item))
-                                            }
-                                            className="p-2 bg-lanh_green border-2 border-lanh_green text-white hover:bg-white hover:text-lanh_green rounded-lg"
-                                        >
-                                            <TrashIcon className="w-5 h-5 " />
-                                        </button>
-                                    </div>
-                                    <div className="relative w-28 h-28 border-2 rounded-xl">
-                                        {item.imgs?.length > 0 ? (
-                                            <Image
-                                                src={item.imgs[0].url}
-                                                alt={item.name}
-                                                fill
-                                                className="object-contain"
-                                            />
-                                        ) : (
-                                            <Image
-                                                src="/defaultImg.png"
-                                                alt="product_img"
-                                                className="object-contain"
-                                                fill
-                                            />
-                                        )}
-                                    </div>
+                <div className="md:px-5 px-0 rounded-xl">
+                    {/* PC,Laptop cart */}
+                    <div className="md:block hidden ">
+                        <table className="bg-white rounded-xl w-full table-auto">
+                            <thead>
+                                <tr>
+                                    <th className="py-5">Hình ảnh</th>
+                                    <th className="py-5">Tên sản phẩm</th>
+                                    <th className="py-5">Giá</th>
+                                    <th className="py-5">Số lượng</th>
+                                    <th className="py-5">Tổng</th>
+                                    <th className="py-5"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cart.map((item: Products) => (
+                                    <tr
+                                        key={item._id}
+                                        className="text-center border-t-2"
+                                    >
+                                        <td className="relative w-28 h-28">
+                                            {item.imgs?.length > 0 ? (
+                                                <Image
+                                                    src={item.imgs[0].url}
+                                                    alt={item.name}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            ) : (
+                                                <Image
+                                                    src="/defaultImg.png"
+                                                    alt="product_img"
+                                                    className="object-contain"
+                                                    fill
+                                                />
+                                            )}
+                                        </td>
+                                        <td>{item.name}</td>
+                                        <td>
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(item.salePrice)}
+                                        </td>
+                                        <td>
+                                            <div className="flex items-center gap-2 justify-center">
+                                                <button
+                                                    onClick={() =>
+                                                        dispatch(
+                                                            removeCart(item)
+                                                        )
+                                                    }
+                                                    className="rounded-full bg-lanh_green text-white"
+                                                >
+                                                    <MinusIcon className="h-6 w-6" />
+                                                </button>
+                                                <span className="border-2 px-5">
+                                                    {item.quantity}
+                                                </span>
+                                                <button
+                                                    onClick={() =>
+                                                        dispatch(addCart(item))
+                                                    }
+                                                    className="rounded-full bg-lanh_green text-white"
+                                                >
+                                                    <PlusIcon className="h-6 w-6" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(
+                                                item.salePrice * item.quantity
+                                            )}
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() =>
+                                                    dispatch(clearItem(item))
+                                                }
+                                                className="  text-lanh_green  hover:opacity-50 "
+                                            >
+                                                <XMarkIcon className="w-6 h-6" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* Mobile cart */}
+                    <div className="md:hidden block">
+                        {cart.map((item) => (
+                            <div className="bg-white p-4" key={item._id}>
+                                <div className="relative h-20 mx-auto w-full border-t-2">
+                                    {item.imgs?.length > 0 ? (
+                                        <Image
+                                            src={item.imgs[0].url}
+                                            alt={item.name}
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src="/defaultImg.png"
+                                            alt="product_img"
+                                            className="object-contain"
+                                            fill
+                                        />
+                                    )}
                                 </div>
-
-                                <div className="flex flex-1 justify-between md:flex-row flex-col md:items-center md:gap-8 gap-5">
-                                    <div className="flex flex-col gap-2">
-                                        <span>{item.name}</span>
-                                        <span className="text-sm text-gray-500">
-                                            {item.ingredient}
-                                        </span>
-                                    </div>
-                                    <div className="flex items-center">
+                                <div className="border-t-2 py-2 flex justify-between font-bold">
+                                    <span>Tên sản phẩm</span>
+                                    <span>{item.name}</span>
+                                </div>
+                                <div className="border-t-2 py-2 flex justify-between font-bold">
+                                    <span>Giá</span>
+                                    {Intl.NumberFormat("vi-VN", {
+                                        style: "currency",
+                                        currency: "VND",
+                                    }).format(item.salePrice)}
+                                </div>
+                                <div className="border-t-2 py-2 flex justify-between font-bold">
+                                    <span>Số lượng</span>
+                                    <div className="flex items-center gap-2 justify-center">
                                         <button
-                                            className="p-2 rounded-lg bg-lanh_green border-2 border-lanh_green text-white hover:bg-white hover:text-lanh_green disabled:bg-gray-500 disabled:border-gray-500 disabled:opacity-50"
-                                            disabled={
-                                                item.inStock > item.quantity
-                                                    ? false
-                                                    : true
-                                            }
-                                            onClick={() =>
-                                                dispatch(addCart(item))
-                                            }
-                                        >
-                                            <PlusIcon className="h-5 w-5 " />
-                                        </button>
-
-                                        <span className="px-4">
-                                            {item.quantity}
-                                        </span>
-
-                                        <button
-                                            className="p-2 rounded-lg bg-lanh_green border-2 border-lanh_green text-white hover:bg-white hover:text-lanh_green"
                                             onClick={() =>
                                                 dispatch(removeCart(item))
                                             }
+                                            className="rounded-full bg-lanh_green text-white"
                                         >
-                                            <MinusIcon className="h-5 w-5 " />
+                                            <MinusIcon className="h-6 w-6" />
+                                        </button>
+                                        <span className="border-2 px-5">
+                                            {item.quantity}
+                                        </span>
+                                        <button
+                                            onClick={() =>
+                                                dispatch(addCart(item))
+                                            }
+                                            className="rounded-full bg-lanh_green text-white"
+                                        >
+                                            <PlusIcon className="h-6 w-6" />
                                         </button>
                                     </div>
-                                    <div className="flex flex-col gap-2">
+                                </div>
+                                <div className="border-t-2 py-2 flex justify-between font-bold">
+                                    <span>Tổng</span>
+                                    <span>
                                         {Intl.NumberFormat("vi-VN", {
                                             style: "currency",
                                             currency: "VND",
                                         }).format(
                                             item.salePrice * item.quantity
                                         )}
-                                        <span className="text-sm">
-                                            {Intl.NumberFormat("vi-VN", {
-                                                style: "currency",
-                                                currency: "VND",
-                                            }).format(item.salePrice)}
-                                            / sản phẩm
-                                        </span>
-                                    </div>
+                                    </span>
+                                </div>
+                                <div className="border-t-2 py-2 flex justify-between font-bold">
+                                    <span></span>
+                                    <button
+                                        onClick={() =>
+                                            dispatch(clearItem(item))
+                                        }
+                                        className="  text-lanh_green  hover:opacity-50 "
+                                    >
+                                        <XMarkIcon className="w-6 h-6" />
+                                    </button>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                    <div className="bg-white lg:w-2/6 w-full h-fit rounded-xl my-5">
+                        <div className="flex flex-col">
+                            <div className="px-5 space-y-2">
+                                <h1 className="font-bold text-lanh_green border-b-2 py-4">
+                                    Giỏ hàng
+                                </h1>
+                                <div className="flex gap-8 justify-between">
+                                    <span>Tổng sản phẩm: </span>
+                                    {cart.length}
+                                </div>
+                                <div className="flex gap-8 justify-between items-center py-2 border-t-2">
+                                    <span>Tổng tiền:</span>
+                                    <span className="font-bold text-lanh_green">
+                                        {Intl.NumberFormat("vi-VN", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        }).format(
+                                            price.reduce(
+                                                (acc: number, init: number) =>
+                                                    acc + init,
+                                                0
+                                            )
+                                        )}
+                                    </span>
+                                </div>
+                            </div>
+                            <button className="text-white w-1/2 border-2 border-lanh_green bg-lanh_green mx-5 my-5 py-2 rounded-lg hover:text-lanh_green hover:bg-white">
+                                Đặt hàng
+                            </button>
                         </div>
-                    ))}
+                    </div>
                 </div>
             ) : (
-                <div className="flex flex-col justify-center items-center min-h-screen flex-1 gap-2 bg-white">
+                <div className="flex flex-col justify-center items-center h-full flex-1 gap-2 min-h-screen">
                     <span>Giỏ hàng của bạn đang trống</span>
                     <Link
                         href={"/products"}
@@ -123,37 +237,6 @@ const Cart = () => {
                     </Link>
                 </div>
             )}
-            <div className="bg-white h-fit rounded-xl">
-                <div className="flex flex-col">
-                    <h1 className="text-xl font-bold px-10 py-5 text-lanh_green">
-                        Đơn hàng
-                    </h1>
-                    <div className="pb-5 border-t-2 px-10 py-5 space-y-4">
-                        <div className="flex gap-8 justify-between">
-                            <span>Tổng sản phẩm: </span>
-                            {cart.length}
-                        </div>
-                        <div className="flex gap-8 justify-between items-center">
-                            <span>Tổng tiền:</span>
-                            <span className="font-bold text-xl text-lanh_green">
-                                {Intl.NumberFormat("vi-VN", {
-                                    style: "currency",
-                                    currency: "VND",
-                                }).format(
-                                    price.reduce(
-                                        (acc: number, init: number) =>
-                                            acc + init,
-                                        0
-                                    )
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                    <button className="text-white border-2 border-lanh_green bg-lanh_green mx-10 mb-5 py-2 rounded-lg hover:text-lanh_green hover:bg-white">
-                        Đặt hàng
-                    </button>
-                </div>
-            </div>
         </div>
     );
 };

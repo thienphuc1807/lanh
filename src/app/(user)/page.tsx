@@ -37,7 +37,7 @@ async function Home() {
             <div className="relative z-0 xl:mt-[-250px] lg:mt-[-180px] md:mt-[-130px] mt-[-60px]">
                 <Image src={bannerImage} alt="banner_lanh" />
             </div>
-            <div className="lg:mt-10 mt-8 ">
+            <div className="lg:mt-10 mt-6 ">
                 <ProductsSwiper />
                 <Introduction />
                 <NewProducts products={products} />

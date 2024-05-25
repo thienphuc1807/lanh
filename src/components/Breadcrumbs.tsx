@@ -12,7 +12,7 @@ interface Props {
 function BreadCrumbs(props: Props) {
     const { breadcrumbs } = props;
     return (
-        <section className="md:py-7 py-5 text-xl text-lanh_green">
+        <section className="md:py-7 py-5 md:text-xl text-lanh_green">
             <ul className="flex gap-2 flex-wrap">
                 {breadcrumbs.map((item, index) => (
                     <li className="flex items-center gap-2" key={item.name}>

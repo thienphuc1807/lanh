@@ -30,21 +30,21 @@ const NewProducts = (props: Props) => {
                         SẢN PHẨM MỚI
                     </h2>
                 </div>
-                <p className="lg:px-48 px-2 text-center mt-6 md:text-md text-sm">
+                <p className="lg:px-48 px-2 text-center md:mt-6 mt-2 md:text-md text-sm">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id
                     temporibus rem cum. Voluptate molestiae placeat minima
                     corporis! Ipsum facere obcaecati iure, voluptatibus optio
                     nemo, at vel deleniti numquam, neque vero!
                 </p>
                 <div className="lg:pt-5 pt-2">
-                    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 lg:gap-8 md:gap-4 gap-2">
+                    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-8 md:gap-4 gap-2">
                         {data.map((item) => (
                             <Link
                                 href={`products/${item.name}`}
                                 key={item.name}
-                                className="group/item cursor-pointer rounded-lg overflow-hidden shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]"
+                                className="group/item cursor-pointer bg-white rounded-lg overflow-hidden shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)]"
                             >
-                                <div className="relative w-full h-64 bg-white overflow-hidden">
+                                <div className="relative w-full md:h-64 h-28 bg-white overflow-hidden">
                                     {item?.imgs ? (
                                         <Image
                                             key={item.imgs[0]?._id}
@@ -63,8 +63,8 @@ const NewProducts = (props: Props) => {
                                         />
                                     )}
                                 </div>
-                                <div className="bg-white p-6">
-                                    <div className="flex justify-center gap-4 items-center ">
+                                <div className="bg-white md:p-6 p-2">
+                                    <div className="flex md:flex-row flex-col justify-center md:gap-4 gap-2 items-center ">
                                         <span className="text-[#f35a69]">
                                             {Intl.NumberFormat("vi-VN", {
                                                 style: "currency",
@@ -81,11 +81,11 @@ const NewProducts = (props: Props) => {
                                     <p className="mt-2 text-center">
                                         {item.name}
                                     </p>
-                                    <div className="lg:invisible visible text-center group-hover/item:visible">
+                                    <div className="md:block hidden lg:invisible text-center group-hover/item:visible">
                                         <p className="text-sm text-gray-600">
                                             {item.ingredient}
                                         </p>
-                                        <button className="bg-[#f35a69] text-white rounded-full py-2 md:px-10 px-5 md:mt-5 mt-2">
+                                        <button className="bg-[#f35a69] text-white md:rounded-full py-2 md:px-10 px-5 md:mt-5 mt-2">
                                             Thêm vào giỏ
                                         </button>
                                     </div>
