@@ -4,18 +4,44 @@ import BreadCrumbs from "@/components/Breadcrumbs";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const Cart = () => {
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
         { name: "Giỏ hàng", path: "/cart" },
     ];
-    const cart = useSelector((state: { cart: Products[] }) => state.cart);
     const dispatch = useDispatch();
+    const cart = useSelector((state: { cart: Products[] }) => state.cart);
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+    if (!isMounted) {
+        // Prevent rendering on the server side
+        return null;
+    }
     const price = cart.map((item: Products) => item.salePrice * item.quantity);
+
+    const handleRemoveItem = (item: Products) => {
+        Swal.fire({
+            title: "Xoá sản phẩm ?",
+            showDenyButton: true,
+            confirmButtonText: "Xoá",
+            confirmButtonColor: "#97ba79",
+            denyButtonText: `Huỷ`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                dispatch(clearItem(item));
+            }
+        });
+    };
+
     return (
-        <div className="container mx-auto my-5 gap-4 ">
+        <div className="container mx-auto my-5 gap-4">
             <div className="px-5">
                 <BreadCrumbs breadcrumbs={breadcrumbs} />
             </div>
@@ -82,7 +108,12 @@ const Cart = () => {
                                                 </span>
                                                 <button
                                                     onClick={() =>
-                                                        dispatch(addCart(item))
+                                                        dispatch(
+                                                            addCart({
+                                                                ...item,
+                                                                quantity: 1,
+                                                            })
+                                                        )
                                                     }
                                                     className="rounded-full bg-lanh_green text-white"
                                                 >
@@ -101,7 +132,7 @@ const Cart = () => {
                                         <td>
                                             <button
                                                 onClick={() =>
-                                                    dispatch(clearItem(item))
+                                                    handleRemoveItem(item)
                                                 }
                                                 className="  text-lanh_green  hover:opacity-50 "
                                             >

@@ -4,6 +4,8 @@ import "../globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/Footer";
 import StoreProvider from "../Redux/StoreProvider";
+import { Suspense } from "react";
+import Loading from "@/components/loading";
 
 const montserrat = Montserrat({
     weight: "400",
@@ -29,7 +31,9 @@ export default function RootLayout({
             <body className={montserrat.className}>
                 <StoreProvider>
                     <Header />
-                    <div className="pb-5">{children}</div>
+                    <div className="pb-5">
+                        <Suspense fallback={<Loading />}>{children}</Suspense>
+                    </div>
                     <Footer />
                 </StoreProvider>
             </body>

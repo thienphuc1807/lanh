@@ -1,24 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: Products[] =
-    localStorage.getItem("Cart") !== null
-        ? JSON.parse(localStorage.getItem("Cart") || "[]")
-        : [];
+const getLocalStorageItem = (key: string, fallback: any) => {
+    if (typeof localStorage !== "undefined") {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : fallback;
+    }
+    return fallback;
+};
 
+const setLocalStorageItem = (key: string, value: any) => {
+    if (typeof localStorage !== "undefined") {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+};
+
+const initialState: Products[] = getLocalStorageItem("Cart", []);
 const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
         addCart(state, action: PayloadAction<Products>) {
+            console.log(action.payload);
+
             const existingItem = state.find(
                 (item) => item._id === action.payload._id
             );
             if (existingItem) {
-                existingItem.quantity += 1;
+                existingItem.quantity += action.payload.quantity;
             } else {
                 state.push(action.payload);
             }
-            localStorage.setItem("Cart", JSON.stringify(state));
+            setLocalStorageItem("Cart", state);
         },
         removeCart(state, action: PayloadAction<Products>) {
             const existingItem = state.find(
@@ -27,12 +39,6 @@ const cartSlice = createSlice({
             if (existingItem) {
                 if (existingItem.quantity > 1) {
                     existingItem.quantity -= 1;
-                } else {
-                    const updatedState = state.filter(
-                        (item) => item._id !== action.payload._id
-                    );
-                    localStorage.setItem("Cart", JSON.stringify(updatedState));
-                    return updatedState;
                 }
             }
             localStorage.setItem("Cart", JSON.stringify(state));
@@ -41,7 +47,7 @@ const cartSlice = createSlice({
             const updatedState = state.filter(
                 (item) => item._id !== action.payload._id
             );
-            localStorage.setItem("Cart", JSON.stringify(updatedState));
+            setLocalStorageItem("Cart", updatedState);
             return updatedState;
         },
     },

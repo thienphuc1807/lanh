@@ -18,19 +18,19 @@ const getProducts = async () => {
     return res.json();
 };
 
-const getNews = async () => {
-    const res = await fetch(`http://${process.env.DOMAIN}/api/news`, {
-        cache: "no-store",
-    });
-    if (!res.ok) {
-        throw new Error("Something went wrong");
-    }
-    return res.json();
-};
+// const getNews = async () => {
+//     const res = await fetch(`http://${process.env.DOMAIN}/api/news`, {
+//         cache: "no-store",
+//     });
+//     if (!res.ok) {
+//         throw new Error("Something went wrong");
+//     }
+//     return res.json();
+// };
 
 async function Home() {
     const products = await getProducts();
-    const news = await getNews();
+    // const news = await getNews();
 
     return (
         <main>
@@ -41,7 +41,7 @@ async function Home() {
                 <ProductsSwiper />
                 <Introduction />
                 <NewProducts products={products} />
-                <FeaturedNews news={news} />
+                {/* <FeaturedNews news={news} /> */}
                 <div
                     className="lg:py-10 container mx-auto px-5"
                     data-aos="fade-left"

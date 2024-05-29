@@ -27,7 +27,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -52,7 +52,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -77,7 +77,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -102,7 +102,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -127,7 +127,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -152,7 +152,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -176,7 +176,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -200,7 +200,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -224,7 +224,7 @@ function News() {
                         <div className="border-2 p-2">
                             <div className="bg-gray-300 flex justify-center items-center h-52 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -279,7 +279,7 @@ function News() {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -296,7 +296,7 @@ function News() {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -313,7 +313,7 @@ function News() {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -335,7 +335,7 @@ function News() {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -352,7 +352,7 @@ function News() {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}
@@ -369,7 +369,7 @@ function News() {
                         >
                             <div className="bg-gray-300 flex justify-center items-center p-2 rounded-xl">
                                 <Image
-                                    src="/images/Icon/Logo.png"
+                                    src="/defaultImg.png"
                                     alt="news img"
                                     width={100}
                                     height={100}

@@ -122,10 +122,10 @@ const UserProducts = (props: Props) => {
                         {entries.map((item: Products) => (
                             <div
                                 key={item.name}
-                                className="bg-white rounded-lg shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)] border-[1px] px-2"
+                                className="bg-white shadow-[0_0_7px_rgba(151,186,121,0.3)] border-[1px]"
                             >
-                                <Link href={`products/${item.name}`}>
-                                    <div className="relative mt-5 w-auto h-52">
+                                <div className="relative group/item">
+                                    <div className="relative md:h-80 h-60 w-full">
                                         {item.imgs.length > 0 ? (
                                             item.imgs.map((img) => (
                                                 <Image
@@ -146,34 +146,34 @@ const UserProducts = (props: Props) => {
                                             />
                                         )}
                                     </div>
-                                    <div className="text-center py-4">
-                                        <p className="whitespace-nowrap overflow-hidden text-ellipsis">
+                                    <div className="flex group-hover/item:opacity-45 opacity-0 transition-all ease-in-out absolute top-0 bottom-0 right-0 left-0 bg-black"></div>
+                                    <div className="flex gap-2 opacity-0 group-hover/item:opacity-100  absolute top-1/2 justify-center right-0 left-0 group-hover/item:translate-y-[-50%] ease-in-out transition-all duration-500">
+                                        <button
+                                            onClick={() =>
+                                                dispatch(addCart(item))
+                                            }
+                                            className="bg-lanh_green text-white py-2 px-4 rounded-lg border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
+                                        >
+                                            Thêm vào giỏ
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="p-4 space-y-2">
+                                    <Link
+                                        href={`products/${item.name}`}
+                                        className="py-2 hover:text-lanh_green"
+                                    >
+                                        <p className="whitespace-nowrap overflow-hidden text-ellipsis font-bold">
                                             {item.name}
                                         </p>
-                                    </div>
+                                    </Link>
 
-                                    <div className="flex md:flex-row flex-col gap-2 items-center justify-center">
-                                        <p className="font-bold">
-                                            {Intl.NumberFormat("vi-VN", {
-                                                style: "currency",
-                                                currency: "VND",
-                                            }).format(item.salePrice)}
-                                        </p>
-                                        <p className="text-[red] font-bold text-xs line-through">
-                                            {Intl.NumberFormat("vi-VN", {
-                                                style: "currency",
-                                                currency: "VND",
-                                            }).format(item.price)}
-                                        </p>
-                                    </div>
-                                </Link>
-                                <div className="py-4 text-center">
-                                    <button
-                                        className="py-2 px-2 text-white bg-lanh_green hover:opacity-60 rounded-md"
-                                        onClick={() => dispatch(addCart(item))}
-                                    >
-                                        Thêm vào giỏ hàng
-                                    </button>
+                                    <p className="font-bold text-lanh_green">
+                                        {Intl.NumberFormat("vi-VN", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        }).format(item.salePrice)}
+                                    </p>
                                 </div>
                             </div>
                         ))}
