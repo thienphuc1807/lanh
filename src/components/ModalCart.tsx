@@ -45,7 +45,7 @@ const ModalCart = (props: Props) => {
                                     <div className="flex flex-col gap-2 justify-center text-white">
                                         <Link
                                             href={`/products/${item.name}`}
-                                            className="font-bold line-clamp-1 group-hover/item:text-black"
+                                            className="font-bold line-clamp-1 group-hover/item:text-black transition-all duration-500"
                                         >
                                             {item.name}
                                         </Link>
@@ -90,14 +90,17 @@ const ModalCart = (props: Props) => {
                         <div className="flex gap-2 px-[15px] pb-[15px] font-bold text-lanh_green">
                             <Link
                                 href={"/cart"}
-                                className="p-2 flex-1 bg-white text-center"
+                                className="p-2 flex-1 bg-white text-center border-2 border-white hover:bg-lanh_green hover:text-white transition-all duration-300 ease-linear"
                             >
                                 Giỏ hàng
                             </Link>
 
-                            <button className="p-2 flex-1 bg-white">
+                            <Link
+                                href={"/checkout"}
+                                className="p-2 flex-1 bg-white text-center border-2 border-white hover:bg-lanh_green hover:text-white transition-all duration-300 ease-linear"
+                            >
                                 Thanh toán
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

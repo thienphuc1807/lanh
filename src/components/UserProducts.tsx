@@ -152,7 +152,7 @@ const UserProducts = (props: Props) => {
                                             onClick={() =>
                                                 dispatch(addCart(item))
                                             }
-                                            className="bg-lanh_green text-white py-2 px-4 rounded-lg border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
+                                            className="bg-lanh_green text-white py-2 px-4 rounded-lg border-2 border-lanh_green hover:bg-white hover:text-lanh_green transition-all ease-linear duration-300"
                                         >
                                             Thêm vào giỏ
                                         </button>
@@ -161,7 +161,7 @@ const UserProducts = (props: Props) => {
                                 <div className="p-4 space-y-2">
                                     <Link
                                         href={`products/${item.name}`}
-                                        className="py-2 hover:text-lanh_green"
+                                        className="py-2 hover:text-lanh_green transition-all ease-linear"
                                     >
                                         <p className="whitespace-nowrap overflow-hidden text-ellipsis font-bold">
                                             {item.name}
