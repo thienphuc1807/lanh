@@ -18,18 +18,11 @@ const LoginPage = async () => {
                     <p className="font-bold text-lanh_green">
                         Hoặc đăng nhập bằng:
                     </p>
-                    <div className="grid md:grid-cols-2 grid-cols-1 gap-3">
-                        <form action={handleGithubLogin}>
-                            <button className="w-full border-2 rounded-full bg-lanh_green font-bold text-white hover:bg-white hover:text-lanh_green border-lanh_green py-2 px-5">
-                                Github
-                            </button>
-                        </form>
-                        <form action={handleGithubLogin}>
-                            <button className="w-full border-2 rounded-full bg-lanh_green font-bold text-white hover:bg-white hover:text-lanh_green border-lanh_green py-2 px-5">
-                                Google
-                            </button>
-                        </form>
-                    </div>
+                    <form action={handleGithubLogin}>
+                        <button className="w-full border-2 rounded-full bg-lanh_green font-bold text-white hover:bg-white hover:text-lanh_green border-lanh_green py-2 px-5">
+                            Github
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

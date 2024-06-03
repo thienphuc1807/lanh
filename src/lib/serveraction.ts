@@ -1,5 +1,4 @@
 "use server";
-
 import { signIn, signOut } from "./auth";
 import { File, Products, User } from "./models";
 import { connectToDb } from "./utils";
@@ -95,7 +94,6 @@ export const handleRemoveUser = async (id: string) => {
 
 const saveImageToLocal = async (formData: FormData) => {
     const files: File[] = formData.getAll("files") as File[];
-    console.log(files);
     const multipleBuffersPromise = files.map((file) =>
         file.arrayBuffer().then((data) => {
             const buffer = Buffer.from(data);
@@ -111,7 +109,7 @@ const saveImageToLocal = async (formData: FormData) => {
     return await Promise.all(multipleBuffersPromise);
 };
 
-const uploadImagesToCloudinary = async (
+export const uploadImagesToCloudinary = async (
     newFiles: { filepath: string; filename: string }[]
 ) => {
     const multipleImagesPromise = newFiles.map((file) =>
@@ -143,6 +141,34 @@ export const uploadProduct = async (formData: FormData) => {
             quantity,
         });
         await newProduct.save();
+    } catch (error) {
+        console.log(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const updateProduct = async (formData: FormData, id: string) => {
+    const { name, price, salePrice, ingredient, inStock, quantity } =
+        Object.fromEntries(formData);
+    try {
+        const newFiles = await saveImageToLocal(formData);
+        const files = await uploadImagesToCloudinary(newFiles);
+        connectToDb();
+        const fileDocs = [];
+        for (const file of files) {
+            const newFile = new File({ url: file.secure_url });
+            fileDocs.push(await newFile.save());
+        }
+        newFiles.map((file) => fs.unlink(file.filepath));
+        await Products.findByIdAndUpdate(id, {
+            name,
+            price,
+            salePrice,
+            imgs: fileDocs,
+            ingredient,
+            inStock,
+            quantity,
+        });
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" };

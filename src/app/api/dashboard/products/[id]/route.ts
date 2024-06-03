@@ -19,7 +19,6 @@ export const PUT = async (request: any, { params }: any) => {
     const { name, price, salePrice, ingredient, imgs, inStock } =
         await request.json();
     console.log("Imgs >>>" + JSON.stringify(imgs));
-
     try {
         await connectToDb();
         await Products.findByIdAndUpdate(id, {

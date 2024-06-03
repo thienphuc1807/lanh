@@ -1,4 +1,3 @@
-
 import DetailProduct from "@/components/DetailProduct";
 
 // Fetch Data With AN API

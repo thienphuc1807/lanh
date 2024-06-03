@@ -1,4 +1,6 @@
 import FormProduct from "@/components/FormProduct";
+import { Products } from "@/lib/models";
+import { connectToDb } from "@/lib/utils";
 
 const getData = async (id: string) => {
     const data = await fetch(

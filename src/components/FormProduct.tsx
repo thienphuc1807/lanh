@@ -1,5 +1,5 @@
 "use client";
-import { uploadProduct } from "@/lib/serveraction";
+import { updateProduct, uploadProduct } from "@/lib/serveraction";
 import { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
@@ -25,7 +25,7 @@ const FormProduct = (props: Props) => {
 
     const [values, setValues] = useState(product || initialProductState);
 
-    console.log(values);
+    console.log(values.imgs.map((item) => item));
 
     const router = useRouter();
 
@@ -129,32 +129,38 @@ const FormProduct = (props: Props) => {
             });
             return;
         }
+        const formData = new FormData();
+        formData.append("name", values?.name);
+        formData.append("price", values?.price.toString());
+        formData.append("salePrice", values?.salePrice.toString());
+        formData.append("ingredient", values?.ingredient);
+        formData.append("inStock", values?.inStock.toString());
+        formData.append("quantity", values?.quantity.toString());
+        values?.imgs.forEach((img) => {
+            formData.append("files", img);
+        });
         if (id) {
-            console.log(process.env.DOMAIN);
-
             try {
-                const res = await fetch(
-                    `http://${process.env.DOMAIN}/api/dashboard/products/${id}`,
-                    {
-                        method: "PUT",
-                        headers: {
-                            "Content-type": "application/json",
-                        },
-                        body: JSON.stringify(values),
-                    }
-                );
-                if (!res.ok) {
-                    throw new Error("Something went wrong");
+                const update = await updateProduct(formData, id);
+                if (!update) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Thêm sản phẩm thành công!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    router.push("/dashboard/products");
+                    router.refresh();
+                } else {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Lỗi cập nhật!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 }
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Thêm sản phẩm thành công!",
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
-                router.push("/dashboard/products");
-                router.refresh();
             } catch (error) {
                 console.log(error);
                 Swal.fire({
@@ -166,16 +172,6 @@ const FormProduct = (props: Props) => {
                 });
             }
         } else {
-            const formData = new FormData();
-            formData.append("name", values?.name);
-            formData.append("price", values?.price.toString());
-            formData.append("salePrice", values?.salePrice.toString());
-            formData.append("ingredient", values?.ingredient);
-            formData.append("inStock", values?.inStock.toString());
-            formData.append("quantity", values?.quantity.toString());
-            values?.imgs.forEach((img) => {
-                formData.append("files", img);
-            });
             const upload = await uploadProduct(formData);
             if (!upload) {
                 Swal.fire({
@@ -233,10 +229,10 @@ const FormProduct = (props: Props) => {
                                                 <Image
                                                     src={
                                                         file.url
-                                                            ? file.url
-                                                            : URL.createObjectURL(
-                                                                  file
-                                                              )
+                                                        // ? file.url
+                                                        // : URL.createObjectURL(
+                                                        //       file
+                                                        //   )
                                                     }
                                                     alt="PreviewImg"
                                                     className="w-28 h-28 object-contain"

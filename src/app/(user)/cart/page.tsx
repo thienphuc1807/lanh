@@ -192,7 +192,12 @@ const Cart = () => {
                                         </span>
                                         <button
                                             onClick={() =>
-                                                dispatch(addCart(item))
+                                                dispatch(
+                                                    addCart({
+                                                        ...item,
+                                                        quantity: 1,
+                                                    })
+                                                )
                                             }
                                             className="rounded-full bg-lanh_green text-white"
                                         >
