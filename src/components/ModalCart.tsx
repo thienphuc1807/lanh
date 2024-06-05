@@ -45,7 +45,7 @@ const ModalCart = (props: Props) => {
                                     <div className="flex flex-col gap-2 justify-center text-white">
                                         <Link
                                             href={`/products/${item.name}`}
-                                            className="font-bold line-clamp-1 group-hover/item:text-black transition-all duration-500"
+                                            className="font-bold line-clamp-1 group-hover/item:underline transition-all duration-500"
                                         >
                                             {item.name}
                                         </Link>

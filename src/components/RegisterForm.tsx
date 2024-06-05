@@ -86,11 +86,11 @@ function RegiterForm() {
                         key={field.id}
                         {...field}
                         onChange={onChange}
-                        className="border-2 border-lanh_green rounded-full py-2 px-5 peer"
+                        className="border-2 border-lanh_green rounded-md w-full py-2 px-5 peer"
                     />
                 </div>
             ))}
-            <button className="bg-lanh_green text-white py-2 px-5 rounded-full border-2 border-lanh_green hover:bg-white hover:text-lanh_green">
+            <button className="bg-lanh_green text-white py-2 px-5 rounded-md border-2 border-lanh_green hover:bg-white hover:text-lanh_green">
                 Đăng ký
             </button>
             <span className="text-red-600">{state?.error}</span>

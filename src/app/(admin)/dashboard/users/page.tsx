@@ -1,4 +1,4 @@
-import UserList from "@/components/UserList";
+import UserList from "@/components/AdminUsers";
 import Link from "next/link";
 const getUsers = async () => {
     const res = await fetch(`http://${process.env.DOMAIN}/api/users`, {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
 import PaginationControl from "@/components/PaginationControl";
-import _, { add } from "lodash";
+import _ from "lodash";
 import { useState } from "react";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";

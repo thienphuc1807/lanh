@@ -50,19 +50,18 @@ const ProductList = (props: Props) => {
 
     const handleRemove = (id: string | undefined) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
+            title: "Xoá sản phẩm?",
+            text: "Sau khi xoá sẽ không thể hoàn tác!",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "#97ba79",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: "Xoá",
         }).then((result) => {
             if (result.isConfirmed) {
                 handleRemoveProduct(id);
                 Swal.fire({
-                    title: "Deleted!",
-                    text: "Your product has been deleted.",
+                    title: "Đã xoá!",
+                    text: "Sản phẩm đã bị xoá khỏi dữ liệu.",
                     icon: "success",
                     showConfirmButton: false,
                     timer: 1000,
@@ -205,7 +204,7 @@ const ProductList = (props: Props) => {
                                                     href={`/dashboard/products/${product._id}`}
                                                     className="px-4 py-2 text-white bg-lanh_green rounded-md"
                                                 >
-                                                    Edit
+                                                    Chỉnh sửa
                                                 </Link>
                                                 <button
                                                     onClick={() =>
@@ -215,7 +214,7 @@ const ProductList = (props: Props) => {
                                                     }
                                                     className="px-4 py-2 text-white bg-lanh_green rounded-md"
                                                 >
-                                                    Remove
+                                                    Xoá
                                                 </button>
                                             </div>
                                         </td>

@@ -1,4 +1,4 @@
-import ProductList from "@/components/ProductList";
+import ProductList from "@/components/AdminProducts";
 import Link from "next/link";
 
 const getProducts = async () => {

@@ -12,7 +12,6 @@ export const authConfig = {
                 token.id = user.id;
                 token.isAdmin = user.isAdmin;
                 token.name = user.username;
-                token.image = user.image;
             }
             return token;
         },
@@ -21,12 +20,10 @@ export const authConfig = {
                 session.user.id = token.id;
                 session.user.isAdmin = token.isAdmin;
                 session.user.name = token.name;
-                session.user.image = token.image;
             }
             console.log("this is token session >>>", session);
 
             return session;
-
         },
         authorized({
             auth,
@@ -35,7 +32,6 @@ export const authConfig = {
             auth: any;
             request: { nextUrl?: any };
         }) {
-
             const user = auth?.user;
             const isOnAdminPanel =
                 request.nextUrl?.pathname.startsWith("/dashboard");

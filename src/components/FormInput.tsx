@@ -1,3 +1,4 @@
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState, ChangeEvent } from "react";
 
 interface Props {
@@ -34,6 +35,7 @@ const FormInput = (props: Props) => {
     return (
         <>
             <label htmlFor={name}>{label}</label>
+
             <input
                 name={name}
                 {...inputProps}
@@ -42,6 +44,7 @@ const FormInput = (props: Props) => {
                 className={className}
                 value={value}
             />
+
             <span
                 data-focused={focused}
                 className="hidden data-[focused=true]:block peer-valid:hidden text-red-600"

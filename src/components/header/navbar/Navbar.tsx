@@ -81,7 +81,7 @@ const NavBar = ({ session }: any) => {
                             <span>Giỏ hàng: {cart.length}</span>
                         </button>
                         <ModalCart
-                            className="absolute group-hover/cart:visible origin-[80%_0%] group-hover/cart:scale-100 scale-0 group-hover/cart:opacity-100 invisible opacity-0 w-[330px] md:top-11 top-10 right-0 border-[1px] border-lanh_green transition-all duration-500"
+                            className="absolute group-hover/cart:visible origin-[80%_0%] group-hover/cart:scale-100 scale-0 group-hover/cart:opacity-100 invisible opacity-0 w-[330px] md:top-11 top-10 right-0 border-[1px] transition-all duration-500 shadow-lg"
                             cart={cart}
                         />
                     </div>
@@ -112,7 +112,7 @@ const NavBar = ({ session }: any) => {
                             </span>
                         </button>
                         <ModalCart
-                            className="absolute group-hover/cart:visible origin-top-right group-hover/cart:scale-100 scale-0 group-hover/cart:opacity-100 invisible opacity-0 w-[300px] md:top-11 top-10 right-0 border-[1px] border-lanh_green transition-all duration-500"
+                            className="absolute group-hover/cart:visible origin-top-right group-hover/cart:scale-100 scale-0 group-hover/cart:opacity-100 invisible opacity-0 w-[300px] md:top-11 top-10 right-0 border-[1px] transition-all duration-500 shadow-lg"
                             cart={cart}
                         />
                     </div>

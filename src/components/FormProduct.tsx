@@ -195,10 +195,10 @@ const FormProduct = (props: Props) => {
         }
     };
     return (
-        <div className="md:py-6 md:px-0 md:flex md:justify-center container  mx-auto">
+        <div className="md:py-6 md:px-0 md:flex md:justify-center container mx-auto">
             <form
                 onSubmit={handleUpload}
-                className="space-y-5 md:p-10 md:items-stretch items-center p-4 border-2 border-gray-200 shadow-md rounded-md bg-white"
+                className="lg:min-w-[600px] space-y-5 md:p-10 md:items-stretch items-center p-4 border-2 border-gray-200 shadow-md rounded-md bg-white"
             >
                 <h1 className="text-lanh_green text-center font-bold">
                     {product ? "CHỈNH SỬA SẢN PHẨM" : "THÊM SẢN PHẨM MỚI"}
@@ -229,10 +229,10 @@ const FormProduct = (props: Props) => {
                                                 <Image
                                                     src={
                                                         file.url
-                                                        // ? file.url
-                                                        // : URL.createObjectURL(
-                                                        //       file
-                                                        //   )
+                                                            ? file.url
+                                                            : URL.createObjectURL(
+                                                                  file
+                                                              )
                                                     }
                                                     alt="PreviewImg"
                                                     className="w-28 h-28 object-contain"

@@ -256,9 +256,12 @@ const Cart = () => {
                                     </span>
                                 </div>
                             </div>
-                            <button className="text-white w-1/2 border-2 border-lanh_green bg-lanh_green mx-5 my-5 py-2 rounded-lg hover:text-lanh_green hover:bg-white">
+                            <Link
+                                href={"/checkout"}
+                                className="text-white w-1/2 text-center border-2 border-lanh_green bg-lanh_green mx-5 my-5 py-2 rounded-lg hover:text-lanh_green hover:bg-white"
+                            >
                                 Đặt hàng
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
