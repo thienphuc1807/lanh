@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { unique } from "next/dist/build/utils";
 
 const fileSchema = new mongoose.Schema({
     url: { type: String },
@@ -30,6 +29,34 @@ const productSchema = new mongoose.Schema(
         inStock: {
             type: Number,
         },
+    },
+    { timestamps: true }
+);
+
+const orderSchema = new mongoose.Schema(
+    {
+        fullName: {
+            type: String,
+        },
+        email: {
+            type: String,
+        },
+        phoneNumber: {
+            type: String,
+        },
+        city: {
+            type: String,
+        },
+        district: {
+            type: String,
+        },
+        ward: {
+            type: String,
+        },
+        address: {
+            type: String,
+        },
+        orders: [],
     },
     { timestamps: true }
 );
@@ -87,3 +114,5 @@ export const Products =
 export const File = mongoose.models.File || mongoose.model("File", fileSchema);
 export const News = mongoose.models.News || mongoose.model("News", newsSchema);
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
+export const Orders =
+    mongoose.models.Orders || mongoose.model("Orders", orderSchema);

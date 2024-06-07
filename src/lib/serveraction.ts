@@ -1,6 +1,6 @@
 "use server";
 import { signIn, signOut } from "./auth";
-import { File, Products, User } from "./models";
+import { File, Orders, Products, User } from "./models";
 import { connectToDb } from "./utils";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
@@ -169,6 +169,34 @@ export const updateProduct = async (formData: FormData, id: string) => {
             inStock,
             quantity,
         });
+    } catch (error) {
+        console.log(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const handleUploadOrders = async (formData: FormData) => {
+    const { fullName, email, phoneNumber, city, district, ward, address } =
+        Object.fromEntries(formData);
+    const ordersProduct: string[] = formData.getAll("orders") as string[];
+    const orderList = [];
+    for (const item of ordersProduct) {
+        orderList.push(JSON.parse(item));
+    }
+    try {
+        connectToDb();
+        
+        const newOrders = new Orders({
+            fullName: fullName,
+            email: email,
+            phoneNumber: phoneNumber,
+            city: city,
+            district: district,
+            ward: ward,
+            address: address,
+            orders: orderList,
+        });
+        await newOrders.save();
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" };

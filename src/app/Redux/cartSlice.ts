@@ -32,7 +32,7 @@ const cartSlice = createSlice({
             }
             setLocalStorageItem("Cart", state);
         },
-        removeCart(state, action: PayloadAction<Products>) {
+        adjustItem(state, action: PayloadAction<Products>) {
             const existingItem = state.find(
                 (item) => item._id === action.payload._id
             );
@@ -43,16 +43,19 @@ const cartSlice = createSlice({
             }
             localStorage.setItem("Cart", JSON.stringify(state));
         },
-        clearItem(state, action: PayloadAction<{ _id: string }>) {
+        removeItem(state, action: PayloadAction<{ _id: string }>) {
             const updatedState = state.filter(
                 (item) => item._id !== action.payload._id
             );
             setLocalStorageItem("Cart", updatedState);
             return updatedState;
         },
+        clearCart() {
+            setLocalStorageItem("Cart", []);
+        },
     },
 });
 
-export const { addCart, removeCart, clearItem } = cartSlice.actions;
+export const { addCart, adjustItem, removeItem, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

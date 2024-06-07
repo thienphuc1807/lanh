@@ -1,37 +1,53 @@
 "use client";
+import { clearCart } from "@/app/Redux/cartSlice";
+import { handleUploadOrders } from "@/lib/serveraction";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 const CheckOut = (props: { data: any }) => {
     const { data } = props;
     const [cities, setCities] = useState(data);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
-    const [selectedCity, setSelectedCity] = useState<string | undefined>("");
-    const [selectedDistrict, setSelectedDistrict] = useState<
-        string | undefined
-    >("");
-
     const cart = useSelector((state: { cart: Products[] }) => state.cart);
     const [isMounted, setIsMounted] = useState(false);
 
+    const dispatch = useDispatch();
+
+    const [values, setValues] = useState({
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        city: "",
+        district: "",
+        ward: "",
+        address: "",
+        orders: cart,
+    });
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
+    const router = useRouter();
+
     if (!isMounted) {
         // Prevent rendering on the server side
         return null;
     }
 
+    console.log(values);
+
     const handleCityChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const cityId = e.target.options[e.target.selectedIndex].dataset.id;
-        setSelectedCity(cityId);
+        const cityName = e.target.options[e.target.selectedIndex].value;
+        setValues({ ...values, city: cityName });
         setDistricts([]);
         setWards([]);
         const selectedCityData: any = cities.find(
-            (city: any) => city.Id === cityId
+            (city: any) => city.Name === cityName
         );
         if (selectedCityData) {
             setDistricts(selectedCityData.Districts);
@@ -39,19 +55,66 @@ const CheckOut = (props: { data: any }) => {
     };
 
     const handleDistrictChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const districtId = e.target.options[e.target.selectedIndex].dataset.id;
-        setSelectedDistrict(districtId);
+        const districtName = e.target.options[e.target.selectedIndex].value;
+        setValues({ ...values, district: districtName });
         setWards([]);
         const selectedCityData: any = cities.find(
-            (city: any) => city.Id === selectedCity
+            (city: any) => city.Name === values.city
         );
         if (selectedCityData) {
             const selectedDistrictData = selectedCityData.Districts.find(
-                (district: any) => district.Id === districtId
+                (district: any) => district.Name === districtName
             );
             if (selectedDistrictData) {
                 setWards(selectedDistrictData.Wards);
             }
+        }
+    };
+    const handleWardChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const wardName = e.target.options[e.target.selectedIndex].value;
+        setValues({ ...values, ward: wardName });
+    };
+
+    const onChangeValues = (e: ChangeEvent<HTMLInputElement>) => {
+        setValues({ ...values, [e.target.name]: e.target.value });
+    };
+
+    const handleUpload = async (
+        e: React.FormEvent<HTMLFormElement>
+    ): Promise<void> => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("fullName", values?.fullName);
+        formData.append("email", values?.email);
+        formData.append("phoneNumber", values?.phoneNumber);
+        formData.append("city", values?.city);
+        formData.append("district", values?.district);
+        formData.append("address", values?.address);
+        formData.append("ward", values?.ward);
+        values?.orders.forEach((item: Products) => {
+            formData.append("orders", JSON.stringify(item));
+        });
+
+        const uploadOrders = await handleUploadOrders(formData);
+        if (!uploadOrders) {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Đặt hàng thành công!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            dispatch(clearCart());
+            router.refresh();
+            router.push("/");
+        } else {
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Lỗi đặt hàng không thành công",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
     };
 
@@ -59,13 +122,13 @@ const CheckOut = (props: { data: any }) => {
 
     return (
         <div className="container mx-auto flex lg:flex-row md:flex-row-reverse flex-col-reverse md:gap-10 gap-5 xl:my-10 my-2 xl:px-0 px-5">
-            <div className="lg:flex-[60%] flex-1">
+            <form onSubmit={handleUpload} className="lg:flex-[60%] flex-1">
                 <h1 className="font-bold lg:text-2xl text-xl text-lanh_green pb-4">
                     Thông tin giao hàng
                 </h1>
                 <div>
-                    <form className="flex flex-col gap-2">
-                        <div className="relative">
+                    <div className="flex flex-col gap-2">
+                        <div className="relative space-y-2">
                             <label htmlFor="full_name">
                                 <span>Họ Tên</span>
                             </label>
@@ -74,10 +137,12 @@ const CheckOut = (props: { data: any }) => {
                                 name="fullName"
                                 id="full_name"
                                 className="p-2 w-full border-2 rounded-md"
+                                onChange={onChangeValues}
+                                required
                             />
                         </div>
                         <div className="flex gap-2">
-                            <div className="flex-1">
+                            <div className="flex-1 space-y-2">
                                 <label htmlFor="email">
                                     <span>Email</span>
                                 </label>
@@ -86,9 +151,10 @@ const CheckOut = (props: { data: any }) => {
                                     className="p-2 border-2 rounded-md w-full"
                                     id="email"
                                     name="email"
+                                    onChange={onChangeValues}
                                 />
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1 space-y-2">
                                 <label htmlFor="phoneNumber">
                                     <span>Số điện thoại</span>
                                 </label>
@@ -97,6 +163,8 @@ const CheckOut = (props: { data: any }) => {
                                     className="p-2 border-2 rounded-md w-full"
                                     id="phoneNumber"
                                     name="phoneNumber"
+                                    onChange={onChangeValues}
+                                    required
                                 />
                             </div>
                         </div>
@@ -104,11 +172,13 @@ const CheckOut = (props: { data: any }) => {
                             <label htmlFor="address">
                                 <span>Địa chỉ</span>
                             </label>
-                            <div className="flex gap-2">
+                            <div className="flex lg:flex-row flex-col gap-2">
                                 <select
                                     className="flex-1 border-2 rounded-md p-2"
                                     id="city"
                                     onChange={handleCityChange}
+                                    name="city"
+                                    required
                                 >
                                     <option value="">Chọn Tỉnh/Thành</option>
                                     {cities.map((city: any) => (
@@ -126,6 +196,7 @@ const CheckOut = (props: { data: any }) => {
                                     className="flex-1 border-2 rounded-md p-2"
                                     id="district"
                                     onChange={handleDistrictChange}
+                                    required
                                 >
                                     <option value="">Chọn Quận/Huyện</option>
                                     {districts.map((district: any) => (
@@ -142,6 +213,8 @@ const CheckOut = (props: { data: any }) => {
                                 <select
                                     className="flex-1 border-2 rounded-md p-2"
                                     id="ward"
+                                    onChange={handleWardChange}
+                                    required
                                 >
                                     <option value="">Chọn Phường/Xã</option>
                                     {wards.map((ward: any) => (
@@ -161,9 +234,11 @@ const CheckOut = (props: { data: any }) => {
                                 className="p-2 w-full border-2 rounded-md"
                                 id="address"
                                 name="address"
+                                onChange={onChangeValues}
+                                required
                             />
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div className="flex md:flex-row flex-col-reverse gap-4 justify-between py-5 md:items-center">
                     <Link
@@ -173,11 +248,14 @@ const CheckOut = (props: { data: any }) => {
                         <ArrowLongLeftIcon className="w-8 h-8" />
                         Trở lại giỏ hàng
                     </Link>
-                    <button className="bg-lanh_green hover:bg-white hover:text-lanh_green border-2 border-lanh_green text-white px-4 py-2 rounded-md">
+                    <button
+                        type="submit"
+                        className="bg-lanh_green hover:bg-white hover:text-lanh_green border-2 border-lanh_green text-white px-4 py-2 rounded-md"
+                    >
                         Đặt hàng
                     </button>
                 </div>
-            </div>
+            </form>
             <div className="lg:flex-[40%] flex-1">
                 {cart.length > 0 ? (
                     <div>

@@ -1,6 +1,5 @@
 import CheckOut from "@/components/CheckOut";
 
-
 const page = async () => {
     const getData = async () => {
         const res = await fetch(
@@ -11,18 +10,12 @@ const page = async () => {
                 },
             }
         );
-
         if (!res.ok) {
             throw new Error("Something went wrong");
         }
-
         return res.json();
     };
-
     const data = await getData();
-
-    console.log(data);
-
     return <CheckOut data={data} />;
 };
 

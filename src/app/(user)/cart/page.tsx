@@ -1,5 +1,5 @@
 "use client";
-import { addCart, removeCart, clearItem } from "@/app/Redux/cartSlice";
+import { addCart, adjustItem, removeItem } from "@/app/Redux/cartSlice";
 import BreadCrumbs from "@/components/Breadcrumbs";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -9,13 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 const Cart = () => {
-    const breadcrumbs = [
-        { name: "Trang chủ", path: "/" },
-        { name: "Giỏ hàng", path: "/cart" },
-    ];
+    const [isMounted, setIsMounted] = useState(false);
     const dispatch = useDispatch();
     const cart = useSelector((state: { cart: Products[] }) => state.cart);
-    const [isMounted, setIsMounted] = useState(false);
+    const price = cart.map((item: Products) => item.salePrice * item.quantity);
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -23,7 +20,10 @@ const Cart = () => {
         // Prevent rendering on the server side
         return null;
     }
-    const price = cart.map((item: Products) => item.salePrice * item.quantity);
+    const breadcrumbs = [
+        { name: "Trang chủ", path: "/" },
+        { name: "Giỏ hàng", path: "/cart" },
+    ];
 
     const handleRemoveItem = (item: Products) => {
         Swal.fire({
@@ -35,7 +35,7 @@ const Cart = () => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                dispatch(clearItem(item));
+                dispatch(removeItem(item));
             }
         });
     };
@@ -96,7 +96,7 @@ const Cart = () => {
                                                 <button
                                                     onClick={() =>
                                                         dispatch(
-                                                            removeCart(item)
+                                                            adjustItem(item)
                                                         )
                                                     }
                                                     className="rounded-full bg-lanh_green text-white"
@@ -181,7 +181,7 @@ const Cart = () => {
                                     <div className="flex items-center gap-2 justify-center">
                                         <button
                                             onClick={() =>
-                                                dispatch(removeCart(item))
+                                                dispatch(adjustItem(item))
                                             }
                                             className="rounded-full bg-lanh_green text-white"
                                         >
@@ -220,7 +220,7 @@ const Cart = () => {
                                     <span></span>
                                     <button
                                         onClick={() =>
-                                            dispatch(clearItem(item))
+                                            dispatch(removeItem(item))
                                         }
                                         className="  text-lanh_green  hover:opacity-50 "
                                     >

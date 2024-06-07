@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { clearItem } from "@/app/Redux/cartSlice";
+import { removeItem } from "@/app/Redux/cartSlice";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 interface Props {
@@ -63,7 +63,7 @@ const ModalCart = (props: Props) => {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => dispatch(clearItem(item))}
+                                    onClick={() => dispatch(removeItem(item))}
                                     className=" text-white  hover:opacity-50 "
                                 >
                                     <XMarkIcon className="w-6 h-6" />
