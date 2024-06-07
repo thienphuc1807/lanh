@@ -97,6 +97,7 @@ const CheckOut = (props: { data: any }) => {
 
         const uploadOrders = await handleUploadOrders(formData);
         if (!uploadOrders) {
+            dispatch(clearCart());
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -104,9 +105,8 @@ const CheckOut = (props: { data: any }) => {
                 showConfirmButton: false,
                 timer: 1500,
             });
-            dispatch(clearCart());
-            router.refresh();
             router.push("/");
+            router.refresh();
         } else {
             Swal.fire({
                 position: "top-end",

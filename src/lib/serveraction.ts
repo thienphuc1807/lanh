@@ -183,9 +183,9 @@ export const handleUploadOrders = async (formData: FormData) => {
     for (const item of ordersProduct) {
         orderList.push(JSON.parse(item));
     }
+
     try {
         connectToDb();
-        
         const newOrders = new Orders({
             fullName: fullName,
             email: email,

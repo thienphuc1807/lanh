@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const fileSchema = new mongoose.Schema({
     url: { type: String },
@@ -56,7 +56,15 @@ const orderSchema = new mongoose.Schema(
         address: {
             type: String,
         },
-        orders: [],
+        orders: [
+            {
+                productId: {
+                    type: Schema.Types.ObjectId,
+                    ref: "Products",
+                },
+                quantity: { type: Number, required: true },
+            },
+        ],
     },
     { timestamps: true }
 );
