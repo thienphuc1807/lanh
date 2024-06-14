@@ -5,13 +5,13 @@ export const authConfig = {
     providers: [],
     callbacks: {
         async jwt({ token, user }: { token: any; user: any }) {
-            // console.log("This is user", user);
-            // console.log("This is token", token);
-
             if (user) {
                 token.id = user.id;
                 token.isAdmin = user.isAdmin;
                 token.name = user.username;
+                token.fullName = user.fullName;
+                token.email = user.email;
+                token.phoneNumber = user.phoneNumber;
             }
             return token;
         },
@@ -20,9 +20,10 @@ export const authConfig = {
                 session.user.id = token.id;
                 session.user.isAdmin = token.isAdmin;
                 session.user.name = token.name;
+                session.user.fullName = token.fullName;
+                session.user.email = token.email;
+                session.user.phoneNumber = token.phoneNumber;
             }
-            console.log("this is token session >>>", session);
-
             return session;
         },
         authorized({
@@ -35,7 +36,8 @@ export const authConfig = {
             const user = auth?.user;
             const isOnAdminPanel =
                 request.nextUrl?.pathname.startsWith("/dashboard");
-            const isOnBlogPage = request.nextUrl?.pathname.startsWith("/blog");
+            const isOnCheckOutPage =
+                request.nextUrl?.pathname.startsWith("/checkout");
             const isOnLoginPage =
                 request.nextUrl?.pathname.startsWith("/login");
             // ONLY ADMIN CAN REACH THE ADMIN DASHBOARD
@@ -43,7 +45,7 @@ export const authConfig = {
                 return false;
             }
             // ONLY AUTHENTICATED USERS CAN REACH THE BLOG PAGE
-            if (isOnBlogPage && !user) {
+            if (isOnCheckOutPage && !user) {
                 return false;
             }
             // ONLY UNAUTHENTICATED USERS CAN REACH THE LOGIN PAGE

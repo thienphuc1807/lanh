@@ -36,10 +36,25 @@ const NavBar = ({ session }: any) => {
                         <h1>Hotline đặt hàng</h1>
                         {session?.user ? (
                             <>
-                                <h1>Xin chào, {session.user.name}!</h1>
-                                <form action={handleGithubLogout}>
-                                    <button>ĐĂNG XUẤT</button>
-                                </form>
+                                <div className="relative group/item cursor-pointer">
+                                    <h1>Xin chào, {session.user.name}!</h1>
+                                    <div className="text-center flex flex-col absolute group-hover/item:visible bg-lanh_green group-hover/item:scale-100 scale-0 group-hover/item:opacity-100 invisible opacity-0 w-full top-8 origin-top border-[1px] transition-all duration-500 shadow-lg z-20">
+                                        <Link
+                                            href={"/account"}
+                                            className="hover:bg-white hover:text-lanh_green p-4 w-full"
+                                        >
+                                            Thông tin tài khoản
+                                        </Link>
+                                        <button className="hover:bg-white hover:text-lanh_green p-4 w-full">
+                                            Đơn hàng của bạn
+                                        </button>
+                                        <form action={handleGithubLogout}>
+                                            <button className="hover:bg-white hover:text-lanh_green p-4 w-full">
+                                                Đăng xuất
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </>
                         ) : (
                             <>
@@ -81,8 +96,9 @@ const NavBar = ({ session }: any) => {
                             <span>Giỏ hàng: {cart.length}</span>
                         </button>
                         <ModalCart
-                            className="absolute group-hover/cart:visible origin-[80%_0%] group-hover/cart:scale-100 scale-0 group-hover/cart:opacity-100 invisible opacity-0 w-[330px] md:top-11 top-10 right-0 border-[1px] transition-all duration-500 shadow-lg"
+                            className="absolute group-hover/cart:visible origin-[80%_0%] group-hover/cart:scale-100 scale-0 group-hover/cart:opacity-100 invisible opacity-0 w-[330px] top-16 right-0 border-[1px] transition-all duration-500 shadow-lg"
                             cart={cart}
+                            session={session}
                         />
                     </div>
                 </div>
@@ -92,7 +108,7 @@ const NavBar = ({ session }: any) => {
                 <div className="flex items-center md:px-4 md:py-3 px-3 py-2 ">
                     <div>
                         <button onClick={() => setOpen(!open)}>
-                            <Bars3Icon className="md:w-10 w-8 text-white" />    
+                            <Bars3Icon className="md:w-10 w-8 text-white" />
                         </button>
                     </div>
                     <div className="relative md:w-28 md:h-20 w-16 h-12 mx-auto">
@@ -114,6 +130,7 @@ const NavBar = ({ session }: any) => {
                         <ModalCart
                             className="absolute group-hover/cart:visible origin-top-right group-hover/cart:scale-100 scale-0 group-hover/cart:opacity-100 invisible opacity-0 w-[300px] md:top-11 top-10 right-0 border-[1px] transition-all duration-500 shadow-lg"
                             cart={cart}
+                            session={session}
                         />
                     </div>
                 </div>

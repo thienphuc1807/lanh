@@ -1,5 +1,5 @@
 import { connectToDb } from "./utils";
-import { Products } from "./models";
+import { Products, User } from "./models";
 
 export const getProducts = async () => {
     try {
@@ -20,5 +20,16 @@ export const getProduct = async (id: string) => {
     } catch (error) {
         console.log(error);
         throw new Error("Failed to get product by ID");
+    }
+};
+
+export const getUser = async (id: string) => {
+    try {
+        connectToDb();
+        const user = await User.findOne({ _id: id });
+        return user;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get user by ID");
     }
 };

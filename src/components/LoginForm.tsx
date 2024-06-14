@@ -13,7 +13,7 @@ function LoginForm() {
             <label htmlFor="username">Tên đăng nhập</label>
             <input
                 type="text"
-                className="py-2 px-5 border-2 border-lanh_green rounded-md"
+                className="py-2 px-3 border-2 border-lanh_green rounded-md"
                 name="username"
                 id="username"
             />
@@ -21,12 +21,12 @@ function LoginForm() {
             <div className="relative">
                 <input
                     type={show ? "text" : "password"}
-                    className="py-2 px-5 border-2 border-lanh_green rounded-md w-full"
+                    className="py-2 px-3 border-2 border-lanh_green rounded-md w-full"
                     name="password"
                     id="password"
                 />
                 <button
-                    onClick={() => setShow(!show)}
+                    onMouseDown={() => setShow(!show)}
                     className="absolute right-2 top-1/2 translate-y-[-50%]"
                 >
                     {show ? (

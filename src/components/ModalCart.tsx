@@ -3,14 +3,31 @@ import { useDispatch } from "react-redux";
 import { removeItem } from "@/app/Redux/cartSlice";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 interface Props {
     cart: Products[];
     className: string;
+    session: any;
 }
 const ModalCart = (props: Props) => {
-    const { cart, className } = props;
+    const { cart, className, session } = props;
     const dispatch = useDispatch();
     const price = cart.map((item: Products) => item.salePrice * item.quantity);
+    const router = useRouter();
+
+    const handleCheckOut = () => {
+        if (session) {
+            router.push("/checkout");
+        } else {
+            Swal.fire({
+                title: "Bạn cần đăng nhập để tiến hành thanh toán",
+                position: "top-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        }
+    };
     return (
         <div className={className}>
             {cart.length > 0 ? (
@@ -95,12 +112,12 @@ const ModalCart = (props: Props) => {
                                 Giỏ hàng
                             </Link>
 
-                            <Link
-                                href={"/checkout"}
+                            <button
+                                onClick={handleCheckOut}
                                 className="p-2 flex-1 bg-white text-center border-2 border-white hover:bg-lanh_green hover:text-white transition-all duration-300 ease-linear"
                             >
                                 Thanh toán
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>

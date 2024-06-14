@@ -98,19 +98,38 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        email: {
+        password: {
             type: String,
             required: true,
+        },
+        email: {
+            type: String,
             unique: true,
+            required: true,
         },
         isAdmin: {
             type: Boolean,
             default: false,
         },
-        img: {
+        fullName: {
             type: String,
         },
-        password: {
+        userAvatar: {
+            type: String,
+        },
+        phoneNumber: {
+            type: String,
+        },
+        city: {
+            type: String,
+        },
+        ward: {
+            type: String,
+        },
+        district: {
+            type: String,
+        },
+        address: {
             type: String,
         },
     },

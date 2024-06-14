@@ -44,6 +44,13 @@ export const handleRegister = async (previousState: any, fromData: any) => {
             username,
             email,
             password: hashedPassword,
+            userAvatar: "",
+            fullName: "",
+            phoneNumber: "",
+            city: "",
+            ward: "",
+            district: "",
+            address: "",
         });
         await newUser.save();
         console.log("save to DB");
@@ -197,6 +204,29 @@ export const handleUploadOrders = async (formData: FormData) => {
             orders: orderList,
         });
         await newOrders.save();
+    } catch (error) {
+        console.log(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const handleEditUser = async (formData: FormData, id: string) => {
+    const { fullName, email, phoneNumber, city, district, ward, address } =
+        Object.fromEntries(formData);
+    try {
+        connectToDb();
+        await User.findOneAndUpdate(
+            { _id: id },
+            {
+                fullName: fullName,
+                email: email,
+                phoneNumber: phoneNumber,
+                city: city,
+                district: district,
+                ward: ward,
+                address: address,
+            }
+        );
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" };

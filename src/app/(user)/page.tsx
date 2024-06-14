@@ -5,8 +5,6 @@ import Shipper from "/public/Shipper.png";
 import bannerImage from "/public/Banner.png";
 import ProductsSwiper from "@/components/Swiper";
 import NewProducts from "@/components/NewProducts";
-import Introduction from "@/components/Introduction";
-import FeaturedNews from "@/components/FeaturedNews";
 
 const getProducts = async () => {
     const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {

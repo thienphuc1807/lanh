@@ -8,20 +8,22 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-const CheckOut = (props: { data: any }) => {
-    const { data } = props;
+const CheckOut = (props: { data: any; session: any }) => {
+    const { data, session } = props;
     const [cities, setCities] = useState(data);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
     const cart = useSelector((state: { cart: Products[] }) => state.cart);
     const [isMounted, setIsMounted] = useState(false);
+    console.log(session);
 
     const dispatch = useDispatch();
 
     const [values, setValues] = useState({
-        fullName: "",
-        email: "",
-        phoneNumber: "",
+        userId: session.user.id,
+        fullName: session.user.fullName,
+        email: session.user.email,
+        phoneNumber: session.user.phoneNumber,
         city: "",
         district: "",
         ward: "",
@@ -139,6 +141,7 @@ const CheckOut = (props: { data: any }) => {
                                 className="p-2 w-full border-2 rounded-md"
                                 onChange={onChangeValues}
                                 required
+                                value={values.fullName}
                             />
                         </div>
                         <div className="flex gap-2">
@@ -152,6 +155,7 @@ const CheckOut = (props: { data: any }) => {
                                     id="email"
                                     name="email"
                                     onChange={onChangeValues}
+                                    value={values.email}
                                 />
                             </div>
                             <div className="flex-1 space-y-2">
@@ -165,6 +169,7 @@ const CheckOut = (props: { data: any }) => {
                                     name="phoneNumber"
                                     onChange={onChangeValues}
                                     required
+                                    value={values.phoneNumber}
                                 />
                             </div>
                         </div>
