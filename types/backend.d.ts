@@ -54,3 +54,18 @@ interface PaginationControl {
     hasPrevPage: bolean;
     dataLength: number;
 }
+
+interface Orders {
+    _id: string;
+    userID: string;
+    fullName: string;
+    email: string;
+    phoneNumber: string;
+    city: string;
+    district: string;
+    ward: string;
+    address: string;
+    orders: any[];
+    createdAt: date;
+    status: string;
+}

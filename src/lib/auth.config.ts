@@ -40,12 +40,18 @@ export const authConfig = {
                 request.nextUrl?.pathname.startsWith("/checkout");
             const isOnLoginPage =
                 request.nextUrl?.pathname.startsWith("/login");
+            const isOnOrdersPage =
+                request.nextUrl?.pathname.startsWith("/orders");
             // ONLY ADMIN CAN REACH THE ADMIN DASHBOARD
             if (isOnAdminPanel && !user?.isAdmin) {
                 return false;
             }
-            // ONLY AUTHENTICATED USERS CAN REACH THE BLOG PAGE
+            // ONLY AUTHENTICATED USERS CAN REACH THE CHECKOUT PAGE
             if (isOnCheckOutPage && !user) {
+                return false;
+            }
+            // ONLY AUTHENTICATED USERS CAN REACH THE ORDERS PAGE
+            if (isOnOrdersPage && !user) {
                 return false;
             }
             // ONLY UNAUTHENTICATED USERS CAN REACH THE LOGIN PAGE

@@ -1,5 +1,5 @@
 "use client";
-import { handleRemoveUser } from "@/lib/serveraction";
+import { handleRemoveUser } from "@/lib/serverAction";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
 
@@ -15,7 +15,7 @@ const handleRemove = (id: string) => {
         confirmButtonColor: "#97ba79",
         cancelButtonColor: "#d33",
         confirmButtonText: "Xoá",
-        cancelButtonText: "Huỷ"
+        cancelButtonText: "Huỷ",
     }).then((result) => {
         if (result.isConfirmed) {
             handleRemoveUser(id);

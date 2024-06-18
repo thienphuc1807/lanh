@@ -1,5 +1,5 @@
 "use client";
-import { handleLogin } from "@/lib/serveraction";
+import { handleLogin } from "@/lib/serverAction";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";

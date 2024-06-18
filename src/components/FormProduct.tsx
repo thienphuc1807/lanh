@@ -1,5 +1,5 @@
 "use client";
-import { updateProduct, uploadProduct } from "@/lib/serveraction";
+import { updateProduct, uploadProduct } from "@/lib/serverAction";
 import { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";

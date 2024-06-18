@@ -183,8 +183,16 @@ export const updateProduct = async (formData: FormData, id: string) => {
 };
 
 export const handleUploadOrders = async (formData: FormData) => {
-    const { fullName, email, phoneNumber, city, district, ward, address } =
-        Object.fromEntries(formData);
+    const {
+        fullName,
+        email,
+        phoneNumber,
+        city,
+        district,
+        ward,
+        address,
+        userID,
+    } = Object.fromEntries(formData);
     const ordersProduct: string[] = formData.getAll("orders") as string[];
     const orderList = [];
     for (const item of ordersProduct) {
@@ -194,6 +202,7 @@ export const handleUploadOrders = async (formData: FormData) => {
     try {
         connectToDb();
         const newOrders = new Orders({
+            userID: userID,
             fullName: fullName,
             email: email,
             phoneNumber: phoneNumber,
@@ -201,6 +210,7 @@ export const handleUploadOrders = async (formData: FormData) => {
             district: district,
             ward: ward,
             address: address,
+            status: "Đã đặt hàng",
             orders: orderList,
         });
         await newOrders.save();

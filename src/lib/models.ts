@@ -35,6 +35,10 @@ const productSchema = new mongoose.Schema(
 
 const orderSchema = new mongoose.Schema(
     {
+        userID: {
+            type: String,
+            required: true,
+        },
         fullName: {
             type: String,
         },
@@ -56,15 +60,10 @@ const orderSchema = new mongoose.Schema(
         address: {
             type: String,
         },
-        orders: [
-            {
-                productId: {
-                    type: Schema.Types.ObjectId,
-                    ref: "Products",
-                },
-                quantity: { type: Number, required: true },
-            },
-        ],
+        status: {
+            type: String,
+        },
+        orders: [productSchema],
     },
     { timestamps: true }
 );

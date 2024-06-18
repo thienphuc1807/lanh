@@ -8,7 +8,7 @@ import {
     ShoppingCartIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { handleGithubLogout } from "@/lib/serveraction";
+import { handleGithubLogout } from "@/lib/serverAction";
 import { useSelector } from "react-redux";
 import ModalCart from "@/components/ModalCart";
 
@@ -45,9 +45,12 @@ const NavBar = ({ session }: any) => {
                                         >
                                             Thông tin tài khoản
                                         </Link>
-                                        <button className="hover:bg-white hover:text-lanh_green p-4 w-full">
+                                        <Link
+                                            href={"/orders"}
+                                            className="hover:bg-white hover:text-lanh_green p-4 w-full"
+                                        >
                                             Đơn hàng của bạn
-                                        </button>
+                                        </Link>
                                         <form action={handleGithubLogout}>
                                             <button className="hover:bg-white hover:text-lanh_green p-4 w-full">
                                                 Đăng xuất
@@ -105,7 +108,7 @@ const NavBar = ({ session }: any) => {
             </div>
             {/* Mobile navbar */}
             <div className="lg:hidden block relative">
-                <div className="flex items-center md:px-4 md:py-3 px-3 py-2 ">
+                <div className="flex items-center md:px-4 md:py-3 px-3 py-2">
                     <div>
                         <button onClick={() => setOpen(!open)}>
                             <Bars3Icon className="md:w-10 w-8 text-white" />
@@ -137,9 +140,9 @@ const NavBar = ({ session }: any) => {
 
                 <div className="flex">
                     <div
-                        className={`flex flex-col md:w-[250px] top-0 bottom-0 w-[60%] fixed z-20 ${
-                            !open && "ml-[-60%] md:ml-[-250px]"
-                        } bg-lanh_green min-h-screen transition-all py-5`}
+                        className={`flex flex-col md:w-[250px] top-0 bottom-0 w-[80%] fixed z-20 ${
+                            !open && "ml-[-80%] md:ml-[-250px]"
+                        } bg-lanh_green min-h-screen transition-all`}
                     >
                         <div className="flex flex-col h-screen bg-lanh_green md:p-6 p-3">
                             <div className="flex justify-end">
@@ -155,7 +158,7 @@ const NavBar = ({ session }: any) => {
                                         pathName === link.path
                                             ? "text-black"
                                             : "text-white"
-                                    } uppercase px-5 md:text-lg flex flex-col gap-5 py-5 text-left `}
+                                    } uppercase px-2 flex flex-col gap-2 py-4 text-left `}
                                 >
                                     {link.name}
                                 </Link>
@@ -163,11 +166,11 @@ const NavBar = ({ session }: any) => {
 
                             {session?.user ? (
                                 <>
-                                    <h1 className="text-white uppercase px-5 md:text-lg flex flex-col gap-5 py-5 text-left">
+                                    <h1 className="text-white uppercase px-2 md:text-lg py-4 text-left truncate">
                                         {session.user.name}
                                     </h1>
                                     <form action={handleGithubLogout}>
-                                        <button className="text-white uppercase px-5 md:text-lg flex flex-col gap-5 py-5 text-left">
+                                        <button className="text-white uppercase px-2 py-4 text-left">
                                             ĐĂNG XUẤT
                                         </button>
                                     </form>
@@ -179,7 +182,7 @@ const NavBar = ({ session }: any) => {
                                             pathName === "/login"
                                                 ? "text-black"
                                                 : "text-white"
-                                        } uppercase px-5 md:text-lg flex flex-col gap-5 py-5 text-left `}
+                                        } uppercase px-2 py-4 text-left `}
                                         href={"/login"}
                                     >
                                         ĐĂNG NHẬP
@@ -189,7 +192,7 @@ const NavBar = ({ session }: any) => {
                                             pathName === "/register"
                                                 ? "text-black"
                                                 : "text-white"
-                                        } uppercase px-5 md:text-lg flex flex-col gap-5 py-5 text-left `}
+                                        } uppercase px-5 md:text-lg py-5 text-left `}
                                         href={"/register"}
                                     >
                                         ĐĂNG KÝ

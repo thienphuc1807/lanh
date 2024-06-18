@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { handleEditUser } from "@/lib/serveraction";
+import { handleEditUser } from "@/lib/serverAction";
 
 const UserAccount = (props: { data: any; user: any }) => {
     const { data, user } = props;
@@ -115,35 +115,10 @@ const UserAccount = (props: { data: any; user: any }) => {
         });
     };
     return (
-        <div className="container mx-auto flex md:flex-row flex-col md:py-10 py-2 gap-4 md:px-4 px-0">
-            <form className="md:flex-[30%] flex-1 flex flex-col gap-4 bg-white p-6 items-center rounded-md h-fit">
-                <h1 className="font-bold text-lanh_green text-xl">
-                    Ảnh đại diện
-                </h1>
-                <label
-                    htmlFor="userAvatar"
-                    className="flexx flex-col items-center"
-                >
-                    <div className="relative h-32 w-32 hover:bg-gray hover:opacity-50 rounded-full overflow-hidden">
-                        <Image
-                            src={"/defaultImg.png"}
-                            alt="User Avatar"
-                            fill
-                            className="object-contain"
-                        />
-                    </div>
-                    <input type="file" id="userAvatar" className="hidden" />
-                </label>
-                <button
-                    type="submit"
-                    className="p-2 text-sm rounded-lg w-fit border-2 border-lanh_green bg-lanh_green text-white hover:bg-white hover:text-lanh_green"
-                >
-                    Cập nhật ảnh đại diện
-                </button>
-            </form>
+        <div className="container mx-auto md:py-5 py-2 md:px-4 px-0">
             <form
                 onSubmit={handleUpdateInfo}
-                className="md:flex-[70%] flex-1 flex flex-col gap-4 bg-white p-6 rounded-md"
+                className="flex flex-col gap-4 bg-white p-6 rounded-md"
             >
                 <h1 className="font-bold text-lanh_green text-xl">
                     Thông tin cá nhân
@@ -159,7 +134,7 @@ const UserAccount = (props: { data: any; user: any }) => {
                         value={values.fullName}
                     />
                 ) : (
-                    <p>{user.fullName}</p>
+                    <b>{user.fullName}</b>
                 )}
                 <label htmlFor="email">Địa chỉ email:</label>
                 {isEdit ? (
@@ -172,7 +147,7 @@ const UserAccount = (props: { data: any; user: any }) => {
                         value={values.email}
                     />
                 ) : (
-                    <p>{user.email}</p>
+                    <b>{user.email}</b>
                 )}
                 <label htmlFor="phoneNumber">Số điện thoại:</label>
                 {isEdit ? (
@@ -185,7 +160,7 @@ const UserAccount = (props: { data: any; user: any }) => {
                         value={values.phoneNumber}
                     />
                 ) : (
-                    <p>{user.phoneNumber}</p>
+                    <b>{user.phoneNumber}</b>
                 )}
                 <label htmlFor="address">Địa chỉ:</label>
                 {isEdit ? (
@@ -198,7 +173,7 @@ const UserAccount = (props: { data: any; user: any }) => {
                         value={values.address}
                     />
                 ) : (
-                    <p>{user.address}</p>
+                    <b>{user.address}</b>
                 )}
                 <div className="flex md:flex-row flex-col md:items-center gap-4">
                     {isEdit ? (
@@ -260,9 +235,9 @@ const UserAccount = (props: { data: any; user: any }) => {
                         </>
                     ) : (
                         <>
-                            <p>{user.city}</p>
-                            <p>{user.district}</p>
-                            <p>{user.ward}</p>
+                            <b>{user.city}</b>
+                            <b>{user.district}</b>
+                            <b>{user.ward}</b>
                         </>
                     )}
                 </div>
