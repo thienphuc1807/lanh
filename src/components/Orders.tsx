@@ -8,7 +8,7 @@ const Orders = (props: { orders: Orders[] }) => {
                     Đơn hàng của bạn
                 </h1>
                 {orders.length > 0 ? (
-                    orders.map((item: Orders, index: number) => (
+                    orders.map((item: Orders) => (
                         <div key={item._id} className="p-4 border-b-2 w-full">
                             <div className="w-full">
                                 <div>
@@ -28,7 +28,7 @@ const Orders = (props: { orders: Orders[] }) => {
                                     </p>
                                     <p>
                                         Địa chỉ: <b>{item.address}</b>,{" "}
-                                        <b>{item.district}</b>,<b> </b>
+                                        <b>{item.district}</b>,{" "}
                                         <b>{item.ward}</b>, <b>{item.city}</b>
                                     </p>
                                     <p>
@@ -54,29 +54,41 @@ const Orders = (props: { orders: Orders[] }) => {
                                             </div>
                                         ))}
                                     </div>
-                                    <p className="text-xl border-t-2 mt-2 pt-2">
-                                        Tổng cộng:
-                                        <b className="pl-2 text-lanh_green">
-                                            {Intl.NumberFormat("vi-VN", {
-                                                style: "currency",
-                                                currency: "VND",
-                                            }).format(
-                                                item.orders
-                                                    .map(
-                                                        (item: Products) =>
-                                                            item.salePrice *
-                                                            item.quantity
-                                                    )
-                                                    .reduce(
-                                                        (
-                                                            acc: number,
-                                                            init: number
-                                                        ) => acc + init,
-                                                        0
-                                                    )
-                                            )}
-                                        </b>
-                                    </p>
+                                    <div className="flex text-xl justify-between border-t-2 mt-2 pt-2">
+                                        <div className="flex gap-2">
+                                            <p>Tổng:</p>
+                                            <b className="text-lanh_green">
+                                                {Intl.NumberFormat("vi-VN", {
+                                                    style: "currency",
+                                                    currency: "VND",
+                                                }).format(
+                                                    item.orders
+                                                        .map(
+                                                            (item: Products) =>
+                                                                item.salePrice *
+                                                                item.quantity
+                                                        )
+                                                        .reduce(
+                                                            (
+                                                                acc: number,
+                                                                init: number
+                                                            ) => acc + init,
+                                                            0
+                                                        )
+                                                )}
+                                            </b>
+                                        </div>
+                                        <button
+                                            disabled={
+                                                item.status === "Đã đặt hàng"
+                                                    ? false
+                                                    : true
+                                            }
+                                            className="text-sm px-2 disabled:bg-slate-400 disabled:border-slate-400 disabled:opacity-50 disabled:hover:text-white rounded-md bg-lanh_green text-white border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
+                                        >
+                                            Huỷ đơn
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

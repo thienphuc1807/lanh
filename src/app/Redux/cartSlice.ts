@@ -20,16 +20,37 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addCart(state, action: PayloadAction<Products>) {
-            console.log(action.payload);
-
             const existingItem = state.find(
                 (item) => item._id === action.payload._id
             );
             if (existingItem) {
-                existingItem.quantity += action.payload.quantity;
+                // Check if there's enough stock to add the requested quantity
+                if (
+                    existingItem.inStock &&
+                    existingItem.inStock >=
+                        existingItem.quantity + action.payload.quantity
+                ) {
+                    existingItem.quantity += action.payload.quantity;
+                } else {
+                    // Optionally handle the case where there's not enough stock
+                    console.warn(
+                        "Not enough stock to add the requested quantity"
+                    );
+                }
             } else {
-                state.push(action.payload);
-            }
+                // Only add the new item if there's enough stock
+                if (
+                    action.payload.inStock &&
+                    action.payload.quantity <= action.payload.inStock
+                ) {
+                    state.push({ ...action.payload });
+                } else {
+                    // Optionally handle the case where there's not enough stock
+                    console.warn(
+                        "Not enough stock to add the item to the cart"
+                    );
+                }
+            } 
             setLocalStorageItem("Cart", state);
         },
         adjustItem(state, action: PayloadAction<Products>) {

@@ -5,7 +5,11 @@ import BreadCrumbs from "@/components/Breadcrumbs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addCart } from "@/app/Redux/cartSlice";
-import { ShoppingCartIcon } from "@heroicons/react/24/solid";
+import {
+    MinusIcon,
+    ShoppingCartIcon,
+    PlusIcon,
+} from "@heroicons/react/24/solid";
 
 interface Props {
     data: Products;
@@ -20,6 +24,18 @@ const DetailProduct = (props: Props) => {
     ];
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
+
+    const handleChangeQuantity = (math: string, quantity: number) => {
+        if (math === "plus") {
+            if (data.inStock && quantity < data.inStock) {
+                setQuantity((quantity += 1));
+            }
+        } else {
+            if (quantity > 1) {
+                setQuantity((quantity -= 1));
+            }
+        }
+    };
 
     return (
         <div className="container mx-auto lg:px-5 px-0">
@@ -47,20 +63,55 @@ const DetailProduct = (props: Props) => {
                     </p>
                     <p className="my-5">Nguyên liệu: {data.ingredient}</p>
                     <label htmlFor="quantity">Số lượng: </label>
-                    <input
-                        type="number"
-                        id="quantity"
-                        name="quantity"
-                        className="border-2 px-3"
-                        min="1"
-                        max={data.inStock}
-                        inputMode="numeric"
-                        value={quantity}
-                        onChange={(e) => setQuantity(Number(e.target.value))}
-                    />
+                    {data.inStock === 0 ? (
+                        <p className="text-red-500 font-bold">Hết hàng</p>
+                    ) : (
+                        <div className="flex pt-4">
+                            <button
+                                onClick={() =>
+                                    handleChangeQuantity("minus", quantity)
+                                }
+                                className={`p-3 ${
+                                    quantity === 1
+                                        ? "bg-gray-400"
+                                        : " bg-lanh_green"
+                                }  text-white rounded-l-md`}
+                                disabled={quantity === 1 ? true : false}
+                            >
+                                <MinusIcon className="w-4 h-4" />
+                            </button>
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                className="p-2 border-2 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                min="1"
+                                max={data.inStock}
+                                inputMode="numeric"
+                                value={quantity}
+                                readOnly
+                            />
+                            <button
+                                onClick={() =>
+                                    handleChangeQuantity("plus", quantity)
+                                }
+                                className={`p-3 ${
+                                    quantity === data.inStock
+                                        ? "bg-gray-400"
+                                        : "bg-lanh_green"
+                                }  text-white rounded-r-md`}
+                                disabled={
+                                    quantity === data.inStock ? true : false
+                                }
+                            >
+                                <PlusIcon className="w-4 h-4" />
+                            </button>
+                        </div>
+                    )}
                     <div className="flex flex-wrap gap-5 mt-5">
                         <button
-                            className="bg-lanh_green text-white lg:text-base text-sm px-4 py-2 rounded-md hover:opacity-80 flex gap-2 items-center"
+                            disabled={data.inStock === 0 ? true : false}
+                            className="bg-lanh_green disabled:bg-slate-400 disabled:opacity-50 text-white lg:text-base text-sm px-4 py-2 rounded-md hover:opacity-80 flex gap-2 items-center"
                             onClick={() =>
                                 dispatch(addCart({ ...data, quantity }))
                             }
@@ -68,7 +119,10 @@ const DetailProduct = (props: Props) => {
                             <ShoppingCartIcon className="h-6 w-6" />
                             <span>Thêm vào giỏ</span>
                         </button>
-                        <button className="bg-lanh_green text-white lg:text-base text-sm px-4 py-2 rounded-md hover:opacity-80">
+                        <button
+                            disabled={data.inStock === 0 ? true : false}
+                            className="bg-lanh_green disabled:bg-slate-400 disabled:opacity-50 text-white lg:text-base text-sm px-4 py-2 rounded-md hover:opacity-80"
+                        >
                             Mua ngay
                         </button>
                     </div>

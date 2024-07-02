@@ -6,7 +6,7 @@ interface Products {
     imgs: any[];
     ingredient: string;
     quantity: number;
-    inStock: number;
+    inStock?: number;
 }
 
 interface News {

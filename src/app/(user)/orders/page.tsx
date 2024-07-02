@@ -11,7 +11,6 @@ const OrdersPage = async () => {
         orders = await getOrdersByUserId(id);
     }
     const userOrders = JSON.parse(JSON.stringify(orders));
-    console.log(userOrders);
     return <Orders orders={userOrders} />;
 };
 

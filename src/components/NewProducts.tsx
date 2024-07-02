@@ -51,7 +51,11 @@ const NewProducts = (props: Props) => {
                                             key={item.imgs[0]?._id}
                                             src={item.imgs[0]?.url}
                                             fill={true}
-                                            className="object-contain"
+                                            className={`object-contain ${
+                                                item.inStock === 0
+                                                    ? "opacity-50"
+                                                    : "opacity-100"
+                                            }`}
                                             alt={item.name}
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
@@ -59,8 +63,29 @@ const NewProducts = (props: Props) => {
                                         <Image
                                             src="/defaultImg.png"
                                             alt="product_img"
-                                            className="object-contain"
+                                            className={`object-contain ${
+                                                item.inStock === 0
+                                                    ? "opacity-50"
+                                                    : "opacity-100"
+                                            }`}
                                             fill
+                                        />
+                                    )}
+                                    {item.inStock === 0 ? (
+                                        <Image
+                                            src="/outofstock.png"
+                                            alt="sale"
+                                            className="relative top-[-15px] left-[-15px] object-contain z-10"
+                                            width={100}
+                                            height={100}
+                                        />
+                                    ) : (
+                                        <Image
+                                            src="/sale.png"
+                                            alt="sale"
+                                            className="object-contain"
+                                            width={100}
+                                            height={100}
                                         />
                                     )}
                                 </div>
@@ -92,12 +117,19 @@ const NewProducts = (props: Props) => {
                                             {item.ingredient}
                                         </p>
                                         <button
-                                            className="bg-[#f35a69] text-white md:rounded-full py-2 md:px-10 px-5 md:mt-5 mt-2"
+                                            disabled={
+                                                item.inStock === 0
+                                                    ? true
+                                                    : false
+                                            }
+                                            className="bg-[#f35a69] disabled:bg-gray-400 text-white md:rounded-full py-2 md:px-10 px-5 md:mt-5 mt-2"
                                             onClick={() =>
                                                 dispatch(addCart(item))
                                             }
                                         >
-                                            Thêm vào giỏ
+                                            {item.inStock === 0
+                                                ? "Hết hàng"
+                                                : "Thêm vào giỏ"}
                                         </button>
                                     </div>
                                 </div>

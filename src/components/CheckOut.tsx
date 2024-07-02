@@ -97,10 +97,9 @@ const CheckOut = (props: { data: any; session: any }) => {
         values?.orders.forEach((item: Products) => {
             formData.append("orders", JSON.stringify(item));
         });
-
         const uploadOrders = await handleUploadOrders(formData);
         if (!uploadOrders) {
-            dispatch(clearCart());
+            await dispatch(clearCart());
             Swal.fire({
                 position: "top-end",
                 icon: "success",

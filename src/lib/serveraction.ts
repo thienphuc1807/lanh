@@ -196,9 +196,22 @@ export const handleUploadOrders = async (formData: FormData) => {
     const ordersProduct: string[] = formData.getAll("orders") as string[];
     const orderList = [];
     for (const item of ordersProduct) {
-        orderList.push(JSON.parse(item));
+        const product: Products = JSON.parse(item);
+        const productOrders: Products = {
+            _id: product._id,
+            name: product.name,
+            salePrice: product.salePrice,
+            imgs: product.imgs,
+            price: product.price,
+            quantity: product.quantity,
+            ingredient: product.ingredient,
+        };
+        await Products.findByIdAndUpdate(productOrders._id, {
+            $inc: { inStock: -productOrders.quantity },
+        });
+        
+        orderList.push(productOrders);
     }
-
     try {
         connectToDb();
         const newOrders = new Orders({
