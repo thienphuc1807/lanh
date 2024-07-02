@@ -134,7 +134,10 @@ const FormProduct = (props: Props) => {
         formData.append("price", values?.price.toString());
         formData.append("salePrice", values?.salePrice.toString());
         formData.append("ingredient", values?.ingredient);
-        formData.append("inStock", values?.inStock.toString());
+        formData.append(
+            "inStock",
+            values?.inStock ? values?.inStock.toString() : "0"
+        );
         formData.append("quantity", values?.quantity.toString());
         values?.imgs.forEach((img) => {
             formData.append("files", img);
