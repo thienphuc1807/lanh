@@ -8,7 +8,7 @@ import {
     ShoppingCartIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { handleGithubLogout } from "@/lib/serverAction";
+import { handleGithubLogout } from "@/lib/serveraction";
 import { useSelector } from "react-redux";
 import ModalCart from "@/components/ModalCart";
 

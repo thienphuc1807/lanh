@@ -1,5 +1,5 @@
 "use client";
-import { handleRemoveUser } from "@/lib/serverAction";
+import { handleRemoveUser } from "@/lib/serveraction";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
 

@@ -1,5 +1,5 @@
 import LoginForm from "@/components/LoginForm";
-import { handleGithubLogin } from "@/lib/serverAction";
+import { handleGithubLogin } from "@/lib/serveraction";
 import Image from "next/image";
 const LoginPage = async () => {
     return (

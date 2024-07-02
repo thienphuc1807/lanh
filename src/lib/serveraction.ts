@@ -209,7 +209,7 @@ export const handleUploadOrders = async (formData: FormData) => {
         await Products.findByIdAndUpdate(productOrders._id, {
             $inc: { inStock: -productOrders.quantity },
         });
-        
+
         orderList.push(productOrders);
     }
     try {

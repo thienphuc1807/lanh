@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { handleEditUser } from "@/lib/serverAction";
+import { handleEditUser } from "@/lib/serveraction";
 
 const UserAccount = (props: { data: any; user: any }) => {
     const { data, user } = props;

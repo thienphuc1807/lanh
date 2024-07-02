@@ -1,6 +1,6 @@
 "use client";
 import { clearCart } from "@/app/Redux/cartSlice";
-import { handleUploadOrders } from "@/lib/serverAction";
+import { handleUploadOrders } from "@/lib/serveraction";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -99,7 +99,6 @@ const CheckOut = (props: { data: any; session: any }) => {
         });
         const uploadOrders = await handleUploadOrders(formData);
         if (!uploadOrders) {
-            await dispatch(clearCart());
             Swal.fire({
                 position: "top-end",
                 icon: "success",
