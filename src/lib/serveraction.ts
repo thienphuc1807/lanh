@@ -1,6 +1,6 @@
 "use server";
 import { signIn, signOut } from "./auth";
-import { File, Orders, Products, User } from "./models";
+import { File, Orders, Products, User, UserFeedBack } from "./models";
 import { connectToDb } from "./utils";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
@@ -209,7 +209,6 @@ export const handleUploadOrders = async (formData: FormData) => {
         await Products.findByIdAndUpdate(productOrders._id, {
             $inc: { inStock: -productOrders.quantity },
         });
-
         orderList.push(productOrders);
     }
     try {
@@ -250,6 +249,29 @@ export const handleEditUser = async (formData: FormData, id: string) => {
                 address: address,
             }
         );
+    } catch (error) {
+        console.log(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const handleUserFeedback = async (
+    formData: FormData,
+    userId: string,
+    productId: string,
+    fullName: string
+) => {
+    const { rating, comment } = Object.fromEntries(formData);
+    try {
+        connectToDb();
+        const newFeedback = new UserFeedBack({
+            userId,
+            productId,
+            rating,
+            comment,
+            fullName,
+        });
+        await newFeedback.save();
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" };

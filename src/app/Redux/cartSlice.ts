@@ -50,7 +50,7 @@ const cartSlice = createSlice({
                         "Not enough stock to add the item to the cart"
                     );
                 }
-            } 
+            }
             setLocalStorageItem("Cart", state);
         },
         adjustItem(state, action: PayloadAction<Products>) {
@@ -73,6 +73,7 @@ const cartSlice = createSlice({
         },
         clearCart() {
             setLocalStorageItem("Cart", []);
+            return [];
         },
     },
 });

@@ -134,6 +134,29 @@ const userSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+const userFeedBackSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: String,
+            required: true,
+        },
+        productId: {
+            type: String,
+            required: true,
+        },
+        rating: {
+            type: String,
+        },
+        comment: {
+            type: String,
+        },
+        fullName: {
+            type: String,
+        },
+    },
+    { timestamps: true }
+);
+
 export const Products =
     mongoose.models.Products || mongoose.model("Products", productSchema);
 export const File = mongoose.models.File || mongoose.model("File", fileSchema);
@@ -141,3 +164,6 @@ export const News = mongoose.models.News || mongoose.model("News", newsSchema);
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 export const Orders =
     mongoose.models.Orders || mongoose.model("Orders", orderSchema);
+export const UserFeedBack =
+    mongoose.models.UserFeedBack ||
+    mongoose.model("UserFeedBack", userFeedBackSchema);

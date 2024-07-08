@@ -1,5 +1,5 @@
 import { connectToDb } from "./utils";
-import { Orders, Products, User } from "./models";
+import { Orders, Products, User, UserFeedBack } from "./models";
 
 export const getProducts = async () => {
     try {
@@ -31,5 +31,16 @@ export const getOrdersByUserId = async (userID: string) => {
     } catch (error) {
         console.log(error);
         throw new Error("Failed to get orders");
+    }
+};
+
+export const getFeedbacks = async () => {
+    try {
+        connectToDb();
+        const feedbacks = await UserFeedBack.find();
+        return feedbacks;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get feedbacks");
     }
 };

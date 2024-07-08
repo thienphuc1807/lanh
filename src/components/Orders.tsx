@@ -1,15 +1,21 @@
 const Orders = (props: { orders: Orders[] }) => {
     const { orders } = props;
-    var total = 0;
+    const formatISODate = (isoDate: any) => {
+        let date = new Date(isoDate);
+        return date.toLocaleDateString("en-GB");
+    };
     return (
         <div className="container mx-auto md:py-5 py-2 md:px-5 px-0 ">
-            <div className="bg-white rounded-md overflow-hidden">
+            <div className="rounded-md overflow-hidden">
                 <h1 className="font-bold text-lanh_green p-4 border-b-2 text-xl">
                     Đơn hàng của bạn
                 </h1>
                 {orders.length > 0 ? (
                     orders.map((item: Orders) => (
-                        <div key={item._id} className="p-4 border-b-2 w-full">
+                        <div
+                            key={item._id}
+                            className="p-4 border-b-2 w-full bg-white my-4 shadow-lg"
+                        >
                             <div className="w-full">
                                 <div>
                                     <p className="flex md:flex-row flex-col-reverse justify-between">
@@ -21,14 +27,18 @@ const Orders = (props: { orders: Orders[] }) => {
                                         </span>
                                     </p>
                                     <p>
+                                        Ngày đặt:
+                                        <b>{formatISODate(item.createdAt)}</b>
+                                    </p>
+                                    <p>
                                         Tên người nhận: <b>{item.fullName}</b>
                                     </p>
                                     <p>
                                         Số điện thoại: <b>{item.phoneNumber}</b>
                                     </p>
                                     <p>
-                                        Địa chỉ: <b>{item.address}</b>,{" "}
-                                        <b>{item.district}</b>,{" "}
+                                        Địa chỉ: <b>{item.address}</b>,
+                                        <b>{item.district}</b>,
                                         <b>{item.ward}</b>, <b>{item.city}</b>
                                     </p>
                                     <p>

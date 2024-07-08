@@ -69,3 +69,11 @@ interface Orders {
     createdAt: date;
     status: string;
 }
+
+interface Feedbacks {
+    userId: string;
+    productId: string;
+    rating: number;
+    comment: string;
+    fullName: string;
+}

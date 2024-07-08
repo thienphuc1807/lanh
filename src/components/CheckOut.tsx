@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 const CheckOut = (props: { data: any; session: any }) => {
     const { data, session } = props;
@@ -15,8 +15,6 @@ const CheckOut = (props: { data: any; session: any }) => {
     const [wards, setWards] = useState([]);
     const cart = useSelector((state: { cart: Products[] }) => state.cart);
     const [isMounted, setIsMounted] = useState(false);
-    console.log(session);
-
     const dispatch = useDispatch();
 
     const [values, setValues] = useState({
@@ -30,12 +28,11 @@ const CheckOut = (props: { data: any; session: any }) => {
         address: "",
         orders: cart,
     });
+    
+    const router = useRouter();
     useEffect(() => {
         setIsMounted(true);
     }, []);
-
-    const router = useRouter();
-
     if (!isMounted) {
         // Prevent rendering on the server side
         return null;
@@ -106,8 +103,8 @@ const CheckOut = (props: { data: any; session: any }) => {
                 showConfirmButton: false,
                 timer: 1500,
             });
+            await dispatch(clearCart());
             router.push("/");
-            router.refresh();
         } else {
             Swal.fire({
                 position: "top-end",

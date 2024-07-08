@@ -11,7 +11,7 @@ const OrdersPage = async () => {
         orders = await getOrdersByUserId(id);
     }
     const userOrders = JSON.parse(JSON.stringify(orders));
-    return <Orders orders={userOrders} />;
+    return <Orders orders={userOrders.reverse()} />;
 };
 
 export default OrdersPage;
