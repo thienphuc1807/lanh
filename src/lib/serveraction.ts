@@ -192,6 +192,7 @@ export const handleUploadOrders = async (formData: FormData) => {
         ward,
         address,
         userID,
+        category,
     } = Object.fromEntries(formData);
     const ordersProduct: string[] = formData.getAll("orders") as string[];
     const orderList = [];
@@ -205,6 +206,7 @@ export const handleUploadOrders = async (formData: FormData) => {
             price: product.price,
             quantity: product.quantity,
             ingredient: product.ingredient,
+            category: product.category,
         };
         await Products.findByIdAndUpdate(productOrders._id, {
             $inc: { inStock: -productOrders.quantity },

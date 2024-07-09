@@ -1,6 +1,6 @@
 import DetailProduct from "@/components/DetailProduct";
 import { auth } from "@/lib/auth";
-import { getFeedbacks } from "@/lib/data";
+import { getFeedbacks, getProducts } from "@/lib/data";
 
 // Fetch Data With AN API
 
@@ -45,7 +45,13 @@ async function ProductDetail({ params }: { params: { name: string } }) {
 
     const averageRating = totalRating / totalFeedbacks;
 
-    console.log(averageRating);
+    const products = await getProducts();
+
+    const relatedProducts = JSON.parse(
+        JSON.stringify(
+            products.filter((item: Products) => item.category === data.category)
+        )
+    );
 
     return (
         <DetailProduct
@@ -53,6 +59,7 @@ async function ProductDetail({ params }: { params: { name: string } }) {
             session={session}
             feedbacks={productsfeedbacks}
             averageRating={averageRating}
+            relatedProducts={relatedProducts}
         />
     );
 }

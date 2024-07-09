@@ -7,6 +7,7 @@ interface Products {
     ingredient: string;
     quantity: number;
     inStock?: number;
+    category: string;
 }
 
 interface News {
@@ -71,6 +72,7 @@ interface Orders {
 }
 
 interface Feedbacks {
+    _id: string; 
     userId: string;
     productId: string;
     rating: number;

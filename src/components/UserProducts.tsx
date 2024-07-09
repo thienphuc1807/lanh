@@ -8,12 +8,14 @@ import { useState } from "react";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
 import { addCart } from "@/app/Redux/cartSlice";
+import RatingStar from "./RatingStar";
 interface Props {
     data: Products[];
     searchParams: { [key: string]: string | string[] | undefined };
+    feedbacks: Feedbacks[];
 }
 const UserProducts = (props: Props) => {
-    const { data, searchParams } = props;
+    const { data, searchParams, feedbacks } = props;
     const [listProducts, setListProducts] = useState<Products[]>(data);
     const [sortBy, setSortBy] = useState("asc");
     const [sortField, setSortField] = useState("");
@@ -68,6 +70,20 @@ const UserProducts = (props: Props) => {
             cloneListProducts = _.orderBy(listProducts, [field], [sort]);
             setListProducts(cloneListProducts);
         }
+    };
+
+    const caculateRating = (productID: string) => {
+        const totalRating = feedbacks
+            .filter((feedback: Feedbacks) => feedback.productId === productID)
+            .map((item: Feedbacks) => Number(item.rating))
+            .reduce((acc, init) => acc + init, 0);
+
+        const totalFeedbacks = feedbacks.filter(
+            (feedback: Feedbacks) => feedback.productId === productID
+        ).length;
+
+        const averageRating = totalRating / totalFeedbacks;
+        return averageRating;
     };
 
     // PaginationControl
@@ -186,6 +202,10 @@ const UserProducts = (props: Props) => {
                                             {item.name}
                                         </p>
                                     </Link>
+
+                                    <RatingStar
+                                        rating={caculateRating(item._id)}
+                                    />
 
                                     <p className="font-bold text-lanh_green">
                                         {Intl.NumberFormat("vi-VN", {

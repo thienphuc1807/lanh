@@ -13,16 +13,19 @@ import {
 } from "@heroicons/react/24/solid";
 import { handleUserFeedback } from "@/lib/serveraction";
 import { useRouter } from "next/navigation";
+import RatingStar from "./RatingStar";
+import RelatedProducts from "./RelatedProducts";
 
 interface Props {
     data: Products;
     session: any;
     feedbacks: Feedbacks[];
     averageRating: number;
+    relatedProducts: Products[];
 }
 
 const DetailProduct = (props: Props) => {
-    const { data, session, feedbacks, averageRating } = props;
+    const { data, session, feedbacks, averageRating, relatedProducts } = props;
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
         { name: "Sản phẩm", path: "/products" },
@@ -30,7 +33,7 @@ const DetailProduct = (props: Props) => {
     ];
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(1);
     const [comment, setComment] = useState("");
     const router = useRouter();
 
@@ -69,11 +72,14 @@ const DetailProduct = (props: Props) => {
 
     return (
         <div className="container mx-auto lg:px-5 px-0">
+            {/* BreadCrumbs */}
             <div className="lg:px-0 px-3">
                 <BreadCrumbs breadcrumbs={breadcrumbs} />
             </div>
             <div className="bg-white rounded-lg p-5">
+                {/* Detail Product */}
                 <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5 gap-3">
+                    {/* Product Image */}
                     <div className="relative lg:w-auto lg:h-[400px] h-72 w-full border-2 rounded-md">
                         <Image
                             src={data.imgs[0].url}
@@ -83,23 +89,15 @@ const DetailProduct = (props: Props) => {
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                     </div>
+                    {/* Product Info */}
                     <div>
                         <h1 className="font-bold text-xl">{data.name}</h1>
-                        <p className="flex my-2">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <StarIcon
-                                    key={star}
-                                    className={`w-6 h-6 ${
-                                        star <= averageRating
-                                            ? "text-yellow-300"
-                                            : "text-gray-400"
-                                    }`}
-                                />
-                            ))}
+                        <div className="flex items-center">
+                            <RatingStar rating={averageRating} />
                             <span className="pl-2">
                                 ({feedbacks.length} đánh giá)
                             </span>
-                        </p>
+                        </div>
                         <p className="text-2xl font-bold text-lanh_green">
                             {Intl.NumberFormat("vi-VN", {
                                 style: "currency",
@@ -173,6 +171,7 @@ const DetailProduct = (props: Props) => {
                         </div>
                     </div>
                 </div>
+                {/* User Feedback */}
                 <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5 gap-0">
                     {session && (
                         <form
@@ -195,7 +194,7 @@ const DetailProduct = (props: Props) => {
                             </p>
                             <h1 className="font-bold">Bình luận:</h1>
                             <textarea
-                                rows={5}
+                                rows={2}
                                 className="w-full border-2 rounded-md p-2"
                                 name="comment"
                                 onChange={(e) => setComment(e.target.value)}
@@ -218,7 +217,7 @@ const DetailProduct = (props: Props) => {
                                 feedbacks.map((feed) => (
                                     <div
                                         className="border-b-2 py-2"
-                                        key={feed.userId}
+                                        key={feed._id}
                                     >
                                         <div className="flex justify-between">
                                             <p className="font-bold">
@@ -237,7 +236,11 @@ const DetailProduct = (props: Props) => {
                                                 ))}
                                             </p>
                                         </div>
-                                        <p>{feed.comment}</p>
+                                        <p className="italic">
+                                            {feed.comment
+                                                ? feed.comment
+                                                : "Người dùng không để lại bình luận"}
+                                        </p>
                                     </div>
                                 ))
                             ) : (
@@ -248,6 +251,8 @@ const DetailProduct = (props: Props) => {
                         </div>
                     </div>
                 </div>
+                {/* Related Products */}
+                <RelatedProducts relatedProducts={relatedProducts} />
             </div>
         </div>
     );
