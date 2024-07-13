@@ -218,6 +218,7 @@ export const handleUploadOrders = async (formData: FormData) => {
         district,
         ward,
         address,
+        note,
         userID,
     } = Object.fromEntries(formData);
     const ordersProduct: string[] = formData.getAll("orders") as string[];
@@ -251,6 +252,7 @@ export const handleUploadOrders = async (formData: FormData) => {
             district: district,
             ward: ward,
             address: address,
+            note: note,
             status: "Đã đặt hàng",
             orders: orderList,
         });

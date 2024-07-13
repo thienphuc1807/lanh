@@ -68,6 +68,12 @@ const Orders = (props: { orders: Orders[] }) => {
                                             </div>
                                         ))}
                                     </div>
+                                    {item.note && (
+                                        <div>
+                                            Ghi chú:{" "}
+                                            <b> &quot;{item.note}&quot;</b>
+                                        </div>
+                                    )}
                                     <div className="flex text-xl justify-between border-t-2 mt-2 pt-2">
                                         <div className="flex gap-2">
                                             <p>Tổng:</p>

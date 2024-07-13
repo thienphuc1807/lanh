@@ -26,6 +26,7 @@ const CheckOut = (props: { data: any; session: any }) => {
         district: "",
         ward: "",
         address: "",
+        note: "",
         orders: cart,
     });
 
@@ -91,6 +92,7 @@ const CheckOut = (props: { data: any; session: any }) => {
         formData.append("district", values?.district);
         formData.append("address", values?.address);
         formData.append("ward", values?.ward);
+        formData.append("note", values?.note);
         values?.orders.forEach((item: Products) => {
             formData.append("orders", JSON.stringify(item));
         });
@@ -229,7 +231,7 @@ const CheckOut = (props: { data: any; session: any }) => {
                                     ))}
                                 </select>
                             </div>
-                            <label>Số nhà, tên đường</label>
+                            <label htmlFor="address">Số nhà, tên đường</label>
                             <input
                                 type="text"
                                 className="p-2 w-full border-2 rounded-md"
@@ -238,6 +240,13 @@ const CheckOut = (props: { data: any; session: any }) => {
                                 onChange={onChangeValues}
                                 required
                             />
+                            <label htmlFor="note">Ghi chú</label>
+                            <input
+                                className="p-2 w-full border-2 rounded-md"
+                                onChange={onChangeValues}
+                                id="note"
+                                name="note"
+                            ></input>
                         </div>
                     </div>
                 </div>

@@ -71,6 +71,7 @@ interface Orders {
     orders: any[];
     createdAt: date;
     status: string;
+    note: string;
 }
 
 interface Feedbacks {

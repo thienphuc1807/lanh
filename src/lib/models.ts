@@ -66,6 +66,9 @@ const orderSchema = new mongoose.Schema(
         status: {
             type: String,
         },
+        note: {
+            type: String,
+        },
         orders: [productSchema],
     },
     { timestamps: true }
