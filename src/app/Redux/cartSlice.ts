@@ -33,24 +33,48 @@ const cartSlice = createSlice({
                 .reduce((acc, item) => acc + item.quantity, 0);
 
             const existingItem = state.find(
-                (item) =>
-                    item.size === action.payload.size &&
-                    item._id === action.payload._id
+                (item) => item.size === action.payload.size
             );
 
             if (action.payload.size) {
-                if (existingItem) {
+                if (productInCart) {
+                    if (existingItem) {
+                        if (
+                            totalQuantityProductInCart +
+                                action.payload.quantity >
+                            inStockProduct
+                        ) {
+                            alert(
+                                "Not enough stock to add the requested quantity"
+                            );
+                            return;
+                        } else {
+                            productInCart.quantity += action.payload.quantity;
+                        }
+                    } else {
+                        if (
+                            totalQuantityProductInCart +
+                                action.payload.quantity >
+                            inStockProduct
+                        ) {
+                            alert(
+                                "Not enough stock to add the requested quantity"
+                            );
+                            return;
+                        } else {
+                            state.push({ ...action.payload });
+                        }
+                    }
+                } else {
                     if (
                         totalQuantityProductInCart + action.payload.quantity >
                         inStockProduct
                     ) {
+                        state.push({ ...action.payload });
+                    } else {
                         alert("Not enough stock to add the requested quantity");
                         return;
-                    } else {
-                        existingItem.quantity += action.payload.quantity;
                     }
-                } else {
-                    state.push({ ...action.payload });
                 }
             } else {
                 alert("Choose Size Required!");
@@ -60,9 +84,9 @@ const cartSlice = createSlice({
             setLocalStorageItem("Cart", state);
         },
 
-        adjustItem(state, action: PayloadAction<Products>) {
+        adjustItem(state, action: PayloadAction<number>) {
             const existingItem = state.find(
-                (item) => item._id === action.payload._id
+                (item, index) => index === action.payload
             );
             if (existingItem) {
                 if (existingItem.quantity > 1) {

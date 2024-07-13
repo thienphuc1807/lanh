@@ -28,7 +28,7 @@ const CheckOut = (props: { data: any; session: any }) => {
         address: "",
         orders: cart,
     });
-    
+
     const router = useRouter();
     useEffect(() => {
         setIsMounted(true);
@@ -278,7 +278,12 @@ const CheckOut = (props: { data: any; session: any }) => {
                                             {item.quantity}
                                         </span>
                                     </div>
-                                    <h1>{item.name}</h1>
+                                    <h1>
+                                        <p>{item.name}</p>
+                                        <p className="text-sm">
+                                            Kích cỡ: {item.size}
+                                        </p>
+                                    </h1>
                                 </div>
                                 <span>
                                     {Intl.NumberFormat("vi-VN", {
@@ -290,7 +295,7 @@ const CheckOut = (props: { data: any; session: any }) => {
                         ))}
                         <div className="border-t-2 py-5 flex justify-between">
                             <b>Tổng cộng: </b>
-                            <span className="font-bold text-2xl">
+                            <span className="font-bold text-xl">
                                 {Intl.NumberFormat("vi-VN", {
                                     style: "currency",
                                     currency: "VND",

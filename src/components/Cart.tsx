@@ -28,7 +28,7 @@ const Cart = (props: { session: any }) => {
         { name: "Giỏ hàng", path: "/cart" },
     ];
 
-    const handleRemoveItem = (item: Products) => {
+    const handleRemoveItem = (index: number) => {
         Swal.fire({
             title: "Xoá sản phẩm ?",
             showDenyButton: true,
@@ -38,7 +38,7 @@ const Cart = (props: { session: any }) => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                dispatch(removeItem(item));
+                dispatch(removeItem(index));
             }
         });
     };
@@ -79,9 +79,9 @@ const Cart = (props: { session: any }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {cart.map((item: Products) => (
+                                {cart.map((item: Products, index: number) => (
                                     <tr
-                                        key={item._id}
+                                        key={index}
                                         className="text-center border-t-2"
                                     >
                                         <td className="relative w-28 h-28">
@@ -101,7 +101,12 @@ const Cart = (props: { session: any }) => {
                                                 />
                                             )}
                                         </td>
-                                        <td>{item.name}</td>
+                                        <td>
+                                            <p>{item.name}</p>
+                                            <p className="text-sm">
+                                                Kích cỡ: {item.size}
+                                            </p>
+                                        </td>
                                         <td>
                                             {Intl.NumberFormat("vi-VN", {
                                                 style: "currency",
@@ -113,7 +118,7 @@ const Cart = (props: { session: any }) => {
                                                 <button
                                                     onClick={() =>
                                                         dispatch(
-                                                            adjustItem(item)
+                                                            adjustItem(index)
                                                         )
                                                     }
                                                     className="rounded-full bg-lanh_green text-white"
@@ -149,7 +154,7 @@ const Cart = (props: { session: any }) => {
                                         <td>
                                             <button
                                                 onClick={() =>
-                                                    handleRemoveItem(item)
+                                                    handleRemoveItem(index)
                                                 }
                                                 className="  text-lanh_green  hover:opacity-50 "
                                             >
@@ -163,8 +168,8 @@ const Cart = (props: { session: any }) => {
                     </div>
                     {/* Mobile cart */}
                     <div className="md:hidden block">
-                        {cart.map((item) => (
-                            <div className="bg-white p-4" key={item._id}>
+                        {cart.map((item, index) => (
+                            <div className="bg-white p-4" key={index}>
                                 <div className="relative h-20 mx-auto w-full border-t-2">
                                     {item.imgs?.length > 0 ? (
                                         <Image
@@ -184,7 +189,12 @@ const Cart = (props: { session: any }) => {
                                 </div>
                                 <div className="border-t-2 py-2 flex justify-between font-bold">
                                     <span>Tên sản phẩm</span>
-                                    <span>{item.name}</span>
+                                    <div className="text-right">
+                                        <p>{item.name}</p>
+                                        <p className="text-sm">
+                                            Kích cỡ: {item.size}
+                                        </p>
+                                    </div>
                                 </div>
                                 <div className="border-t-2 py-2 flex justify-between font-bold">
                                     <span>Giá</span>
@@ -198,7 +208,7 @@ const Cart = (props: { session: any }) => {
                                     <div className="flex items-center gap-2 justify-center">
                                         <button
                                             onClick={() =>
-                                                dispatch(adjustItem(item))
+                                                dispatch(adjustItem(index))
                                             }
                                             className="rounded-full bg-lanh_green text-white"
                                         >
@@ -237,7 +247,7 @@ const Cart = (props: { session: any }) => {
                                     <span></span>
                                     <button
                                         onClick={() =>
-                                            dispatch(removeItem(item))
+                                            dispatch(removeItem(index))
                                         }
                                         className="  text-lanh_green  hover:opacity-50 "
                                     >

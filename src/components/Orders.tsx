@@ -27,7 +27,7 @@ const Orders = (props: { orders: Orders[] }) => {
                                         </span>
                                     </p>
                                     <p>
-                                        Ngày đặt:
+                                        Ngày đặt:{" "}
                                         <b>{formatISODate(item.createdAt)}</b>
                                     </p>
                                     <p>
@@ -51,7 +51,11 @@ const Orders = (props: { orders: Orders[] }) => {
                                                 className="flex gap-2 font-bold"
                                             >
                                                 <p>{item.quantity}x </p>
-                                                <p>{item.name}</p>
+                                                <div>
+                                                    <p>
+                                                        {item.name}, {item.size}
+                                                    </p>
+                                                </div>
                                                 <p>
                                                     {Intl.NumberFormat(
                                                         "vi-VN",
