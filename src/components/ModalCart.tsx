@@ -33,10 +33,10 @@ const ModalCart = (props: Props) => {
             {cart.length > 0 ? (
                 <div>
                     <div className="max-h-[220px] overflow-y-scroll">
-                        {cart.map((item) => (
+                        {cart.map((item, index) => (
                             <div
                                 className="flex items-start justify-between border-b-2 p-3 bg-lanh_green"
-                                key={item._id}
+                                key={index}
                             >
                                 <div className="flex gap-2 group/item">
                                     <Link
@@ -59,13 +59,16 @@ const ModalCart = (props: Props) => {
                                             />
                                         )}
                                     </Link>
-                                    <div className="flex flex-col gap-2 justify-center text-white">
+                                    <div className="flex flex-col justify-center text-white">
                                         <Link
                                             href={`/products/${item.name}`}
                                             className="font-bold line-clamp-1 group-hover/item:underline transition-all duration-500"
                                         >
                                             {item.name}
                                         </Link>
+                                        <span className="text-sm">
+                                            Kích cỡ: {item.size}
+                                        </span>
                                         <span className="text-sm">
                                             {item.ingredient}
                                         </span>
@@ -80,7 +83,7 @@ const ModalCart = (props: Props) => {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => dispatch(removeItem(item))}
+                                    onClick={() => dispatch(removeItem(index))}
                                     className=" text-white  hover:opacity-50 "
                                 >
                                     <XMarkIcon className="w-6 h-6" />

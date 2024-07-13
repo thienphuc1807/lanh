@@ -21,11 +21,12 @@ const FormProduct = (props: Props) => {
         imgs: [],
         inStock: 0,
         quantity: 1,
+        size: [],
     };
 
     const [values, setValues] = useState(product || initialProductState);
 
-    console.log(values.imgs.map((item) => item));
+    console.log(values);
 
     const router = useRouter();
 
@@ -83,6 +84,15 @@ const FormProduct = (props: Props) => {
             placeholder: "Số lượng sản phẩm",
             required: true,
         },
+        {
+            id: 7,
+            type: "text",
+            label: "Kích cỡ sản phẩm",
+            name: "size",
+            errorMess: "Kích cỡ sản phẩm không được để trống!",
+            placeholder: "VD: S,M,L",
+            required: true,
+        },
     ];
 
     const onChangeValues = (e: ChangeEvent<HTMLInputElement>) => {
@@ -98,6 +108,12 @@ const FormProduct = (props: Props) => {
             setValues({
                 ...values,
                 [e.target.name]: [...values.imgs, ...newFile],
+            });
+        } else if (e.target.name === "size") {
+            const sizes = e.target.value.toUpperCase().trim().split(",");
+            setValues({
+                ...values,
+                [e.target.name]: sizes,
             });
         } else {
             setValues({
@@ -139,6 +155,9 @@ const FormProduct = (props: Props) => {
             values?.inStock ? values?.inStock.toString() : "0"
         );
         formData.append("quantity", values?.quantity.toString());
+        values.size.forEach((item) => {
+            formData.append("size", item);
+        });
         values?.imgs.forEach((img) => {
             formData.append("files", img);
         });
@@ -221,40 +240,35 @@ const FormProduct = (props: Props) => {
                         />
 
                         {input.type === "file" && (
-                            <>
-                                <div className="flex flex-wrap gap-4">
-                                    {values.imgs?.map((file, index) => (
-                                        <div
-                                            key={index}
-                                            className="items-center"
-                                        >
-                                            <div className="flex flex-col">
-                                                <Image
-                                                    src={
-                                                        file.url
-                                                            ? file.url
-                                                            : URL.createObjectURL(
-                                                                  file
-                                                              )
-                                                    }
-                                                    alt="PreviewImg"
-                                                    className="w-28 h-28 object-contain"
-                                                    height={100}
-                                                    width={100}
-                                                />
-                                                <button
-                                                    onClick={() =>
-                                                        handleDelete(index)
-                                                    }
-                                                    className="text-white bg-lanh_green px-2 py-2"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
+                            <div className="flex flex-wrap gap-4">
+                                {values.imgs?.map((file, index) => (
+                                    <div key={index} className="items-center">
+                                        <div className="flex flex-col">
+                                            <Image
+                                                src={
+                                                    file.url
+                                                        ? file.url
+                                                        : URL.createObjectURL(
+                                                              file
+                                                          )
+                                                }
+                                                alt="PreviewImg"
+                                                className="w-28 h-28 object-contain"
+                                                height={100}
+                                                width={100}
+                                            />
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(index)
+                                                }
+                                                className="text-white bg-lanh_green px-2 py-2"
+                                            >
+                                                Delete
+                                            </button>
                                         </div>
-                                    ))}
-                                </div>
-                            </>
+                                    </div>
+                                ))}
+                            </div>
                         )}
                     </div>
                 ))}

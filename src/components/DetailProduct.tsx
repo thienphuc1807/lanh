@@ -35,6 +35,7 @@ const DetailProduct = (props: Props) => {
     const dispatch = useDispatch();
     const [rating, setRating] = useState(1);
     const [comment, setComment] = useState("");
+    const [size, setSize] = useState("");
     const router = useRouter();
 
     const handleChangeQuantity = (math: string, quantity: number) => {
@@ -63,8 +64,9 @@ const DetailProduct = (props: Props) => {
             session.user.fullName
         );
         if (!userFeedback) {
-            alert("Success!");
             router.refresh();
+            setRating(1);
+            setComment("");
         } else {
             alert("Fail!");
         }
@@ -109,7 +111,7 @@ const DetailProduct = (props: Props) => {
                         {data.inStock === 0 ? (
                             <p className="text-red-500 font-bold">Hết hàng</p>
                         ) : (
-                            <div className="flex pt-4">
+                            <div className="flex pt-2">
                                 <button
                                     onClick={() =>
                                         handleChangeQuantity("minus", quantity)
@@ -151,22 +153,34 @@ const DetailProduct = (props: Props) => {
                                 </button>
                             </div>
                         )}
-                        <div className="flex flex-wrap gap-5 mt-5">
+                        <div className="mt-5">
+                            <h1 className="mb-2">Kích cỡ:</h1>
+                            {data.size.map((item: any) => (
+                                <button
+                                    key={item}
+                                    className={`border-2 border-lanh_green ${
+                                        size === item
+                                            ? "bg-lanh_green text-white"
+                                            : "bg-white text-black"
+                                    } px-4 rounded-md mr-4 hover:bg-lanh_green hover:text-white`}
+                                    onClick={() => setSize(item)}
+                                >
+                                    {item}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="gap-5 mt-5">
                             <button
                                 disabled={data.inStock === 0 ? true : false}
                                 className="bg-lanh_green disabled:bg-slate-400 disabled:opacity-50 text-white lg:text-base text-sm px-4 py-2 rounded-md hover:opacity-80 flex gap-2 items-center"
                                 onClick={() =>
-                                    dispatch(addCart({ ...data, quantity }))
+                                    dispatch(
+                                        addCart({ ...data, quantity, size })
+                                    )
                                 }
                             >
                                 <ShoppingCartIcon className="h-6 w-6" />
                                 <span>Thêm vào giỏ</span>
-                            </button>
-                            <button
-                                disabled={data.inStock === 0 ? true : false}
-                                className="bg-lanh_green disabled:bg-slate-400 disabled:opacity-50 text-white lg:text-base text-sm px-4 py-2 rounded-md hover:opacity-80"
-                            >
-                                Mua ngay
                             </button>
                         </div>
                     </div>

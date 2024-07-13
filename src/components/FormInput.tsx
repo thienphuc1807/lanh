@@ -1,4 +1,3 @@
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState, ChangeEvent } from "react";
 
 interface Props {

@@ -17,9 +17,9 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
             <div
                 className={`flex flex-col ${
                     open
-                        ? "md:w-[250px] md:relative w-[60%] absolute z-20"
-                        : "md:w-[250px] md:relative w-[60%] absolute z-20 ml-[-60%] md:ml-[-250px]"
-                } bg-lanh_green min-h-full transition-all py-5`}
+                        ? "md:w-[250px] md:relative w-[60%] fixed z-30"
+                        : "md:w-[250px] md:relative w-[60%] fixed z-30 ml-[-60%] md:ml-[-250px]"
+                } bg-lanh_green min-h-full transition-all py-5 `}
             >
                 <div className="fixed">
                     <Link href="/dashboard">
@@ -62,7 +62,7 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
             <div
                 className={`${
                     open ? "md:hidden block" : "hidden"
-                } absolute w-full h-full bg-black opacity-55 text-right z-10`}
+                } fixed w-full h-full bg-black opacity-55 text-right z-20`}
             >
                 <button
                     className="fixed p-4 top-0 right-0"
@@ -72,7 +72,7 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                 </button>
             </div>
             <div className="flex flex-col flex-1">
-                <div className="bg-white w-full ">
+                <div className="bg-white w-full fixed z-10">
                     <button
                         className="py-2 px-5"
                         onClick={() => setOpen(!open)}
@@ -80,7 +80,7 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                         <Bars3Icon className="w-10 h-10 text-gray" />
                     </button>
                 </div>
-                {children}
+                <div className="mt-14">{children}</div>
             </div>
         </div>
     );

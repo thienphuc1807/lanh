@@ -20,39 +20,46 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addCart(state, action: PayloadAction<Products>) {
-            const existingItem = state.find(
+            const productInCart = state.find(
                 (item) => item._id === action.payload._id
             );
-            if (existingItem) {
-                // Check if there's enough stock to add the requested quantity
-                if (
-                    existingItem.inStock &&
-                    existingItem.inStock >=
-                        existingItem.quantity + action.payload.quantity
-                ) {
-                    existingItem.quantity += action.payload.quantity;
+
+            const inStockProduct = productInCart?.inStock
+                ? productInCart.inStock
+                : 0;
+
+            const totalQuantityProductInCart = state
+                .filter((item) => item._id === action.payload._id)
+                .reduce((acc, item) => acc + item.quantity, 0);
+
+            const existingItem = state.find(
+                (item) =>
+                    item.size === action.payload.size &&
+                    item._id === action.payload._id
+            );
+
+            if (action.payload.size) {
+                if (existingItem) {
+                    if (
+                        totalQuantityProductInCart + action.payload.quantity >
+                        inStockProduct
+                    ) {
+                        alert("Not enough stock to add the requested quantity");
+                        return;
+                    } else {
+                        existingItem.quantity += action.payload.quantity;
+                    }
                 } else {
-                    // Optionally handle the case where there's not enough stock
-                    console.warn(
-                        "Not enough stock to add the requested quantity"
-                    );
+                    state.push({ ...action.payload });
                 }
             } else {
-                // Only add the new item if there's enough stock
-                if (
-                    action.payload.inStock &&
-                    action.payload.quantity <= action.payload.inStock
-                ) {
-                    state.push({ ...action.payload });
-                } else {
-                    // Optionally handle the case where there's not enough stock
-                    console.warn(
-                        "Not enough stock to add the item to the cart"
-                    );
-                }
+                alert("Choose Size Required!");
+                return;
             }
+
             setLocalStorageItem("Cart", state);
         },
+
         adjustItem(state, action: PayloadAction<Products>) {
             const existingItem = state.find(
                 (item) => item._id === action.payload._id
@@ -64,9 +71,9 @@ const cartSlice = createSlice({
             }
             localStorage.setItem("Cart", JSON.stringify(state));
         },
-        removeItem(state, action: PayloadAction<{ _id: string }>) {
+        removeItem(state, action: PayloadAction<number>) {
             const updatedState = state.filter(
-                (item) => item._id !== action.payload._id
+                (item, index) => index !== action.payload
             );
             setLocalStorageItem("Cart", updatedState);
             return updatedState;

@@ -99,8 +99,13 @@ export const handleRemoveUser = async (id: string) => {
     revalidatePath("/dashboard/users");
 };
 
-const saveImageToLocal = async (formData: FormData) => {
-    const files: File[] = formData.getAll("files") as File[];
+const saveImageToLocal = async (formData: FormData | File) => {
+    let files;
+    if (formData instanceof FormData) {
+        files = formData.getAll("files") as File[];
+    } else {
+        files = [formData];
+    }
     const multipleBuffersPromise = files.map((file) =>
         file.arrayBuffer().then((data) => {
             const buffer = Buffer.from(data);
@@ -128,6 +133,7 @@ export const uploadImagesToCloudinary = async (
 export const uploadProduct = async (formData: FormData) => {
     const { name, price, salePrice, ingredient, inStock, quantity } =
         Object.fromEntries(formData);
+    const sizes = formData.getAll("size");
     try {
         const newFiles = await saveImageToLocal(formData);
         const files = await uploadImagesToCloudinary(newFiles);
@@ -146,6 +152,7 @@ export const uploadProduct = async (formData: FormData) => {
             ingredient,
             inStock,
             quantity,
+            size: sizes,
         });
         await newProduct.save();
     } catch (error) {
@@ -157,25 +164,45 @@ export const uploadProduct = async (formData: FormData) => {
 export const updateProduct = async (formData: FormData, id: string) => {
     const { name, price, salePrice, ingredient, inStock, quantity } =
         Object.fromEntries(formData);
+    const sizes = formData.getAll("size");
+    const images = formData.getAll("files");
+
     try {
-        const newFiles = await saveImageToLocal(formData);
-        const files = await uploadImagesToCloudinary(newFiles);
         connectToDb();
-        const fileDocs = [];
-        for (const file of files) {
-            const newFile = new File({ url: file.secure_url });
-            fileDocs.push(await newFile.save());
+        let fileDocs = [];
+        for (const item of images) {
+            if (typeof item === "object") {
+                const newFiles = await saveImageToLocal(item);
+                const files = await uploadImagesToCloudinary(newFiles);
+                for (const file of files) {
+                    const newFile = new File({ url: file.secure_url });
+                    fileDocs.push(await newFile.save());
+                }
+                newFiles.map((file) => fs.unlink(file.filepath));
+            }
         }
-        newFiles.map((file) => fs.unlink(file.filepath));
-        await Products.findByIdAndUpdate(id, {
-            name,
-            price,
-            salePrice,
-            imgs: fileDocs,
-            ingredient,
-            inStock,
-            quantity,
-        });
+        if (fileDocs.length > 0) {
+            await Products.findByIdAndUpdate(id, {
+                name,
+                price,
+                salePrice,
+                imgs: fileDocs,
+                ingredient,
+                inStock,
+                quantity,
+                size: sizes,
+            });
+        } else {
+            await Products.findByIdAndUpdate(id, {
+                name,
+                price,
+                salePrice,
+                ingredient,
+                inStock,
+                quantity,
+                size: sizes,
+            });
+        }
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" };
@@ -192,7 +219,6 @@ export const handleUploadOrders = async (formData: FormData) => {
         ward,
         address,
         userID,
-        category,
     } = Object.fromEntries(formData);
     const ordersProduct: string[] = formData.getAll("orders") as string[];
     const orderList = [];
@@ -207,6 +233,7 @@ export const handleUploadOrders = async (formData: FormData) => {
             quantity: product.quantity,
             ingredient: product.ingredient,
             category: product.category,
+            size: product.size,
         };
         await Products.findByIdAndUpdate(productOrders._id, {
             $inc: { inStock: -productOrders.quantity },

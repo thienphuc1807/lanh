@@ -142,34 +142,36 @@ const UserProducts = (props: Props) => {
                             >
                                 <div className="relative group/item">
                                     <div className="relative md:h-80 h-60 w-full">
-                                        {item.imgs.length > 0 ? (
-                                            item.imgs.map((img) => (
+                                        <Link href={`products/${item.name}`}>
+                                            {item.imgs.length > 0 ? (
+                                                item.imgs.map((img) => (
+                                                    <Image
+                                                        key={img._id}
+                                                        fill={true}
+                                                        src={img.url}
+                                                        alt={item.name}
+                                                        className="object-contain"
+                                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                    />
+                                                ))
+                                            ) : (
                                                 <Image
-                                                    key={img._id}
-                                                    fill={true}
-                                                    src={img.url}
-                                                    alt={item.name}
+                                                    src="/defaultImg.png"
+                                                    alt="product_img"
                                                     className="object-contain"
-                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                    fill
                                                 />
-                                            ))
-                                        ) : (
-                                            <Image
-                                                src="/defaultImg.png"
-                                                alt="product_img"
-                                                className="object-contain"
-                                                fill
-                                            />
-                                        )}
+                                            )}
+                                        </Link>
                                     </div>
-                                    <div
+                                    {/* <div
                                         className={`group-hover/item:opacity-45 ${
                                             item.inStock === 0
                                                 ? "opacity-45"
                                                 : "opacity-0"
                                         } transition-all ease-in-out absolute top-0 bottom-0 right-0 left-0 bg-black`}
-                                    ></div>
-                                    <div
+                                    ></div> */}
+                                    {/* <div
                                         className={`flex ${
                                             item.inStock === 0
                                                 ? "opacity-100 translate-y-[-50%]"
@@ -191,7 +193,7 @@ const UserProducts = (props: Props) => {
                                                 ? "Hết hàng"
                                                 : "Thêm vào giỏ"}
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="p-4 space-y-2">
                                     <Link

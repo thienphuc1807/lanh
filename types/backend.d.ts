@@ -8,6 +8,7 @@ interface Products {
     quantity: number;
     inStock?: number;
     category: string;
+    size: any;
 }
 
 interface News {
@@ -48,6 +49,7 @@ interface Values {
     imgs: File[];
     quantity: Number;
     inStock: Number;
+    size: string[];
 }
 
 interface PaginationControl {
@@ -72,7 +74,7 @@ interface Orders {
 }
 
 interface Feedbacks {
-    _id: string; 
+    _id: string;
     userId: string;
     productId: string;
     rating: number;
