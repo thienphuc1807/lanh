@@ -155,7 +155,7 @@ const FormProduct = (props: Props) => {
             values?.inStock ? values?.inStock.toString() : "0"
         );
         formData.append("quantity", values?.quantity.toString());
-        values.size.forEach((item) => {
+        values.size.forEach((item: any) => {
             formData.append("size", item);
         });
         values?.imgs.forEach((img) => {
