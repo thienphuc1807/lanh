@@ -1,15 +1,29 @@
+import Image from "next/image";
+import Link from "next/link";
+import BreadCrumbs from "./Breadcrumbs";
+
 const Orders = (props: { orders: Orders[] }) => {
     const { orders } = props;
     const formatISODate = (isoDate: any) => {
         let date = new Date(isoDate);
         return date.toLocaleDateString("en-GB");
     };
+    const breadcrumbs = [
+        {
+            name: "Trang chủ",
+            path: "/",
+        },
+        {
+            name: "Đơn hàng",
+            path: "/orders",
+        },
+    ];
     return (
         <div className="container mx-auto md:py-5 py-2 md:px-5 px-0 ">
             <div className="rounded-md overflow-hidden">
-                <h1 className="font-bold text-lanh_green p-4 border-b-2 text-xl">
-                    Đơn hàng của bạn
-                </h1>
+                <div className="md:px-0 px-5">
+                    <BreadCrumbs breadcrumbs={breadcrumbs} />
+                </div>
                 {orders.length > 0 ? (
                     orders.map((item: Orders) => (
                         <div
@@ -18,64 +32,101 @@ const Orders = (props: { orders: Orders[] }) => {
                         >
                             <div className="w-full">
                                 <div>
-                                    <p className="flex md:flex-row flex-col-reverse justify-between">
-                                        <span>
-                                            Mã đơn hàng: <b>{item._id}</b>
-                                        </span>
-                                        <span className="text-lanh_green font-bold">
-                                            {item.status}
-                                        </span>
-                                    </p>
-                                    <p>
-                                        Ngày đặt:{" "}
-                                        <b>{formatISODate(item.createdAt)}</b>
-                                    </p>
-                                    <p>
-                                        Tên người nhận: <b>{item.fullName}</b>
-                                    </p>
-                                    <p>
-                                        Số điện thoại: <b>{item.phoneNumber}</b>
-                                    </p>
-                                    <p>
-                                        Địa chỉ: <b>{item.address}</b>,
-                                        <b>{item.district}</b>,
-                                        <b>{item.ward}</b>, <b>{item.city}</b>
-                                    </p>
-                                    <p>
-                                        Số lượng: <b>{item.orders.length}</b>
-                                    </p>
-                                    <div className="flex flex-col">
-                                        {item.orders.map((item: Products) => (
-                                            <div
-                                                key={item._id}
-                                                className="flex gap-2 font-bold"
-                                            >
-                                                <p>{item.quantity}x </p>
-                                                <div>
-                                                    <p>
-                                                        {item.name}, {item.size}
-                                                    </p>
-                                                </div>
-                                                <p>
-                                                    {Intl.NumberFormat(
-                                                        "vi-VN",
-                                                        {
-                                                            style: "currency",
-                                                            currency: "VND",
-                                                        }
-                                                    ).format(item.salePrice)}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    {item.note && (
-                                        <div>
-                                            Ghi chú:{" "}
-                                            <b> &quot;{item.note}&quot;</b>
+                                    <div className="flex md:flex-row flex-col-reverse justify-between md:items-center">
+                                        <div className="flex md:flex-row flex-col md:items-center gap-2">
+                                            <span className="border-2 rounded-full bg-gray-100 font-bold p-3">
+                                                Đơn hàng:{" "}
+                                                <b className="uppercase text-lanh_green">
+                                                    {item._id}
+                                                </b>
+                                            </span>
+                                            <p className="pl-2">
+                                                Ngày đặt:{" "}
+                                                {formatISODate(item.createdAt)}
+                                            </p>
                                         </div>
-                                    )}
-                                    <div className="flex text-xl justify-between border-t-2 mt-2 pt-2">
-                                        <div className="flex gap-2">
+                                        <p className="pl-2 md:pb-0 pb-3 font-bold text-lanh_green">
+                                            {item.status}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col mt-4">
+                                        {item.orders.map(
+                                            (item: Products, index: number) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex gap-2"
+                                                >
+                                                    <div className="relative w-28 h-28">
+                                                        <Image
+                                                            src={
+                                                                item.imgs[0].url
+                                                            }
+                                                            alt={item.name}
+                                                            fill
+                                                            className="object-contain"
+                                                        />
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <div className="flex flex-col">
+                                                            <p className="font-bold text-lg">
+                                                                {item.name}
+                                                            </p>
+                                                            <p>
+                                                                {
+                                                                    item.ingredient
+                                                                }
+                                                            </p>
+                                                            <p>
+                                                                {Intl.NumberFormat(
+                                                                    "vi-VN",
+                                                                    {
+                                                                        style: "currency",
+                                                                        currency:
+                                                                            "VND",
+                                                                    }
+                                                                ).format(
+                                                                    item.salePrice
+                                                                )}
+                                                            </p>
+                                                        </div>
+                                                        <div className="flex gap-4">
+                                                            <span>
+                                                                Kích cỡ:{" "}
+                                                                {item.size}
+                                                            </span>
+                                                            <span>
+                                                                SL:{" "}
+                                                                {item.quantity}
+                                                            </span>
+                                                            <span className="font-bold">
+                                                                {Intl.NumberFormat(
+                                                                    "vi-VN",
+                                                                    {
+                                                                        style: "currency",
+                                                                        currency:
+                                                                            "VND",
+                                                                    }
+                                                                ).format(
+                                                                    item.salePrice *
+                                                                        item.quantity
+                                                                )}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        )}
+                                    </div>
+
+                                    <div className="flex justify-between border-t-2 mt-2 pt-4">
+                                        <Link
+                                            href={`/orders/${item._id}`}
+                                            className="px-4 py-2 bg-lanh_green text-white rounded-full border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
+                                        >
+                                            Chi tiết
+                                        </Link>
+                                        <div className="flex gap-2 text-xl items-center">
                                             <p>Tổng:</p>
                                             <b className="text-lanh_green">
                                                 {Intl.NumberFormat("vi-VN", {
@@ -98,16 +149,6 @@ const Orders = (props: { orders: Orders[] }) => {
                                                 )}
                                             </b>
                                         </div>
-                                        <button
-                                            disabled={
-                                                item.status === "Đã đặt hàng"
-                                                    ? false
-                                                    : true
-                                            }
-                                            className="text-sm px-2 disabled:bg-slate-400 disabled:border-slate-400 disabled:opacity-50 disabled:hover:text-white rounded-md bg-lanh_green text-white border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
-                                        >
-                                            Huỷ đơn
-                                        </button>
                                     </div>
                                 </div>
                             </div>

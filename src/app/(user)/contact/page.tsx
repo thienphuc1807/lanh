@@ -18,10 +18,12 @@ export const metadata = {
 function Contact() {
     return (
         <main className="container mx-auto px-5 gap-6 lg:mb-10">
-            <BreadCrumbs breadcrumbs={breadcrumbs} />
+            <div className="py-4">
+                <BreadCrumbs breadcrumbs={breadcrumbs} />
+            </div>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
                 <section>
-                    <h1 className="text-3xl font-bold mb-2 text-lanh_green">
+                    <h1 className="text-2xl font-bold mb-2 text-lanh_green">
                         Thông tin liên hệ
                     </h1>
                     <p className="text-justify">

@@ -44,9 +44,7 @@ const cartSlice = createSlice({
                                 action.payload.quantity >
                             inStockProduct
                         ) {
-                            alert(
-                                "Not enough stock to add the requested quantity"
-                            );
+                            alert("Không đủ số lượng sản phẩm");
                             return;
                         } else {
                             productInCart.quantity += action.payload.quantity;
@@ -57,9 +55,7 @@ const cartSlice = createSlice({
                                 action.payload.quantity >
                             inStockProduct
                         ) {
-                            alert(
-                                "Not enough stock to add the requested quantity"
-                            );
+                            alert("Vượt quá số lượng sản phẩm trong kho");
                             return;
                         } else {
                             state.push({ ...action.payload });
@@ -72,12 +68,12 @@ const cartSlice = createSlice({
                     ) {
                         state.push({ ...action.payload });
                     } else {
-                        alert("Not enough stock to add the requested quantity");
+                        alert("Vượt quá số lượng sản phẩm trong kho");
                         return;
                     }
                 }
             } else {
-                alert("Choose Size Required!");
+                alert("Vui lòng chọn kích cỡ sản phẩm");
                 return;
             }
 

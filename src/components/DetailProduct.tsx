@@ -68,7 +68,7 @@ const DetailProduct = (props: Props) => {
             setRating(1);
             setComment("");
         } else {
-            alert("Fail!");
+            alert("Có lỗi xảy ra!");
         }
     };
 
@@ -185,9 +185,12 @@ const DetailProduct = (props: Props) => {
                         </div>
                     </div>
                 </div>
+                {/* Related Products */}
+                <RelatedProducts relatedProducts={relatedProducts} />
+
                 {/* User Feedback */}
                 <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5 gap-0">
-                    {session && (
+                    {session ? (
                         <form
                             onSubmit={handleSubmitFeedback}
                             className="mt-4 w-full"
@@ -221,52 +224,61 @@ const DetailProduct = (props: Props) => {
                                 Gửi
                             </button>
                         </form>
+                    ) : (
+                        <div className="w-full text-center">
+                            <button className="md:w-2/3 w-full h-fit bg-lanh_green mt-4 p-2 rounded-md text-white">
+                                Đăng nhập để lại đánh giá
+                            </button>
+                        </div>
                     )}
                     <div className="mt-4 w-full">
                         <h1 className="font-bold pb-2">
                             Phản hồi của khách hàng:
                         </h1>
-                        <div className="border-t-2">
-                            {feedbacks.length > 0 ? (
-                                feedbacks.map((feed) => (
-                                    <div
-                                        className="border-b-2 py-2"
-                                        key={feed._id}
-                                    >
-                                        <div className="flex justify-between">
-                                            <p className="font-bold">
-                                                {feed.fullName}
-                                            </p>
-                                            <p className="flex">
-                                                {[1, 2, 3, 4, 5].map((star) => (
-                                                    <StarIcon
-                                                        key={star}
-                                                        className={`w-6 h-6 ${
-                                                            star <= feed.rating
-                                                                ? "text-yellow-300"
-                                                                : "text-gray-400"
-                                                        }`}
-                                                    />
-                                                ))}
+                        <div className="max-h-52 overflow-y-scroll">
+                            <div className="border-t-2">
+                                {feedbacks.length > 0 ? (
+                                    feedbacks.map((feed) => (
+                                        <div
+                                            className="border-b-2 py-2"
+                                            key={feed._id}
+                                        >
+                                            <div className="flex justify-between">
+                                                <p className="font-bold">
+                                                    {feed.fullName}
+                                                </p>
+                                                <p className="flex">
+                                                    {[1, 2, 3, 4, 5].map(
+                                                        (star) => (
+                                                            <StarIcon
+                                                                key={star}
+                                                                className={`w-6 h-6 ${
+                                                                    star <=
+                                                                    feed.rating
+                                                                        ? "text-yellow-300"
+                                                                        : "text-gray-400"
+                                                                }`}
+                                                            />
+                                                        )
+                                                    )}
+                                                </p>
+                                            </div>
+                                            <p className="italic">
+                                                {feed.comment
+                                                    ? feed.comment
+                                                    : "Người dùng không để lại bình luận"}
                                             </p>
                                         </div>
-                                        <p className="italic">
-                                            {feed.comment
-                                                ? feed.comment
-                                                : "Người dùng không để lại bình luận"}
-                                        </p>
+                                    ))
+                                ) : (
+                                    <div className="py-2">
+                                        Chưa có đánh giá từ khách hàng
                                     </div>
-                                ))
-                            ) : (
-                                <div className="py-2">
-                                    Chưa có đánh giá từ khách hàng
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
-                {/* Related Products */}
-                <RelatedProducts relatedProducts={relatedProducts} />
             </div>
         </div>
     );

@@ -52,7 +52,7 @@ const RelatedProducts = (props: Props) => {
                                     className="object-contain"
                                 />
                             </div>
-                            <h1>{item.name}</h1>
+                            <h1 className="line-clamp-1">{item.name}</h1>
                             <p className="font-bold text-lanh_green">
                                 {Intl.NumberFormat("vi-VN", {
                                     style: "currency",
@@ -62,7 +62,7 @@ const RelatedProducts = (props: Props) => {
                         </Link>
                     </SwiperSlide>
                 ))}
-                <div className="flex justify-end gap-2 md:mt-4 mt-0">
+                <div className="flex justify-end gap-2 mt-4">
                     <button className="prev-button">
                         <Image
                             src="/previous.png"

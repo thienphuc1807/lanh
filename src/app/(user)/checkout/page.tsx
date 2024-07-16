@@ -18,7 +18,11 @@ const page = async () => {
     };
     const data = await getData();
     const session = await auth();
-    return <CheckOut data={data} session={session} />;
+    return (
+        <div className="min-h-screen">
+            <CheckOut data={data} session={session} />
+        </div>
+    );
 };
 
 export default page;

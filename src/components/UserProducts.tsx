@@ -95,7 +95,9 @@ const UserProducts = (props: Props) => {
     return (
         <>
             <div className="flex lg:flex-row flex-col lg:items-center justify-between gap-2 lg:pb-0 pb-5">
-                <BreadCrumbs breadcrumbs={breadcrumbs} />
+                <div className="lg:py-5 py-0 lg:pt-0 pt-4">
+                    <BreadCrumbs breadcrumbs={breadcrumbs} />
+                </div>
                 <div className="flex lg:flex-row flex-col lg:items-center gap-3">
                     <label htmlFor="search">Tìm kiếm:</label>
                     <input
@@ -140,7 +142,7 @@ const UserProducts = (props: Props) => {
                                 key={item.name}
                                 className="bg-white shadow-[0_0_7px_rgba(151,186,121,0.3)] border-[1px]"
                             >
-                                <div className="relative group/item">
+                                <div className="relative">
                                     <div className="relative md:h-80 h-60 w-full">
                                         <Link href={`products/${item.name}`}>
                                             {item.imgs.length > 0 ? (
@@ -164,36 +166,24 @@ const UserProducts = (props: Props) => {
                                             )}
                                         </Link>
                                     </div>
-                                    {/* <div
-                                        className={`group-hover/item:opacity-45 ${
+                                    <div
+                                        className={`${
                                             item.inStock === 0
                                                 ? "opacity-45"
                                                 : "opacity-0"
-                                        } transition-all ease-in-out absolute top-0 bottom-0 right-0 left-0 bg-black`}
-                                    ></div> */}
-                                    {/* <div
+                                        } absolute top-0 bottom-0 right-0 left-0 bg-black`}
+                                    ></div>
+                                    <div
                                         className={`flex ${
                                             item.inStock === 0
                                                 ? "opacity-100 translate-y-[-50%]"
                                                 : "opacity-0"
-                                        }  group-hover/item:opacity-100  absolute top-1/2 justify-center right-0 left-0 group-hover/item:translate-y-[-50%] ease-in-out transition-all duration-500`}
+                                        }   absolute top-1/2 justify-center right-0 left-0`}
                                     >
-                                        <button
-                                            disabled={
-                                                item.inStock === 0
-                                                    ? true
-                                                    : false
-                                            }
-                                            onClick={() =>
-                                                dispatch(addCart(item))
-                                            }
-                                            className="bg-lanh_green disabled:bg-gray-400 disabled:hover:text-white disabled:border-gray-400 text-white py-2 px-4 rounded-lg border-2 border-lanh_green hover:bg-white hover:text-lanh_green transition-all ease-linear duration-300"
-                                        >
-                                            {item.inStock === 0
-                                                ? "Hết hàng"
-                                                : "Thêm vào giỏ"}
-                                        </button>
-                                    </div> */}
+                                        <span className="bg-gray-400 text-white py-2 px-4 rounded-lg border-2">
+                                            Hết hàng
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="p-4 space-y-2">
                                     <Link

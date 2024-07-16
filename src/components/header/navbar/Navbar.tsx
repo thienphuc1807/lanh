@@ -142,7 +142,7 @@ const NavBar = ({ session }: any) => {
                     <div
                         className={`flex flex-col md:w-[250px] top-0 bottom-0 w-[80%] fixed z-20 ${
                             !open && "ml-[-80%] md:ml-[-250px]"
-                        } bg-lanh_green min-h-screen transition-all`}
+                        } bg-lanh_green min-h-screen duration-500 transition-all`}
                     >
                         <div className="flex flex-col h-screen bg-lanh_green md:p-6 p-3">
                             <div className="flex justify-end">
@@ -166,14 +166,36 @@ const NavBar = ({ session }: any) => {
 
                             {session?.user ? (
                                 <>
-                                    <h1 className="text-white uppercase px-2 md:text-lg py-4 text-left truncate">
+                                    <h1 className="uppercase text-white px-2 py-4">
                                         {session.user.name}
                                     </h1>
-                                    <form action={handleGithubLogout}>
-                                        <button className="text-white uppercase px-2 py-4 text-left">
-                                            ĐĂNG XUẤT
-                                        </button>
-                                    </form>
+                                    <div className="text-center flex flex-col">
+                                        <Link
+                                            href={"/account"}
+                                            className={` ${
+                                                pathName === "/account"
+                                                    ? "text-black"
+                                                    : "text-white"
+                                            } uppercase px-2 flex flex-col gap-2 py-4 text-left `}
+                                        >
+                                            Thông tin tài khoản
+                                        </Link>
+                                        <Link
+                                            href={"/orders"}
+                                            className={` ${
+                                                pathName === "/orders"
+                                                    ? "text-black"
+                                                    : "text-white"
+                                            } uppercase px-2 flex flex-col gap-2 py-4 text-left `}
+                                        >
+                                            Đơn hàng của bạn
+                                        </Link>
+                                        <form action={handleGithubLogout}>
+                                            <button className="uppercase text-white px-2 py-4">
+                                                Đăng xuất
+                                            </button>
+                                        </form>
+                                    </div>
                                 </>
                             ) : (
                                 <>
@@ -192,7 +214,7 @@ const NavBar = ({ session }: any) => {
                                             pathName === "/register"
                                                 ? "text-black"
                                                 : "text-white"
-                                        } uppercase px-5 md:text-lg py-5 text-left `}
+                                        } uppercase px-2 py-4 text-left `}
                                         href={"/register"}
                                     >
                                         ĐĂNG KÝ

@@ -34,6 +34,17 @@ export const getOrdersByUserId = async (userID: string) => {
     }
 };
 
+export const getOrderById = async (orderID: string) => {
+    try {
+        connectToDb();
+        const order = await Orders.find({ _id: orderID });
+        return order;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get orders");
+    }
+};
+
 export const getFeedbacks = async () => {
     try {
         connectToDb();

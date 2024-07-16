@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { handleEditUser } from "@/lib/serveraction";
+import BreadCrumbs from "./Breadcrumbs";
 
 const UserAccount = (props: { data: any; user: any }) => {
     const { data, user } = props;
@@ -114,8 +115,22 @@ const UserAccount = (props: { data: any; user: any }) => {
             }
         });
     };
+
+    const breadcrumbs = [
+        {
+            name: "Trang chủ",
+            path: "/",
+        },
+        {
+            name: "Thông tin tài khoản",
+            path: "/account",
+        },
+    ];
     return (
         <div className="container mx-auto md:py-5 py-2 md:px-4 px-0">
+            <div className="py-3 md:px-0 px-4">
+                <BreadCrumbs breadcrumbs={breadcrumbs} />
+            </div>
             <form
                 onSubmit={handleUpdateInfo}
                 className="flex flex-col gap-4 bg-white p-6 rounded-md"

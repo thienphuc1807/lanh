@@ -20,7 +20,9 @@ export const metadata = {
 function News() {
     return (
         <main className="container mx-auto px-5 gap-6">
-            <BreadCrumbs breadcrumbs={breadcrumbs} />
+            <div className="py-4">
+                <BreadCrumbs breadcrumbs={breadcrumbs} />
+            </div>
             <div className="flex gap-5">
                 <div className="flex-[80%]">
                     <div className="grid md:grid-cols-3 grid-cols-1 gap-5">
