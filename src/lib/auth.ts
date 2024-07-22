@@ -12,7 +12,7 @@ const login = async (credentials: any) => {
         const user = await User.findOne({ username: credentials.username });
 
         if (!user) {
-            throw "Wrong Username";
+            throw new Error("Wrong Username");
         }
         const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
@@ -20,11 +20,11 @@ const login = async (credentials: any) => {
         );
 
         if (!isPasswordCorrect) {
-            throw "Wrong Password";
+            throw new Error("Wrong Password");
         }
         return user;
-    } catch (err) {
-        console.log("Login err >>>", err);
+    } catch (error) {
+        throw new Error("Fail to Login!");
     }
 };
 
@@ -58,8 +58,9 @@ export const {
                 try {
                     const user = await login(credentials);
                     return user;
-                } catch (err) {
-                    console.log("authorize error >>>", err);
+                } catch (error) {
+                    console.log(error);
+                    return null;
                 }
             },
         }),
