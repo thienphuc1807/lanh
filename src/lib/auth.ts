@@ -25,6 +25,7 @@ const login = async (credentials: any) => {
         return user;
     } catch (err) {
         console.log("Login err >>>", err);
+        throw err;
     }
 };
 
@@ -60,6 +61,7 @@ export const {
                     return user;
                 } catch (err) {
                     console.log("authorize error >>>", err);
+                    throw err;
                 }
             },
         }),
