@@ -75,7 +75,6 @@ export const handleLogin = async (previousState: any, formData: FormData) => {
         if (error.type?.includes("CredentialsSignin")) {
             return { error: "Sai tên đăng nhập hoặc mật khẩu" };
         }
-        throw error;
     }
 };
 
