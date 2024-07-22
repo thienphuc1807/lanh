@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { connectToDb } from "./utils";
 import { User } from "./models";
@@ -12,7 +12,7 @@ const login = async (credentials: any) => {
         const user = await User.findOne({ username: credentials.username });
 
         if (!user) {
-            throw new Error("Wrong Username");
+            throw "Wrong Username";
         }
         const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
@@ -20,11 +20,11 @@ const login = async (credentials: any) => {
         );
 
         if (!isPasswordCorrect) {
-            throw new Error("Wrong Password");
+            throw "Wrong Password";
         }
         return user;
-    } catch (error) {
-        throw new Error("Fail to Login!");
+    } catch (err) {
+        console.log("Login err >>>", err);
     }
 };
 
@@ -36,17 +36,20 @@ export const {
 } = NextAuth({
     ...authConfig,
     providers: [
-        GitHub({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET,
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
             async profile(profile) {
                 const user = await User.findOne({ email: profile?.email });
                 return {
-                    id: profile.id.toString(),
-                    username: profile.login,
+                    fullName: profile.name,
                     email: profile.email,
-                    image: profile.avatar_url,
                     isAdmin: user?.isAdmin ? user.isAdmin : false,
+                    phoneNumber: user?.phoneNumber,
+                    city: user?.city,
+                    ward: user?.ward,
+                    district: user?.district,
+                    address: user?.address,
                 };
             },
         }),
@@ -55,24 +58,26 @@ export const {
                 try {
                     const user = await login(credentials);
                     return user;
-                } catch (error) {
-                    console.log(error);
-                    return null;
+                } catch (err) {
+                    console.log("authorize error >>>", err);
                 }
             },
         }),
     ],
     callbacks: {
         async signIn({ user, account, profile }) {
-            if (account?.provider === "github") {
-                connectToDb();
+            if (account?.provider === "google") {
                 try {
                     const user = await User.findOne({ email: profile?.email });
                     if (!user) {
                         const newUser = new User({
-                            username: profile?.login,
                             email: profile?.email,
-                            img: profile?.avatar_url,
+                            fullName: profile?.name,
+                            phoneNumber: "",
+                            city: "",
+                            ward: "",
+                            district: "",
+                            address: "",
                         });
                         await newUser.save();
                     }

@@ -19,62 +19,33 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addCart(state, action: PayloadAction<Products>) {
-            const productInCart = state.find(
-                (item) => item._id === action.payload._id
-            );
+        addCart(state: Products[], action: PayloadAction<Products>) {
+            const productId = action.payload._id;
+            const productSize = action.payload.size;
+            const productQuantity = action.payload.quantity;
 
-            const inStockProduct = productInCart?.inStock
-                ? productInCart.inStock
-                : 0;
+            const productInCart = state.find((item) => item._id === productId);
+            const inStockProduct = productInCart?.inStock || 0;
 
             const totalQuantityProductInCart = state
-                .filter((item) => item._id === action.payload._id)
+                .filter((item) => item._id === productId)
                 .reduce((acc, item) => acc + item.quantity, 0);
 
+            if (
+                productInCart &&
+                totalQuantityProductInCart + productQuantity > inStockProduct
+            ) {
+                return state; // No change if there's not enough stock
+            }
+
             const existingItem = state.find(
-                (item) => item.size === action.payload.size
+                (item) => item._id === productId && item.size === productSize
             );
 
-            if (action.payload.size) {
-                if (productInCart) {
-                    if (existingItem) {
-                        if (
-                            totalQuantityProductInCart +
-                                action.payload.quantity >
-                            inStockProduct
-                        ) {
-                            alert("Không đủ số lượng sản phẩm");
-                            return;
-                        } else {
-                            productInCart.quantity += action.payload.quantity;
-                        }
-                    } else {
-                        if (
-                            totalQuantityProductInCart +
-                                action.payload.quantity >
-                            inStockProduct
-                        ) {
-                            alert("Vượt quá số lượng sản phẩm trong kho");
-                            return;
-                        } else {
-                            state.push({ ...action.payload });
-                        }
-                    }
-                } else {
-                    if (
-                        totalQuantityProductInCart + action.payload.quantity >
-                        inStockProduct
-                    ) {
-                        state.push({ ...action.payload });
-                    } else {
-                        alert("Vượt quá số lượng sản phẩm trong kho");
-                        return;
-                    }
-                }
+            if (existingItem) {
+                existingItem.quantity += productQuantity;
             } else {
-                alert("Vui lòng chọn kích cỡ sản phẩm");
-                return;
+                state.push({ ...action.payload });
             }
 
             setLocalStorageItem("Cart", state);

@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -79,7 +78,7 @@ const UserAccount = (props: { data: any; user: any }) => {
         formData.append("district", values?.district);
         formData.append("address", values?.address);
         formData.append("ward", values?.ward);
-        const editUser = await handleEditUser(formData, user.username);
+        const editUser = await handleEditUser(formData, user._id);
         if (!editUser) {
             router.refresh();
             setIsEdit(false);

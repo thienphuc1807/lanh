@@ -8,7 +8,7 @@ import {
     ShoppingCartIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { handleGithubLogout } from "@/lib/serveraction";
+import { handleLogout } from "@/lib/serveraction";
 import { useSelector } from "react-redux";
 import ModalCart from "@/components/ModalCart";
 
@@ -37,7 +37,7 @@ const NavBar = ({ session }: any) => {
                         {session?.user ? (
                             <>
                                 <div className="relative group/item cursor-pointer">
-                                    <h1>Xin chào, {session.user.name}!</h1>
+                                    <h1>Xin chào, {session.user.fullName}!</h1>
                                     <div className="text-center flex flex-col absolute group-hover/item:visible bg-lanh_green group-hover/item:scale-100 scale-0 group-hover/item:opacity-100 invisible opacity-0 w-full top-8 origin-top border-[1px] transition-all duration-500 shadow-lg z-20">
                                         <Link
                                             href={"/account"}
@@ -51,7 +51,7 @@ const NavBar = ({ session }: any) => {
                                         >
                                             Đơn hàng của bạn
                                         </Link>
-                                        <form action={handleGithubLogout}>
+                                        <form action={handleLogout}>
                                             <button className="hover:bg-white hover:text-lanh_green p-4 w-full">
                                                 Đăng xuất
                                             </button>
@@ -167,7 +167,7 @@ const NavBar = ({ session }: any) => {
                             {session?.user ? (
                                 <>
                                     <h1 className="uppercase text-white px-2 py-4">
-                                        {session.user.name}
+                                        {session.user.fullName}
                                     </h1>
                                     <div className="text-center flex flex-col">
                                         <Link
@@ -190,7 +190,7 @@ const NavBar = ({ session }: any) => {
                                         >
                                             Đơn hàng của bạn
                                         </Link>
-                                        <form action={handleGithubLogout}>
+                                        <form action={handleLogout}>
                                             <button className="uppercase text-white px-2 py-4">
                                                 Đăng xuất
                                             </button>

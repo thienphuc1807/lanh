@@ -16,11 +16,15 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const handleGithubLogin = async () => {
-    await signIn("github");
+// export const handleGithubLogin = async () => {
+//     await signIn("github");
+// };
+
+export const handleEmailLogin = async () => {
+    await signIn("google");
 };
 
-export const handleGithubLogout = async () => {
+export const handleLogout = async () => {
     await signOut();
 };
 
@@ -67,7 +71,7 @@ export const handleLogin = async (previousState: any, formData: FormData) => {
     try {
         await signIn("credentials", { username, password });
     } catch (error: any) {
-        console.log(error);
+        console.log("signIn >>>", error);
         if (error.type?.includes("CredentialsSignin")) {
             return { error: "Sai tên đăng nhập hoặc mật khẩu" };
         }
@@ -108,7 +112,7 @@ const saveImageToLocal = async (formData: FormData | File) => {
     }
     const multipleBuffersPromise = files.map((file) =>
         file.arrayBuffer().then((data) => {
-            const buffer = Buffer.from(data);
+            const buffer: any = Buffer.from(data);
             const name = uuidv4();
             const ext = file.type.split("/")[1];
             const tmpDir = os.tmpdir();

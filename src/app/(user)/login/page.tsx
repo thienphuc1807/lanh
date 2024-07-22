@@ -1,5 +1,5 @@
 import LoginForm from "@/components/LoginForm";
-import { handleGithubLogin } from "@/lib/serveraction";
+import { handleEmailLogin } from "@/lib/serveraction";
 import Image from "next/image";
 const LoginPage = async () => {
     return (
@@ -18,9 +18,9 @@ const LoginPage = async () => {
                     <p className="font-bold text-lanh_green">
                         Hoặc đăng nhập bằng:
                     </p>
-                    <form action={handleGithubLogin}>
+                    <form action={handleEmailLogin}>
                         <button className="w-full border-2 rounded-md bg-lanh_green font-bold text-white hover:bg-white hover:text-lanh_green border-lanh_green py-2 px-5">
-                            Github
+                            Google
                         </button>
                     </form>
                 </div>

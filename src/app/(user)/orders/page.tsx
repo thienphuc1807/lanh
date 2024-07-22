@@ -1,14 +1,13 @@
 import Orders from "@/components/Orders";
 import { auth } from "@/lib/auth";
-import { getOrdersByUserId } from "@/lib/data";
-import _ from "lodash";
+import { getOrdersByUserEmail } from "@/lib/data";
 
 const OrdersPage = async () => {
     const session = await auth();
-    const id = session ? session?.user?.id : "";
+    const email = session ? session?.user?.email : "";
     var orders;
-    if (id) {
-        orders = await getOrdersByUserId(id);
+    if (email) {
+        orders = await getOrdersByUserEmail(email);
     }
     const userOrders = JSON.parse(JSON.stringify(orders));
     return <Orders orders={userOrders.reverse()} />;

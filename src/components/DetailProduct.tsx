@@ -3,7 +3,7 @@
 import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "@/app/Redux/cartSlice";
 import {
     MinusIcon,
@@ -37,6 +37,11 @@ const DetailProduct = (props: Props) => {
     const [comment, setComment] = useState("");
     const [size, setSize] = useState("");
     const router = useRouter();
+    const [mess, setMess] = useState<{
+        type: "error" | "success";
+        text: string;
+    } | null>(null);
+    const cart = useSelector((state: { cart: Products[] }) => state.cart);
 
     const handleChangeQuantity = (math: string, quantity: number) => {
         if (math === "plus") {
@@ -72,10 +77,51 @@ const DetailProduct = (props: Props) => {
         }
     };
 
+    const handleAddCart = (data: Products, quantity: number, size: string) => {
+        const productID = data._id;
+
+        console.log(data);
+        console.log(quantity);
+        console.log(size);
+
+        if (!size) {
+            setMess({ type: "error", text: "Vui lòng chọn kích cỡ sản phẩm!" });
+            return;
+        }
+
+        const productInCart = cart.find((item) => item._id === productID);
+        const productInStock = productInCart?.inStock || 0;
+
+        const totalQuantityProductInCart = cart
+            .filter((item) => item._id === productID)
+            .reduce((acc, init) => acc + init.quantity, 0);
+
+        console.log(totalQuantityProductInCart);
+        console.log(productInStock);
+
+        if (
+            productInCart &&
+            totalQuantityProductInCart + quantity > productInStock
+        ) {
+            setMess({
+                type: "error",
+                text: "Đã đạt giới hạn số lượng sản phẩm!",
+            });
+            return;
+        }
+
+        const add = dispatch(addCart({ ...data, quantity, size }));
+        if (add) {
+            setMess({ type: "success", text: "Đã thêm sản phẩm vào giỏ" });
+        } else {
+            setMess({ type: "error", text: "Lỗi" });
+        }
+    };
+
     return (
         <div className="container mx-auto lg:px-5 px-0">
             {/* BreadCrumbs */}
-            <div className="lg:px-0 px-3">
+            <div className="lg:px-0 px-3 py-5">
                 <BreadCrumbs breadcrumbs={breadcrumbs} />
             </div>
             <div className="bg-white rounded-lg p-5">
@@ -169,14 +215,23 @@ const DetailProduct = (props: Props) => {
                                 </button>
                             ))}
                         </div>
-                        <div className="gap-5 mt-5">
+                        <div className="mt-5">
+                            {mess && (
+                                <div
+                                    className={`${
+                                        mess.type === "error"
+                                            ? "text-red-500"
+                                            : "text-green-500"
+                                    } mb-2`}
+                                >
+                                    {mess.text}
+                                </div>
+                            )}
                             <button
                                 disabled={data.inStock === 0 ? true : false}
                                 className="bg-lanh_green disabled:bg-slate-400 disabled:opacity-50 text-white lg:text-base text-sm px-4 py-2 rounded-md hover:opacity-80 flex gap-2 items-center"
                                 onClick={() =>
-                                    dispatch(
-                                        addCart({ ...data, quantity, size })
-                                    )
+                                    handleAddCart(data, quantity, size)
                                 }
                             >
                                 <ShoppingCartIcon className="h-6 w-6" />

@@ -95,7 +95,7 @@ const UserProducts = (props: Props) => {
     return (
         <>
             <div className="flex lg:flex-row flex-col lg:items-center justify-between gap-2 lg:pb-0 pb-5">
-                <div className="lg:py-5 py-0 lg:pt-0 pt-4">
+                <div className="lg:py-5 py-0 lg:pt-3 pt-5">
                     <BreadCrumbs breadcrumbs={breadcrumbs} />
                 </div>
                 <div className="flex lg:flex-row flex-col lg:items-center gap-3">

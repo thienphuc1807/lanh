@@ -12,21 +12,21 @@ export const getProducts = async () => {
     }
 };
 
-export const getUser = async (id: string) => {
+export const getUser = async (email: string) => {
     try {
         connectToDb();
-        const user = await User.findOne({ _id: id });
+        const user = await User.findOne({ email: email });
         return user;
     } catch (error) {
         console.log(error);
-        throw new Error("Failed to get user by ID");
+        throw new Error("Failed to get user by Email");
     }
 };
 
-export const getOrdersByUserId = async (userID: string) => {
+export const getOrdersByUserEmail = async (email: string) => {
     try {
         connectToDb();
-        const orders = await Orders.find({ userID: userID });
+        const orders = await Orders.find({ email: email });
         return orders;
     } catch (error) {
         console.log(error);

@@ -20,11 +20,11 @@ const page = async () => {
     const data = await getData();
     const session = await auth();
 
-    const id = session ? session?.user?.id : "";
+    const email = session ? session?.user?.email : "";
 
     var sampleUser = "";
-    if (id) {
-        sampleUser = await getUser(id);
+    if (email) {
+        sampleUser = await getUser(email);
     }
 
     const user = JSON.parse(JSON.stringify(sampleUser));
