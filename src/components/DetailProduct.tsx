@@ -18,14 +18,17 @@ import RelatedProducts from "./RelatedProducts";
 
 interface Props {
     data: Products;
-    session: any;
+    user: Users;
     feedbacks: Feedbacks[];
     averageRating: number;
     relatedProducts: Products[];
+    session: any;
 }
 
 const DetailProduct = (props: Props) => {
-    const { data, session, feedbacks, averageRating, relatedProducts } = props;
+    const { data, user, feedbacks, averageRating, relatedProducts, session } =
+        props;
+
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
         { name: "Sản phẩm", path: "/products" },
@@ -64,9 +67,9 @@ const DetailProduct = (props: Props) => {
         formData.append("comment", comment);
         const userFeedback = await handleUserFeedback(
             formData,
-            session.user.id,
+            user._id || "",
             data._id,
-            session.user.fullName
+            user.fullName
         );
         if (!userFeedback) {
             router.refresh();
@@ -80,10 +83,6 @@ const DetailProduct = (props: Props) => {
     const handleAddCart = (data: Products, quantity: number, size: string) => {
         const productID = data._id;
 
-        console.log(data);
-        console.log(quantity);
-        console.log(size);
-
         if (!size) {
             setMess({ type: "error", text: "Vui lòng chọn kích cỡ sản phẩm!" });
             return;
@@ -95,9 +94,6 @@ const DetailProduct = (props: Props) => {
         const totalQuantityProductInCart = cart
             .filter((item) => item._id === productID)
             .reduce((acc, init) => acc + init.quantity, 0);
-
-        console.log(totalQuantityProductInCart);
-        console.log(productInStock);
 
         if (
             productInCart &&

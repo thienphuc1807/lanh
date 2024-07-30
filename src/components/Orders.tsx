@@ -35,7 +35,7 @@ const Orders = (props: { orders: Orders[] }) => {
                                     <div className="flex md:flex-row flex-col-reverse justify-between md:items-center">
                                         <div className="flex md:flex-row flex-col md:items-center gap-2">
                                             <span className="border-2 rounded-full bg-gray-100 font-bold p-3">
-                                                Đơn hàng:{" "}
+                                                Đơn hàng:
                                                 <b className="uppercase text-lanh_green">
                                                     {item._id}
                                                 </b>

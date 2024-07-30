@@ -9,16 +9,13 @@ import os from "os";
 import fs from "fs/promises";
 import { v2 as cloudinary } from "cloudinary";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-// export const handleGithubLogin = async () => {
-//     await signIn("github");
-// };
 
 export const handleEmailLogin = async () => {
     await signIn("google");
@@ -28,8 +25,19 @@ export const handleLogout = async () => {
     await signOut();
 };
 
-export const handleRegister = async (previousState: any, fromData: any) => {
-    const { username, email, password } = Object.fromEntries(fromData);
+export const handleRegister = async (fromData: FormData) => {
+    const {
+        username,
+        fullName,
+        email,
+        isAdmin,
+        password,
+        phoneNumber,
+        city,
+        district,
+        address,
+        ward,
+    } = Object.fromEntries(fromData);
     try {
         connectToDb();
         const user = await User.findOne({ username });
@@ -43,18 +51,18 @@ export const handleRegister = async (previousState: any, fromData: any) => {
         }
 
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const hashedPassword = await bcrypt.hash(password.toString(), salt);
         const newUser = new User({
-            username,
-            email,
-            password: hashedPassword,
-            userAvatar: "",
-            fullName: "",
-            phoneNumber: "",
-            city: "",
-            ward: "",
-            district: "",
-            address: "",
+            username: username || "",
+            email: email || "",
+            password: hashedPassword || "",
+            fullName: fullName || "",
+            phoneNumber: phoneNumber || "",
+            city: city || "",
+            ward: ward || "",
+            district: district || "",
+            address: address || "",
+            isAdmin: isAdmin || false,
         });
         await newUser.save();
         console.log("save to DB");
@@ -65,13 +73,12 @@ export const handleRegister = async (previousState: any, fromData: any) => {
     }
 };
 
-export const handleLogin = async (previousState: any, formData: FormData) => {
+export const handleLogin = async (formData: FormData) => {
     const { username, password } = Object.fromEntries(formData);
-
     try {
         await signIn("credentials", { username, password });
+        redirect("/");
     } catch (error: any) {
-        console.log("signIn >>>", error);
         if (error.type?.includes("CredentialsSignin")) {
             return { error: "Sai tên đăng nhập hoặc mật khẩu" };
         }

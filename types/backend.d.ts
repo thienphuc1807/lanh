@@ -21,11 +21,17 @@ interface News {
 }
 
 interface Users {
-    _id: string;
-    username: string;
+    _id?: string;
+    username?: string;
+    fullName: string;
     email: string;
     isAdmin: boolean;
-    img: string;
+    password?: string;
+    phoneNumber?: string;
+    city?: string;
+    ward?: string;
+    district?: string;
+    address?: string;
 }
 
 interface Input {

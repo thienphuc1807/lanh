@@ -9,19 +9,23 @@ const getUsers = async () => {
     }
     return res.json();
 };
-const UsersPage = async () => {
+const UsersPage = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined };
+}) => {
     const users = await getUsers();
     return (
         <div className="p-5">
             <div className="pb-5">
                 <Link
-                    href={"/dashboard/users"}
-                    className="py-2 px-4 bg-lanh_green text-white"
+                    href={"/dashboard/users/formuser"}
+                    className="bg-lanh_green py-2 px-5 rounded-md border-2 border-lanh_green text-white"
                 >
-                    Add new User
+                    Thêm tài khoản mới
                 </Link>
             </div>
-            <UserList users={users} />
+            <UserList users={users} searchParams={searchParams} />
         </div>
     );
 };

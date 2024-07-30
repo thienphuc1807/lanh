@@ -26,8 +26,6 @@ const FormProduct = (props: Props) => {
 
     const [values, setValues] = useState(product || initialProductState);
 
-    console.log(values);
-
     const router = useRouter();
 
     const inputs: Input[] = [

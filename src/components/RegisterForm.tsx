@@ -1,25 +1,20 @@
 "use client";
-import { handleRegister } from "@/lib/serveraction";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useFormState } from "react-dom";
-import { useRouter } from "next/navigation";
+import { ChangeEvent, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import FormInput from "./FormInput";
+import { handleRegister } from "@/lib/serveraction";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 function RegiterForm() {
-    const [state, formAction] = useFormState(handleRegister, undefined);
     const [values, setValues] = useState({
-        name: "",
+        username: "",
         email: "",
         password: "",
         confirmPassword: "",
     });
 
     const router = useRouter();
-
-    useEffect(() => {
-        state?.success && router.push("/login");
-    }, [state?.success, router]);
 
     const registerForm: Input[] = [
         {
@@ -70,8 +65,52 @@ function RegiterForm() {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
+    const handleUpload = async (
+        e: React.FormEvent<HTMLFormElement>
+    ): Promise<void> => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("username", values.username || "");
+        formData.append("email", values?.email);
+        formData.append("password", values.password || "");
+
+        try {
+            const update = await handleRegister(formData);
+            if (update.success) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Đăng ký thành công!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                router.push("/dashboard/users");
+                router.refresh();
+            } else {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: update.error,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Có lỗi xảy ra!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
+    };
+
     return (
-        <form action={formAction} className=" flex flex-col gap-6 md:w-[400px]">
+        <form
+            onSubmit={handleUpload}
+            className=" flex flex-col gap-6 md:w-[400px]"
+        >
             <div className="w-full h-[140px] relative mx-auto">
                 <Image
                     alt="logo_lanh"
@@ -90,10 +129,12 @@ function RegiterForm() {
                     />
                 </div>
             ))}
-            <button className="bg-lanh_green text-white py-2 px-5 rounded-md border-2 border-lanh_green hover:bg-white hover:text-lanh_green">
+            <button
+                type="submit"
+                className="bg-lanh_green text-white py-2 px-5 rounded-md border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
+            >
                 Đăng ký
             </button>
-            <span className="text-red-600">{state?.error}</span>
             <Link href="/login">
                 Bạn đã có tài khoản ?
                 <b className="pl-2 text-lanh_green hover:underline">

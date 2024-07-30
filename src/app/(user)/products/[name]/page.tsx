@@ -1,6 +1,6 @@
 import DetailProduct from "@/components/DetailProduct";
 import { auth } from "@/lib/auth";
-import { getFeedbacks, getProducts } from "@/lib/data";
+import { getFeedbacks, getUser, getProducts } from "@/lib/data";
 
 // Fetch Data With AN API
 
@@ -52,11 +52,14 @@ async function ProductDetail({ params }: { params: { name: string } }) {
             products.filter((item: Products) => item.category === data.category)
         )
     );
+    const email = session?.user?.email || "";
+    const user = await getUser(email);
 
     return (
         <DetailProduct
             data={data}
             session={session}
+            user={JSON.parse(JSON.stringify((user)))}
             feedbacks={productsfeedbacks}
             averageRating={averageRating}
             relatedProducts={relatedProducts}

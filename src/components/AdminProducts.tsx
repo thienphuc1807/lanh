@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import PaginationControl from "./PaginationControl";
 import { useEffect, useState } from "react";
 import _ from "lodash";
-import { FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { FunnelIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 interface Props {

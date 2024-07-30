@@ -40,7 +40,7 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                             href="/dashboard"
                         >
                             <HomeIcon className="h-6 w-6 " />
-                            <p>Home</p>
+                            <p>Dashboard</p>
                         </Link>
                         <Link
                             className="text-white flex gap-2"
