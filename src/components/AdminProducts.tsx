@@ -146,6 +146,7 @@ const ProductList = (props: Props) => {
                                     <th>Giá</th>
                                     <th>Giảm giá</th>
                                     <th>Hình ảnh</th>
+                                    <th>Kích cỡ</th>
                                     <th>Nguyên liệu</th>
                                     <th>Số lượng</th>
                                     <th>Chỉnh sửa/Xoá</th>
@@ -196,6 +197,7 @@ const ProductList = (props: Props) => {
                                                 </div>
                                             )}
                                         </td>
+                                        <td>{product.size.toString()}</td>
                                         <td>{product.ingredient}</td>
                                         <td>{product.inStock}</td>
                                         <td>

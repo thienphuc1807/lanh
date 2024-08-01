@@ -2,39 +2,8 @@
 import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import OrderStatus from "./OrderStatus";
 
-const ordersStatus = [
-    {
-        id: 1,
-        name: "pending",
-        title: "Đang chuẩn bị",
-        color: "bg-[#f0ad4e]",
-    },
-    {
-        id: 2,
-        name: "shipping",
-        title: "Đang giao hàng",
-        color: "bg-[#5bc0de]",
-    },
-    {
-        id: 3,
-        name: "complete",
-        title: "Đã giao hàng",
-        color: "bg-[#5cb85c]",
-    },
-    {
-        id: 4,
-        name: "refunded",
-        title: "Hoàn hàng",
-        color: "bg-[#d9534f]",
-    },
-    {
-        id: 5,
-        name: "canceled",
-        title: "Đã huỷ đơn",
-        color: "bg-[#5f6661]",
-    },
-];
 const ModalDetailOrders = (props: Orders) => {
     const {
         _id,
@@ -51,7 +20,6 @@ const ModalDetailOrders = (props: Orders) => {
         note,
     } = props;
     const [open, setOpen] = useState(false);
-    const [newStatus, setNewStatus] = useState(status);
     const formatISODate = (isoDate: any) => {
         let date = new Date(isoDate);
         return date.toLocaleDateString("en-GB");
@@ -75,20 +43,7 @@ const ModalDetailOrders = (props: Orders) => {
                 <div className="p-5 border-b-2">
                     <div className="flex justify-between items-center">
                         <p className="uppercase">#{_id}</p>
-                        {ordersStatus.map((item) => (
-                            <p
-                                key={item.id}
-                                className={`${
-                                    item.name === status
-                                        ? `block ${item.color}`
-                                        : "hidden"
-                                } font-bold text-sm 
-                                        text-white
-                                        p-2 rounded-md w-fit `}
-                            >
-                                {status === item.name && item.title}
-                            </p>
-                        ))}
+                        <OrderStatus status={status} />
                     </div>
                     <div className="flex font-bold">
                         {fullName}({phoneNumber})

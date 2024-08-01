@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import BreadCrumbs from "./Breadcrumbs";
+import OrderStatus from "./OrderStatus";
 
 interface Props {
     orders: Orders[];
@@ -36,17 +37,15 @@ const OrderDetail = (props: Props) => {
             </div>
             {orders.map((order) => (
                 <div key={order._id} className="bg-white p-5 space-y-6">
-                    <div className="border-2 rounded-md p-5">
+                    <div className="border-2 rounded-md p-5 space-y-3">
                         <h1 className="text-lg flex md:flex-row flex-col md:gap-2 gap-0">
                             <span>Đơn hàng:</span>
-                            <span className="uppercase font-bold text-lanh_green overflow-x-scroll">
+                            <span className="uppercase font-bold text-lanh_green md:overflow-hidden overflow-x-scroll">
                                 {order._id}
                             </span>
                         </h1>
-                        <p className="bg-blue-100 text-blue-600 w-fit p-2 rounded-md font-bold mt-2">
-                            {order.status}
-                        </p>
-                        <p className="bg-slate-200 w-fit p-2 rounded-md mt-4">
+                        <OrderStatus status={order.status} />
+                        <p className="bg-slate-200 w-fit p-2 rounded-md">
                             Ngày đặt: {formatISODate(order.createdAt)}
                         </p>
                     </div>

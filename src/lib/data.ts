@@ -23,10 +23,10 @@ export const getUsers = async () => {
     }
 };
 
-export const getUser = async (email: string) => {
+export const getUser = async (id: string) => {
     try {
         connectToDb();
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ _id: id });
         return user;
     } catch (error) {
         console.log(error);
@@ -45,10 +45,10 @@ export const getOrders = async () => {
     }
 };
 
-export const getOrdersByUserEmail = async (email: string) => {
+export const getOrdersByUserID = async (id: string) => {
     try {
         connectToDb();
-        const orders = await Orders.find({ email: email });
+        const orders = await Orders.find({ userID: id });
         return orders;
     } catch (error) {
         console.log(error);

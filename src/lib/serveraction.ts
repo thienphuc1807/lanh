@@ -264,7 +264,7 @@ export const handleUploadOrders = async (formData: FormData) => {
             ward: ward,
             address: address,
             note: note,
-            status: "Đã đặt hàng",
+            status: "pending",
             orders: orderList,
         });
         await newOrders.save();
@@ -275,25 +275,46 @@ export const handleUploadOrders = async (formData: FormData) => {
 };
 
 export const handleEditUser = async (formData: FormData, id: string) => {
-    const { fullName, email, phoneNumber, city, district, ward, address } =
-        Object.fromEntries(formData);
+    const {
+        username,
+        fullName,
+        email,
+        phoneNumber,
+        city,
+        district,
+        ward,
+        address,
+        isAdmin,
+    } = Object.fromEntries(formData);
+
     try {
-        connectToDb();
-        await User.findOneAndUpdate(
-            { _id: id },
-            {
-                fullName: fullName,
-                email: email,
-                phoneNumber: phoneNumber,
-                city: city,
-                district: district,
-                ward: ward,
-                address: address,
-            }
-        );
-    } catch (error) {
-        console.log(error);
-        return { error: "Something went wrong" };
+        await connectToDb();
+
+        const user = await User.findOne({ username });
+        if (user && user._id.toString() !== id) {
+            return { error: "Tên đăng nhập đã tồn tại!" };
+        }
+
+        const userEmail = await User.findOne({ email });
+        if (userEmail && userEmail._id.toString() !== id) {
+            return { error: "Email đã được đăng ký!" };
+        }
+
+        await User.findByIdAndUpdate(id, {
+            username,
+            fullName,
+            email,
+            phoneNumber,
+            city,
+            district,
+            ward,
+            address,
+            isAdmin,
+        });
+        return { success: true };
+    } catch (err) {
+        console.log(err);
+        return { error: "An error occurred while updating the user." };
     }
 };
 

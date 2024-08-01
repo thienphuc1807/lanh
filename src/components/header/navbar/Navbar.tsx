@@ -37,7 +37,10 @@ const NavBar = ({ session }: any) => {
                         {session?.user ? (
                             <>
                                 <div className="relative group/item cursor-pointer">
-                                    <h1>Xin chào, {session.user.fullName}!</h1>
+                                    <h1>
+                                        Xin chào,{" "}
+                                        {session.user.fullName || "Lành User"}!
+                                    </h1>
                                     <div className="text-center flex flex-col absolute group-hover/item:visible bg-lanh_green group-hover/item:scale-100 scale-0 group-hover/item:opacity-100 invisible opacity-0 w-full top-8 origin-top border-[1px] transition-all duration-500 shadow-lg z-20">
                                         <Link
                                             href={"/account"}

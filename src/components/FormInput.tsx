@@ -1,3 +1,4 @@
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useState, ChangeEvent } from "react";
 
 interface Props {
@@ -28,28 +29,57 @@ const FormInput = (props: Props) => {
         value,
         ...inputProps
     } = props;
+
     const handleFocused = () => {
         setFocused(true);
     };
+
+    const [show, setShow] = useState(false);
     return (
         <>
             <label htmlFor={name}>{label}</label>
 
-            <input
-                name={name}
-                {...inputProps}
-                onBlur={handleFocused}
-                onChange={onChange}
-                className={className}
-                value={value}
-            />
+            <div className="relative">
+                {name !== "password" ? (
+                    <input
+                        name={name}
+                        {...inputProps}
+                        onBlur={handleFocused}
+                        onChange={onChange}
+                        className={className}
+                        value={value}
+                    />
+                ) : (
+                    <input
+                        name={name}
+                        {...inputProps}
+                        type={show ? "text" : "password"}
+                        onBlur={handleFocused}
+                        onChange={onChange}
+                        className={className}
+                        value={value}
+                    />
+                )}
 
-            <span
-                data-focused={focused}
-                className="hidden data-[focused=true]:block peer-valid:hidden text-red-600"
-            >
-                {errorMess}
-            </span>
+                {name === "password" && (
+                    <span
+                        className="absolute right-[10px] top-[50%] translate-y-[-50%]"
+                        onClick={() => setShow(!show)}
+                    >
+                        {show ? (
+                            <EyeIcon className="h-6 w-6 text-lanh_green" />
+                        ) : (
+                            <EyeSlashIcon className="w-6 h-6 text-lanh_green" />
+                        )}
+                    </span>
+                )}
+                <span
+                    data-focused={focused}
+                    className="hidden data-[focused=true]:block peer-valid:hidden text-red-600"
+                >
+                    {errorMess}
+                </span>
+            </div>
         </>
     );
 };

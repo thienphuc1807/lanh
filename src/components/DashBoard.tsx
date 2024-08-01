@@ -1,44 +1,12 @@
 import Image from "next/image";
 import ModalDetailOrders from "./ModalDetailOrders";
+import OrderStatus from "./OrderStatus";
 
 interface Props {
     users: Users[];
     products: Products[];
     orders: Orders[];
 }
-
-const ordersStatus = [
-    {
-        id: 1,
-        name: "pending",
-        title: "Đang chuẩn bị",
-        color: "bg-[#f0ad4e]",
-    },
-    {
-        id: 2,
-        name: "shipping",
-        title: "Đang giao hàng",
-        color: "bg-[#5bc0de]",
-    },
-    {
-        id: 3,
-        name: "complete",
-        title: "Đã giao hàng",
-        color: "bg-[#5cb85c]",
-    },
-    {
-        id: 4,
-        name: "refunded",
-        title: "Hoàn hàng",
-        color: "bg-[#d9534f]",
-    },
-    {
-        id: 5,
-        name: "canceled",
-        title: "Đã huỷ đơn",
-        color: "bg-[#5f6661]",
-    },
-];
 
 const DashBoard = ({ users, products, orders }: Props) => {
     const allOrders = orders.map((item) => item.orders);
@@ -151,21 +119,7 @@ const DashBoard = ({ users, products, orders }: Props) => {
                                 )}
                             </span>
                             <div className="basis-1/4 flex gap-2">
-                                {ordersStatus.map((status) => (
-                                    <p
-                                        key={status.id}
-                                        className={`${
-                                            status.name === item.status
-                                                ? `block ${status.color}`
-                                                : "hidden"
-                                        } font-bold 
-                                        text-white
-                                        p-2 rounded-md w-fit `}
-                                    >
-                                        {item.status === status.name &&
-                                            status.title}
-                                    </p>
-                                ))}
+                                <OrderStatus status={item.status} />
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import BreadCrumbs from "./Breadcrumbs";
+import OrderStatus from "./OrderStatus";
 
 const Orders = (props: { orders: Orders[] }) => {
     const { orders } = props;
@@ -35,7 +36,7 @@ const Orders = (props: { orders: Orders[] }) => {
                                     <div className="flex md:flex-row flex-col-reverse justify-between md:items-center">
                                         <div className="flex md:flex-row flex-col md:items-center gap-2">
                                             <span className="border-2 rounded-full bg-gray-100 font-bold p-3">
-                                                Đơn hàng:
+                                                <span>Đơn hàng: </span>
                                                 <b className="uppercase text-lanh_green">
                                                     {item._id}
                                                 </b>
@@ -45,9 +46,9 @@ const Orders = (props: { orders: Orders[] }) => {
                                                 {formatISODate(item.createdAt)}
                                             </p>
                                         </div>
-                                        <p className="pl-2 md:pb-0 pb-3 font-bold text-lanh_green">
-                                            {item.status}
-                                        </p>
+                                        <div className="pl-2 md:pb-0 pb-3 font-bold text-lanh_green">
+                                            <OrderStatus status={item.status} />
+                                        </div>
                                     </div>
 
                                     <div className="flex flex-col mt-4">

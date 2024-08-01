@@ -7,11 +7,14 @@ import BreadCrumbs from "./Breadcrumbs";
 
 const UserAccount = (props: { data: any; user: any }) => {
     const { data, user } = props;
+    console.log(user);
+
     const [cities, setCities] = useState(data);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
     const [values, setValues] = useState({
+        username: user.username,
         fullName: user.fullName,
         email: user.email,
         phoneNumber: user.phoneNumber,
@@ -71,6 +74,7 @@ const UserAccount = (props: { data: any; user: any }) => {
     ): Promise<void> => {
         e.preventDefault();
         const formData = new FormData();
+        formData.append("username", values?.username);
         formData.append("fullName", values?.fullName);
         formData.append("email", values?.email);
         formData.append("phoneNumber", values?.phoneNumber);
@@ -79,7 +83,7 @@ const UserAccount = (props: { data: any; user: any }) => {
         formData.append("address", values?.address);
         formData.append("ward", values?.ward);
         const editUser = await handleEditUser(formData, user._id);
-        if (!editUser) {
+        if (editUser.success) {
             router.refresh();
             setIsEdit(false);
             Swal.fire({
@@ -93,7 +97,7 @@ const UserAccount = (props: { data: any; user: any }) => {
             Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Cập nhật không thành công",
+                title: editUser.error,
                 showConfirmButton: false,
                 timer: 1500,
             });

@@ -26,6 +26,7 @@ const FormUser = (props: Props) => {
     };
 
     const [values, setValues] = useState(user || initialUserState);
+    console.log(values);
 
     const router = useRouter();
 
@@ -53,7 +54,6 @@ const FormUser = (props: Props) => {
             type: "email",
             label: "Email",
             name: "email",
-            errorMess: "Email không được để trống",
             placeholder: "Nhập email",
         },
         {
@@ -73,7 +73,22 @@ const FormUser = (props: Props) => {
         },
     ];
 
-    const onChangeValues = (e: ChangeEvent<HTMLInputElement>) => {
+    const adminUser = [
+        {
+            id: 1,
+            name: "User",
+            value: false,
+        },
+        {
+            id: 2,
+            name: "Admin",
+            value: true,
+        },
+    ];
+
+    const onChangeValues = (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         setValues({
             ...values,
             [e.target.name]: e.target.value,
@@ -98,7 +113,7 @@ const FormUser = (props: Props) => {
         if (id) {
             try {
                 const update = await handleEditUser(formData, id);
-                if (!update) {
+                if (update?.success) {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
@@ -112,13 +127,12 @@ const FormUser = (props: Props) => {
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
-                        title: "Lỗi cập nhật!",
+                        title: update?.error,
                         showConfirmButton: false,
                         timer: 1500,
                     });
                 }
             } catch (error) {
-                console.log(error);
                 Swal.fire({
                     position: "top-end",
                     icon: "error",
@@ -158,19 +172,39 @@ const FormUser = (props: Props) => {
                 className="lg:min-w-[600px] space-y-5 md:p-10 md:items-stretch items-center p-4 border-2 border-gray-200 shadow-md rounded-md bg-white"
             >
                 <h1 className="text-lanh_green text-center font-bold">
-                    {user ? "CHỈNH SỬA SẢN PHẨM" : "THÊM SẢN PHẨM MỚI"}
+                    {user ? "CHỈNH SỬA THÔNG TIN USER" : "THÊM USER MỚI"}
                 </h1>
                 {inputs.map((input) => (
-                    <div key={input.id} className="flex flex-col gap-4">
+                    <div
+                        key={input.id}
+                        className={`${
+                            id && input.name === "password" ? "hidden" : "block"
+                        } flex flex-col gap-4`}
+                    >
                         <FormInput
                             key={input.id}
                             onChange={onChangeValues}
                             value={values[input.name as keyof Users]}
                             {...input}
-                            className="md:px-6 px-3 w-full md:py-4 py-2 border-2 border-lanh_green rounded-md peer"
+                            className={`md:px-6 px-3 w-full md:py-4 py-2 border-2 border-lanh_green rounded-md peer`}
                         />
                     </div>
                 ))}
+                <div className="flex flex-col gap-4">
+                    <label htmlFor="isAdmin">Vai trò</label>
+                    <select
+                        name="isAdmin"
+                        id="isAdmin"
+                        onChange={onChangeValues}
+                        className=" px-3 w-fit  py-2 border-2 border-lanh_green rounded-md"
+                    >
+                        {adminUser.map((item) => (
+                            <option key={item.id} value={item.value.toString()}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <button
                     type="submit"
                     className="py-4 w-full rounded-md border-2 border-lanh_green bg-lanh_green text-white hover:text-lanh_green hover:bg-white"

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import _ from "lodash";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import PaginationControl from "./PaginationControl";
+import Link from "next/link";
 
 interface Props {
     users: Users[];
@@ -137,13 +138,14 @@ const UserList = (props: Props) => {
                 <>
                     <div className="lg:block hidden border-2 border-gray-200 shadow-md rounded-md bg-white">
                         <h1 className="p-5 font-bold">Admin/User</h1>
-                        <table className="w-full text-center border-separate border-spacing-4">
+                        <table className="w-full border-separate">
                             <thead>
-                                <tr>
-                                    <th>Tên đầy đủ</th>
-                                    <th>Địa chỉ email</th>
-                                    <th>Vai trò</th>
-                                    <th>Xoá</th>
+                                <tr className="text-left">
+                                    <th></th>
+                                    <th className="pl-4">Tên đầy đủ</th>
+                                    <th className="pl-4">Địa chỉ email</th>
+                                    <th className="pl-4">Vai trò</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,22 +154,31 @@ const UserList = (props: Props) => {
                                         key={user._id}
                                         className="even:bg-gray-100"
                                     >
-                                        <td>{user.fullName}</td>
-                                        <td className="lg:max-w-24 overflow-x-auto">
+                                        <td>
+                                            <Link
+                                                href={`/dashboard/users/${user._id}`}
+                                                className="flex justify-center"
+                                            >
+                                                <PencilSquareIcon className="w-6 h-6 text-lanh_green" />
+                                            </Link>
+                                        </td>
+                                        <td className="pl-4">
+                                            {user.fullName}
+                                        </td>
+                                        <td className="overflow-x-auto pl-4">
                                             {user.email}
                                         </td>
 
-                                        <td>
+                                        <td className="pl-4">
                                             {user.isAdmin ? "Admin" : "User"}
                                         </td>
-                                        <td className="py-4">
+                                        <td className="py-4 text-center">
                                             <button
                                                 onClick={() =>
                                                     handleRemove(user._id || "")
                                                 }
-                                                className="px-4 py-2 text-white bg-lanh_green rounded-md "
                                             >
-                                                Xoá
+                                                <TrashIcon className="h-6 w-6 text-lanh_green" />
                                             </button>
                                         </td>
                                     </tr>
