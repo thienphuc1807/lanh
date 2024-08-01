@@ -52,14 +52,13 @@ async function ProductDetail({ params }: { params: { name: string } }) {
             products.filter((item: Products) => item.category === data.category)
         )
     );
-    const id = session?.user?.id || "";
-    const user = await getUser(id);
+    const user = session?.user?.id ? await getUser(session?.user?.id) : "";
 
     return (
         <DetailProduct
             data={data}
             session={session}
-            user={JSON.parse(JSON.stringify((user)))}
+            user={JSON.parse(JSON.stringify(user))}
             feedbacks={productsfeedbacks}
             averageRating={averageRating}
             relatedProducts={relatedProducts}
