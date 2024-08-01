@@ -52,8 +52,8 @@ async function ProductDetail({ params }: { params: { name: string } }) {
             products.filter((item: Products) => item.category === data.category)
         )
     );
-    const email = session?.user?.email || "";
-    const user = await getUser(email);
+    const id = session?.user?.id || "";
+    const user = await getUser(id);
 
     return (
         <DetailProduct
