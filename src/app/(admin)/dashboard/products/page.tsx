@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const getProducts = async () => {
     const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
-        cache: "no-store",
+        next: { revalidate: 0 },
     });
     if (!res.ok) {
         throw new Error("Something went wrong");

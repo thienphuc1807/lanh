@@ -136,7 +136,7 @@ const FormUser = (props: Props) => {
                 Swal.fire({
                     position: "top-end",
                     icon: "error",
-                    title: "Tên sản phẩm đã tồn tại!",
+                    title: "Đã có lỗi xảy ra!",
                     showConfirmButton: false,
                     timer: 1500,
                 });

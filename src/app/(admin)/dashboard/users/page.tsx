@@ -2,7 +2,7 @@ import UserList from "@/components/AdminUsers";
 import Link from "next/link";
 const getUsers = async () => {
     const res = await fetch(`http://${process.env.DOMAIN}/api/users`, {
-        cache: "no-store",
+        next: { revalidate: 0 },
     });
     if (!res.ok) {
         throw new Error("Something went wrong");
