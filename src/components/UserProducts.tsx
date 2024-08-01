@@ -7,7 +7,6 @@ import _ from "lodash";
 import { useState } from "react";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
-import { addCart } from "@/app/Redux/cartSlice";
 import RatingStar from "./RatingStar";
 interface Props {
     data: Products[];

@@ -7,9 +7,13 @@ import ProductsSwiper from "@/components/Swiper";
 import NewProducts from "@/components/NewProducts";
 
 const getProducts = async () => {
-    const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
-        next: { revalidate: 0 },
-    });
+    const timestamp = new Date().getTime();
+    const res = await fetch(
+        `http://${process.env.DOMAIN}/api/products?timestamp=${timestamp}`,
+        {
+            cache: "no-store",
+        }
+    );
     if (!res.ok) {
         throw new Error("Something went wrong");
     }

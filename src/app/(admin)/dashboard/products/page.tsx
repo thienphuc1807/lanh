@@ -2,9 +2,13 @@ import ProductList from "@/components/AdminProducts";
 import Link from "next/link";
 
 const getProducts = async () => {
-    const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
-        next: { revalidate: 0 },
-    });
+    const timestamp = new Date().getTime(); // Generate a unique timestamp
+    const res = await fetch(
+        `http://${process.env.DOMAIN}/api/products?timestamp=${timestamp}`,
+        {
+            cache: "no-store",
+        }
+    );
     if (!res.ok) {
         throw new Error("Something went wrong");
     }
