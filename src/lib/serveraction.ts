@@ -340,3 +340,16 @@ export const handleUserFeedback = async (
         return { error: "Something went wrong" };
     }
 };
+
+export const updateStatus = async (id: string, status: string) => {
+    try {
+        await connectToDb();
+        await Orders.findByIdAndUpdate(id, {
+            status: status,
+        });
+        revalidatePath("/(admin)/dashboard");
+    } catch (error) {
+        console.log(error);
+        return { error: "Something went wrong" };
+    }
+};

@@ -9,9 +9,11 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Sidebar = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(true);
+    const pathName = usePathname();
     return (
         <div className="flex min-h-screen">
             <div
@@ -21,9 +23,9 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                         : "md:w-[250px] md:relative w-[60%] fixed z-30 ml-[-60%] md:ml-[-250px]"
                 } bg-lanh_green min-h-full transition-all py-5 `}
             >
-                <div className="fixed">
+                <div className="px-5">
                     <Link href="/dashboard">
-                        <div className="relative w-full h-20 px-5">
+                        <div className="relative w-full h-20">
                             <Image
                                 src={"/Logo.png"}
                                 alt="logo"
@@ -34,23 +36,35 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                             />
                         </div>
                     </Link>
-                    <div className="flex flex-col gap-5 px-10 py-5">
+                    <div className="flex flex-col pt-4">
                         <Link
-                            className="text-white flex gap-2"
+                            className={` flex gap-2 p-4 rounded-md ${
+                                pathName === "/dashboard"
+                                    ? "bg-white text-lanh_green"
+                                    : "text-white"
+                            }`}
                             href="/dashboard"
                         >
                             <HomeIcon className="h-6 w-6 " />
                             <p>Dashboard</p>
                         </Link>
                         <Link
-                            className="text-white flex gap-2"
+                            className={` flex gap-2 p-4 rounded-md ${
+                                pathName === "/dashboard/products"
+                                    ? "bg-white text-lanh_green"
+                                    : "text-white"
+                            }`}
                             href="/dashboard/products"
                         >
                             <CircleStackIcon className="h-6 w-6 " />
                             <p>Products</p>
                         </Link>
                         <Link
-                            className="text-white flex gap-2"
+                            className={` flex gap-2 p-4 rounded-md ${
+                                pathName === "/dashboard/users"
+                                    ? "bg-white text-lanh_green"
+                                    : "text-white"
+                            }`}
                             href="/dashboard/users"
                         >
                             <UserGroupIcon className="h-6 w-6 " />

@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import BreadCrumbs from "./Breadcrumbs";
 import OrderStatus from "./OrderStatus";
+import Swal from "sweetalert2";
+import { updateStatus } from "@/lib/serveraction";
 
 interface Props {
     orders: Orders[];
@@ -30,6 +33,28 @@ const OrderDetail = (props: Props) => {
             path: `/orders/${id}`,
         },
     ];
+
+    const handleUpdateStatus = (id: string, status: string) => {
+        console.log(id, status);
+        Swal.fire({
+            title: "Huỷ đơn hàng?",
+            showCancelButton: true,
+            confirmButtonColor: "#97ba79",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Huỷ",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await updateStatus(id, status);
+                Swal.fire({
+                    title: "Cập nhật thành công!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            }
+        });
+    };
     return (
         <div className="container mx-auto md:py-5 py-2 md:px-5 px-0">
             <div className="pb-4 md:px-0 px-5">
@@ -116,9 +141,20 @@ const OrderDetail = (props: Props) => {
                                 )
                             )}
                             <div className="text-right flex md:flex-row flex-col-reverse justify-between text-lg border-t-2 md:pt-5 pt-2 md:items-center items-start gap-2">
-                                <button className="p-2 bg-lanh_green text-white rounded-md text-sm border-2 border-lanh_green hover:bg-white hover:text-lanh_green">
-                                    Huỷ đơn
-                                </button>
+                                {order.status === "pending" && (
+                                    <button
+                                        onClick={() =>
+                                            handleUpdateStatus(
+                                                order._id,
+                                                "canceled"
+                                            )
+                                        }
+                                        className="p-2 bg-lanh_green text-white rounded-md text-sm border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
+                                    >
+                                        Huỷ đơn
+                                    </button>
+                                )}
+
                                 <div className="flex gap-2">
                                     <p>Tổng:</p>
                                     <b className="text-lanh_green">

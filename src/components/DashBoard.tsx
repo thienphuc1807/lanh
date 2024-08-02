@@ -8,6 +8,8 @@ interface Props {
     orders: Orders[];
 }
 
+
+
 const DashBoard = ({ users, products, orders }: Props) => {
     const allOrders = orders.map((item) => item.orders);
     const order = allOrders.flat();
