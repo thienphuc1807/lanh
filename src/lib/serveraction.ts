@@ -39,7 +39,7 @@ export const handleRegister = async (fromData: FormData) => {
         ward,
     } = Object.fromEntries(fromData);
     try {
-        connectToDb();
+        await connectToDb();
         const user = await User.findOne({ username });
         if (user) {
             return { error: "Tên đăng nhập đã tồn tại!" };
@@ -88,7 +88,7 @@ export const handleLogin = async (formData: FormData) => {
 
 export const handleRemoveProduct = async (id: string | undefined) => {
     try {
-        connectToDb();
+        await connectToDb();
         await Products.deleteOne({ _id: id });
         console.log("deleted from db");
         revalidatePath("/(admin)/dashboard/products");
@@ -100,7 +100,7 @@ export const handleRemoveProduct = async (id: string | undefined) => {
 
 export const handleRemoveUser = async (id: string) => {
     try {
-        connectToDb();
+        await connectToDb();
         await User.deleteOne({ _id: id });
         console.log("deleted from db");
     } catch (error) {
@@ -148,7 +148,7 @@ export const uploadProduct = async (formData: FormData) => {
     try {
         const newFiles = await saveImageToLocal(formData);
         const files = await uploadImagesToCloudinary(newFiles);
-        connectToDb();
+        await connectToDb();
         const fileDocs = [];
         for (const file of files) {
             const newFile = new File({ url: file.secure_url });
@@ -179,7 +179,7 @@ export const updateProduct = async (formData: FormData, id: string) => {
     const images = formData.getAll("files");
 
     try {
-        connectToDb();
+        await connectToDb();
         let fileDocs = [];
         for (const item of images) {
             if (typeof item === "object") {
@@ -253,7 +253,7 @@ export const handleUploadOrders = async (formData: FormData) => {
         orderList.push(productOrders);
     }
     try {
-        connectToDb();
+        await connectToDb();
         const newOrders = new Orders({
             userID: userID,
             fullName: fullName,
@@ -326,7 +326,7 @@ export const handleUserFeedback = async (
 ) => {
     const { rating, comment } = Object.fromEntries(formData);
     try {
-        connectToDb();
+        await connectToDb();
         const newFeedback = new UserFeedBack({
             userId,
             productId,

@@ -3,7 +3,7 @@ import { Orders, Products, User, UserFeedBack } from "./models";
 
 export const getProducts = async () => {
     try {
-        connectToDb();
+        await connectToDb();
         const products = await Products.find();
         return products;
     } catch (error) {
@@ -14,7 +14,7 @@ export const getProducts = async () => {
 
 export const getUsers = async () => {
     try {
-        connectToDb();
+        await connectToDb();
         const users = await User.find();
         return users;
     } catch (error) {
@@ -25,7 +25,7 @@ export const getUsers = async () => {
 
 export const getUser = async (id: string) => {
     try {
-        connectToDb();
+        await connectToDb();
         const user = await User.findOne({ _id: id });
         return user;
     } catch (error) {
@@ -36,7 +36,7 @@ export const getUser = async (id: string) => {
 
 export const getOrders = async () => {
     try {
-        connectToDb();
+        await connectToDb();
         const orders = await Orders.find();
         return orders;
     } catch (error) {
@@ -47,7 +47,7 @@ export const getOrders = async () => {
 
 export const getOrdersByUserID = async (id: string) => {
     try {
-        connectToDb();
+        await connectToDb();
         const orders = await Orders.find({ userID: id });
         return orders;
     } catch (error) {
@@ -58,7 +58,7 @@ export const getOrdersByUserID = async (id: string) => {
 
 export const getOrderById = async (orderID: string) => {
     try {
-        connectToDb();
+        await connectToDb();
         const order = await Orders.find({ _id: orderID });
         return order;
     } catch (error) {
@@ -69,7 +69,7 @@ export const getOrderById = async (orderID: string) => {
 
 export const getFeedbacks = async () => {
     try {
-        connectToDb();
+        await connectToDb();
         const feedbacks = await UserFeedBack.find();
         return feedbacks;
     } catch (error) {

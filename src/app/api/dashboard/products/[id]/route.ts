@@ -6,7 +6,7 @@ export const GET = async (request: any, { params }: any) => {
     const { id } = params;
 
     try {
-        connectToDb();
+        await connectToDb();
         const product = await Products.findById(id);
         return NextResponse.json(product);
     } catch (error) {
