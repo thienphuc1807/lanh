@@ -1,9 +1,8 @@
 import UserList from "@/components/AdminUsers";
 import Link from "next/link";
 const getUsers = async () => {
-    const timestamp = new Date().getTime();
     const res = await fetch(
-        `http://${process.env.DOMAIN}/api/users?timestamp=${timestamp}`,
+        `http://${process.env.DOMAIN}/api/dashboard/users`,
         {
             cache: "no-store",
         }

@@ -6,9 +6,8 @@ export const metadata = {
 };
 
 const getData = async () => {
-    const timestamp = new Date().getTime();
     const res = await fetch(
-        `http://${process.env.DOMAIN}/api/products?timestamp=${timestamp}`,
+        `http://${process.env.DOMAIN}/api/products`,
         {
             cache: "no-store",
         }

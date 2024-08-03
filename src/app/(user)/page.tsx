@@ -7,9 +7,8 @@ import ProductsSwiper from "@/components/Swiper";
 import NewProducts from "@/components/NewProducts";
 
 const getProducts = async () => {
-    const timestamp = new Date().getTime();
     const res = await fetch(
-        `http://${process.env.DOMAIN}/api/products?timestamp=${timestamp}`,
+        `http://${process.env.DOMAIN}/api/products`,
         {
             cache: "no-store",
         }
