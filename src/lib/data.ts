@@ -1,3 +1,4 @@
+"use server";
 import { connectToDb } from "./utils";
 import { Orders, Products, User, UserFeedBack } from "./models";
 
@@ -33,6 +34,26 @@ export const getUser = async (id: string) => {
         throw new Error("Failed to get user by Email");
     }
 };
+export const getProductByID = async (id: string) => {
+    try {
+        await connectToDb();
+        const productByID = await Products.findOne({ _id: id });
+        return productByID;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get product by ID");
+    }
+};
+export const getProductByName = async (name: string) => {
+    try {
+        await connectToDb();
+        const productByName = await Products.findOne({ name });
+        return productByName;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get product by name");
+    }
+};
 
 export const getOrders = async () => {
     try {
@@ -48,8 +69,8 @@ export const getOrders = async () => {
 export const getOrdersByUserID = async (id: string) => {
     try {
         await connectToDb();
-        const orders = await Orders.find({ userID: id });
-        return orders;
+        const ordersByUserID = await Orders.find({ userID: id });
+        return ordersByUserID;
     } catch (error) {
         console.log(error);
         throw new Error("Failed to get orders");
