@@ -1,18 +1,19 @@
 import ProductList from "@/components/AdminProducts";
+import { getProducts } from "@/lib/data";
 import Link from "next/link";
 
-const getProducts = async () => {
-    const res = await fetch(
-        `http://${process.env.DOMAIN}/api/dashboard/products`,
-        {
-            cache: "no-store",
-        }
-    );
-    if (!res.ok) {
-        throw new Error("Something went wrong");
-    }
-    return res.json();
-};
+// const getAllProducts = async () => {
+//     const res = await fetch(
+//         `http://${process.env.DOMAIN}/api/dashboard/products`,
+//         {
+//             cache: "no-store",
+//         }
+//     );
+//     if (!res.ok) {
+//         throw new Error("Something went wrong");
+//     }
+//     return res.json();
+// };
 
 const AdminProducts = async ({
     searchParams,
@@ -32,7 +33,10 @@ const AdminProducts = async ({
                 </Link>
             </div>
 
-            <ProductList searchParams={searchParams} products={products} />
+            <ProductList
+                searchParams={searchParams}
+                products={JSON.parse(JSON.stringify(products))}
+            />
         </div>
     );
 };

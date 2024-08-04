@@ -5,19 +5,17 @@ import Shipper from "/public/Shipper.png";
 import bannerImage from "/public/Banner.png";
 import ProductsSwiper from "@/components/Swiper";
 import NewProducts from "@/components/NewProducts";
+import { getProducts } from "@/lib/data";
 
-const getProducts = async () => {
-    const res = await fetch(
-        `http://${process.env.DOMAIN}/api/products`,
-        {
-            cache: "no-store",
-        }
-    );
-    if (!res.ok) {
-        throw new Error("Something went wrong");
-    }
-    return res.json();
-};
+// const getProducts = async () => {
+//     const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
+//         cache: "no-store",
+//     });
+//     if (!res.ok) {
+//         throw new Error("Something went wrong");
+//     }
+//     return res.json();
+// };
 
 async function Home() {
     const products = await getProducts();
@@ -29,7 +27,7 @@ async function Home() {
             <div className="lg:mt-10 mt-6 ">
                 <ProductsSwiper />
                 {/* <Introduction /> */}
-                <NewProducts products={products} />
+                <NewProducts products={JSON.parse(JSON.stringify(products))} />
                 <div
                     className="lg:py-10 container mx-auto px-5"
                     data-aos="fade-left"

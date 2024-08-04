@@ -1,17 +1,18 @@
 import UserList from "@/components/AdminUsers";
+import { getUsers } from "@/lib/data";
 import Link from "next/link";
-const getUsers = async () => {
-    const res = await fetch(
-        `http://${process.env.DOMAIN}/api/dashboard/users`,
-        {
-            cache: "no-store",
-        }
-    );
-    if (!res.ok) {
-        throw new Error("Something went wrong");
-    }
-    return res.json();
-};
+// const getUsers = async () => {
+//     const res = await fetch(
+//         `http://${process.env.DOMAIN}/api/dashboard/users`,
+//         {
+//             cache: "no-store",
+//         }
+//     );
+//     if (!res.ok) {
+//         throw new Error("Something went wrong");
+//     }
+//     return res.json();
+// };
 const UsersPage = async ({
     searchParams,
 }: {

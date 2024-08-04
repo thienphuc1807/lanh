@@ -1,24 +1,21 @@
 import UserProducts from "@/components/UserProducts";
-import { getFeedbacks } from "@/lib/data";
+import { getFeedbacks, getProducts } from "@/lib/data";
 
 export const metadata = {
     title: "Sản phẩm",
 };
 
-const getData = async () => {
-    const res = await fetch(
-        `http://${process.env.DOMAIN}/api/products`,
-        {
-            cache: "no-store",
-        }
-    );
+// const getData = async () => {
+//     const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
+//         cache: "no-store",
+//     });
 
-    if (!res.ok) {
-        throw new Error("Something went wrong");
-    }
+//     if (!res.ok) {
+//         throw new Error("Something went wrong");
+//     }
 
-    return res.json();
-};
+//     return res.json();
+// };
 
 const Products = async ({
     searchParams,
@@ -26,13 +23,13 @@ const Products = async ({
     searchParams: { [key: string]: string | string[] | undefined };
 }) => {
     // Fetch Data with API
-    const data = await getData();
+    const data = await getProducts();
     const feedbacks = await getFeedbacks();
     const userFeedbacks = JSON.parse(JSON.stringify(feedbacks));
     return (
         <div className="container mx-auto md:px-5 px-2">
             <UserProducts
-                data={data}
+                data={JSON.parse(JSON.stringify(data))}
                 searchParams={searchParams}
                 feedbacks={userFeedbacks}
             />
