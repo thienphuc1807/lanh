@@ -63,7 +63,7 @@ const FormInput = (props: Props) => {
 
                 {name === "password" && (
                     <span
-                        className="absolute right-[10px] top-[50%] translate-y-[-50%]"
+                        className="absolute right-[10px] top-2 cursor-pointer"
                         onClick={() => setShow(!show)}
                     >
                         {show ? (
@@ -73,6 +73,7 @@ const FormInput = (props: Props) => {
                         )}
                     </span>
                 )}
+
                 <span
                     data-focused={focused}
                     className="hidden data-[focused=true]:block peer-valid:hidden text-red-600"

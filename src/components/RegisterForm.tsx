@@ -14,6 +14,8 @@ function RegiterForm() {
         confirmPassword: "",
     });
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const router = useRouter();
 
     const registerForm: Input[] = [
@@ -69,6 +71,7 @@ function RegiterForm() {
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
+        setIsLoading(true);
         const formData = new FormData();
         formData.append("username", values.username || "");
         formData.append("email", values?.email);
@@ -103,6 +106,8 @@ function RegiterForm() {
                 showConfirmButton: false,
                 timer: 1500,
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -131,9 +136,22 @@ function RegiterForm() {
             ))}
             <button
                 type="submit"
-                className="bg-lanh_green text-white py-2 px-5 rounded-md border-2 border-lanh_green hover:bg-white hover:text-lanh_green"
+                disabled={isLoading}
+                className={`flex justify-center ${
+                    isLoading ? "bg-slate-400 opacity-50" : "bg-lanh_green"
+                }  text-white py-2 px-5 rounded-md border-2 border-lanh_green hover:bg-white hover:text-lanh_green`}
             >
-                Đăng ký
+                {isLoading && (
+                    <div className="relative w-6 h-6 pr-10">
+                        <Image
+                            src={"/loading.png"}
+                            alt="loadings"
+                            fill
+                            className="animate-spin object-contain"
+                        />
+                    </div>
+                )}
+                <span>Đăng ký</span>
             </button>
             <Link href="/login">
                 Bạn đã có tài khoản ?

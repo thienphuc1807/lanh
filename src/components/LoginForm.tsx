@@ -1,12 +1,14 @@
 "use client";
 import { handleLogin } from "@/lib/serveraction";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
 function LoginForm() {
     const [show, setShow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [errMess, setErrMess] = useState("");
     const [values, setValues] = useState({ username: "", password: "" });
 
@@ -24,18 +26,21 @@ function LoginForm() {
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
+        setIsLoading(true);
         const formData = new FormData();
         formData.append("username", values.username);
         formData.append("password", values.password);
         try {
             const login = await handleLogin(formData);
             if (!login) {
-                setErrMess("Đăng nhập thành công");
+                setErrMess("");
             } else {
                 setErrMess(login.error || "");
             }
         } catch (error) {
             setErrMess("Đã có lỗi xảy ra vui lòng thử lại sau!");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -72,10 +77,21 @@ function LoginForm() {
                 </button>
             </div>
             <button
+                disabled={isLoading}
                 type="submit"
-                className="p-2 font-bold bg-lanh_green border-2 border-lanh_green rounded-md text-white hover:bg-white hover:text-lanh_green"
+                className="disabled:opacity-50 flex justify-center p-2 font-bold bg-lanh_green border-2 border-lanh_green rounded-md text-white hover:bg-white hover:text-lanh_green"
             >
-                Đăng nhập
+                {isLoading && (
+                    <div className="relative w-6 h-6 pr-10">
+                        <Image
+                            src={"/loading.png"}
+                            alt="loadings"
+                            fill
+                            className="animate-spin object-contain"
+                        />
+                    </div>
+                )}
+                <span>Đăng nhập</span>
             </button>
             <p className="text-red-500">{errMess}</p>
             <span>

@@ -59,7 +59,7 @@ async function ProductDetail({ params }: { params: { name: string } }) {
             data={data}
             session={session}
             user={JSON.parse(JSON.stringify(user))}
-            feedbacks={productsfeedbacks}
+            feedbacks={productsfeedbacks.reverse()}
             averageRating={averageRating}
             relatedProducts={relatedProducts}
         />

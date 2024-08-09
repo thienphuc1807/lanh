@@ -35,7 +35,6 @@ const CheckOut = (props: { data: any; session: any }) => {
         setIsMounted(true);
     }, []);
     if (!isMounted) {
-        // Prevent rendering on the server side
         return null;
     }
 
@@ -106,7 +105,8 @@ const CheckOut = (props: { data: any; session: any }) => {
                 timer: 1500,
             });
             await dispatch(clearCart());
-            router.push("/");
+            router.push("/orders");
+            router.refresh();
         } else {
             Swal.fire({
                 position: "top-end",

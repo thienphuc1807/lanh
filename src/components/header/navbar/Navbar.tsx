@@ -170,7 +170,7 @@ const NavBar = ({ session }: any) => {
                             {session?.user ? (
                                 <>
                                     <h1 className="uppercase text-white px-2 py-4">
-                                        {session.user.fullName}
+                                        {session.user.fullName || "Lành User"}
                                     </h1>
                                     <div className="text-center flex flex-col">
                                         <Link

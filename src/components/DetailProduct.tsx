@@ -39,9 +39,10 @@ const DetailProduct = (props: Props) => {
     const [rating, setRating] = useState(1);
     const [comment, setComment] = useState("");
     const [size, setSize] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const [mess, setMess] = useState<{
-        type: "error" | "success";
+        type: "error" | "success" | "clear";
         text: string;
     } | null>(null);
     const cart = useSelector((state: { cart: Products[] }) => state.cart);
@@ -50,10 +51,12 @@ const DetailProduct = (props: Props) => {
         if (math === "plus") {
             if (data.inStock && quantity < data.inStock) {
                 setQuantity((quantity += 1));
+                setMess({ type: "clear", text: "" });
             }
         } else {
             if (quantity > 1) {
                 setQuantity((quantity -= 1));
+                setMess({ type: "clear", text: "" });
             }
         }
     };
@@ -62,6 +65,7 @@ const DetailProduct = (props: Props) => {
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
+        setIsLoading(true);
         const formData = new FormData();
         formData.append("rating", rating.toString());
         formData.append("comment", comment);
@@ -71,12 +75,16 @@ const DetailProduct = (props: Props) => {
             data._id,
             user.fullName
         );
-        if (!userFeedback) {
-            router.refresh();
-            setRating(1);
-            setComment("");
-        } else {
+        try {
+            if (!userFeedback) {
+                router.refresh();
+                setRating(1);
+                setComment("");
+            }
+        } catch (error) {
             alert("Có lỗi xảy ra!");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -113,6 +121,7 @@ const DetailProduct = (props: Props) => {
             setMess({ type: "error", text: "Lỗi" });
         }
     };
+    console.log(isLoading);
 
     return (
         <div className="container mx-auto lg:px-5 px-0">
@@ -230,7 +239,19 @@ const DetailProduct = (props: Props) => {
                                     handleAddCart(data, quantity, size)
                                 }
                             >
-                                <ShoppingCartIcon className="h-6 w-6" />
+                                {isLoading ? (
+                                    <div className="relative w-5 h-5">
+                                        <Image
+                                            src={"/loading.png"}
+                                            alt="loadings"
+                                            fill
+                                            className="animate-spin object-contain"
+                                        />
+                                    </div>
+                                ) : (
+                                    <ShoppingCartIcon className="h-6 w-6" />
+                                )}
+
                                 <span>Thêm vào giỏ</span>
                             </button>
                         </div>
@@ -270,9 +291,23 @@ const DetailProduct = (props: Props) => {
                             ></textarea>
                             <button
                                 type="submit"
-                                className="rounded-md w-full bg-lanh_green text-white px-2 py-2"
+                                className={`rounded-md w-fit ${
+                                    isLoading
+                                        ? "bg-slate-400 opacity-50"
+                                        : "bg-lanh_green"
+                                }  text-white px-2 py-2 flex justify-center items-center`}
                             >
-                                Gửi
+                                {isLoading && (
+                                    <div className="relative w-4 h-4 mr-2">
+                                        <Image
+                                            src={"/loading.png"}
+                                            alt="loadings"
+                                            fill
+                                            className="animate-spin object-contain"
+                                        />
+                                    </div>
+                                )}
+                                <span>Gửi</span>
                             </button>
                         </form>
                     ) : (

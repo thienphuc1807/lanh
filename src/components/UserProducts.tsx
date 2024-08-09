@@ -4,10 +4,11 @@ import Image from "next/image";
 import BreadCrumbs from "@/components/Breadcrumbs";
 import PaginationControl from "@/components/PaginationControl";
 import _ from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
 import RatingStar from "./RatingStar";
+import { StarIcon } from "@heroicons/react/24/solid";
 interface Props {
     data: Products[];
     searchParams: { [key: string]: string | string[] | undefined };
@@ -19,7 +20,11 @@ const UserProducts = (props: Props) => {
     const [sortBy, setSortBy] = useState("asc");
     const [sortField, setSortField] = useState("");
     const [openSort, setOpenSort] = useState(false);
-    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 1000);
+    }, []);
 
     const breadcrumbs = [
         { name: "Trang chủ", path: "/" },
@@ -82,7 +87,7 @@ const UserProducts = (props: Props) => {
         ).length;
 
         const averageRating = totalRating / totalFeedbacks;
-        return averageRating;
+        return averageRating || 0.0;
     };
 
     // PaginationControl
@@ -141,70 +146,111 @@ const UserProducts = (props: Props) => {
                                 key={item.name}
                                 className="bg-white shadow-[0_0_7px_rgba(151,186,121,0.3)] border-[1px]"
                             >
-                                <div className="relative">
-                                    <div className="relative md:h-80 h-60 w-full">
-                                        <Link href={`products/${item.name}`}>
-                                            {item.imgs.length > 0 ? (
-                                                item.imgs.map((img) => (
-                                                    <Image
-                                                        key={img._id}
-                                                        fill={true}
-                                                        src={img.url}
-                                                        alt={item.name}
-                                                        className="object-contain"
-                                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                    />
-                                                ))
-                                            ) : (
-                                                <Image
-                                                    src="/defaultImg.png"
-                                                    alt="product_img"
-                                                    className="object-contain"
-                                                    fill
-                                                />
-                                            )}
-                                        </Link>
-                                    </div>
-                                    <div
-                                        className={`${
-                                            item.inStock === 0
-                                                ? "opacity-45"
-                                                : "opacity-0"
-                                        } absolute top-0 bottom-0 right-0 left-0 bg-black`}
-                                    ></div>
-                                    <div
-                                        className={`flex ${
-                                            item.inStock === 0
-                                                ? "opacity-100 translate-y-[-50%]"
-                                                : "opacity-0"
-                                        }   absolute top-1/2 justify-center right-0 left-0`}
-                                    >
-                                        <span className="bg-gray-400 text-white py-2 px-4 rounded-lg border-2">
-                                            Hết hàng
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="p-4 space-y-2">
-                                    <Link
-                                        href={`products/${item.name}`}
-                                        className="py-2 hover:text-lanh_green transition-all ease-linear"
-                                    >
-                                        <p className="whitespace-nowrap overflow-hidden text-ellipsis font-bold">
-                                            {item.name}
-                                        </p>
-                                    </Link>
-
-                                    <RatingStar
-                                        rating={caculateRating(item._id)}
-                                    />
-
-                                    <p className="font-bold text-lanh_green">
-                                        {Intl.NumberFormat("vi-VN", {
-                                            style: "currency",
-                                            currency: "VND",
-                                        }).format(item.salePrice)}
-                                    </p>
-                                </div>
+                                {isLoading ? (
+                                    <>
+                                        <div className="animate-pulse">
+                                            <div className="relative w-full md:h-64 h-80 bg-white overflow-hidden px-4">
+                                                <div className="bg-slate-200 rounded-md h-60 mx-auto mt-4"></div>
+                                            </div>
+                                            <div className="bg-white md:p-4 p-2">
+                                                <div className="flex flex-col gap-2 md:items-center items-start">
+                                                    <div className="bg-slate-200 h-4 w-full mx-auto mt-3"></div>
+                                                    <div className="bg-slate-200 h-4 w-full mx-auto mt-3"></div>
+                                                    <div className="bg-slate-200 h-4 w-full mx-auto mt-3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="relative">
+                                            <div className="relative md:h-80 h-60 w-full">
+                                                <Link
+                                                    href={`products/${item.name}`}
+                                                >
+                                                    {item.imgs.length > 0 ? (
+                                                        item.imgs.map((img) => (
+                                                            <Image
+                                                                key={img._id}
+                                                                fill={true}
+                                                                src={img.url}
+                                                                alt={item.name}
+                                                                className="object-contain"
+                                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                            />
+                                                        ))
+                                                    ) : (
+                                                        <Image
+                                                            src="/defaultImg.png"
+                                                            alt="product_img"
+                                                            className="object-contain"
+                                                            fill
+                                                        />
+                                                    )}
+                                                </Link>
+                                            </div>
+                                            <div
+                                                className={`${
+                                                    item.inStock === 0
+                                                        ? "opacity-45"
+                                                        : "opacity-0"
+                                                } absolute top-0 bottom-0 right-0 left-0 bg-black`}
+                                            ></div>
+                                            <div
+                                                className={`flex ${
+                                                    item.inStock === 0
+                                                        ? "opacity-100 translate-y-[-50%]"
+                                                        : "opacity-0"
+                                                }   absolute top-1/2 justify-center right-0 left-0`}
+                                            >
+                                                <span className="bg-gray-400 text-white py-2 px-4 rounded-lg border-2">
+                                                    Hết hàng
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="p-4 space-y-2">
+                                            <Link
+                                                href={`products/${item.name}`}
+                                                className="py-2 hover:text-lanh_green transition-all ease-linear"
+                                            >
+                                                <p className="whitespace-nowrap overflow-hidden text-ellipsis font-bold">
+                                                    {item.name}
+                                                </p>
+                                            </Link>
+                                            <p className="font-bold text-lanh_green">
+                                                {Intl.NumberFormat("vi-VN", {
+                                                    style: "currency",
+                                                    currency: "VND",
+                                                }).format(item.salePrice)}
+                                            </p>
+                                            <div className="flex gap-2">
+                                                <div className="flex">
+                                                    <span className="text-yellow-300 font-bold">
+                                                        {caculateRating(
+                                                            item._id
+                                                        ).toFixed(1) || 0.0}
+                                                    </span>
+                                                    <StarIcon className="text-yellow-300 w-5 h-5" />
+                                                </div>
+                                                <span className="text-sm">
+                                                    (
+                                                    <span className="mr-1">
+                                                        {
+                                                            feedbacks.filter(
+                                                                (
+                                                                    feedback: Feedbacks
+                                                                ) =>
+                                                                    feedback.productId ===
+                                                                    item._id
+                                                            ).length
+                                                        }
+                                                    </span>
+                                                    Đánh giá)
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         ))}
                     </div>

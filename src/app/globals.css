@@ -11,3 +11,19 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.loader {
+    font-size: 20px;
+    animation: l1 1s linear infinite alternate;
+    color: #97ba79;
+}
+
+.loader:before {
+    content: "Loading..."
+}
+
+@keyframes l1 {
+    to {
+        opacity: 0
+    }
+}
