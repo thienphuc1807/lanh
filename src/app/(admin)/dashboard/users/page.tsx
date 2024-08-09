@@ -29,7 +29,10 @@ const UsersPage = async ({
                     Thêm tài khoản mới
                 </Link>
             </div>
-            <UserList users={users} searchParams={searchParams} />
+            <UserList
+                users={JSON.parse(JSON.stringify(users))}
+                searchParams={searchParams}
+            />
         </div>
     );
 };
