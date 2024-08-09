@@ -8,7 +8,7 @@ const Dashboard = async () => {
         getOrders(),
     ]);
     return (
-        <div className="p-5">
+        <div className="md:p-5">
             <DashBoard
                 users={JSON.parse(JSON.stringify(users))}
                 products={JSON.parse(JSON.stringify(products))}

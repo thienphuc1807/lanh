@@ -21,7 +21,7 @@ export const metadata = {
 const EditProduct = async ({ params }: { params: { id: string } }) => {
     const { id } = params;
     const data = await getUser(id);
-    return <FormUser user={data} id={id} />;
+    return <FormUser user={JSON.parse(JSON.stringify(data))} id={id} />;
 };
 
 export default EditProduct;

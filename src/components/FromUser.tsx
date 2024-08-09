@@ -4,6 +4,7 @@ import { useState, ChangeEvent } from "react";
 import Swal from "sweetalert2";
 import FormInput from "@/components/FormInput";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Props {
     user?: Users;
@@ -27,6 +28,7 @@ const FormUser = (props: Props) => {
 
     const [values, setValues] = useState(user || initialUserState);
     console.log(values);
+    const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
 
@@ -99,6 +101,7 @@ const FormUser = (props: Props) => {
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
+        setIsLoading(true);
         const formData = new FormData();
         formData.append("username", values.username || "");
         formData.append("fullName", values?.fullName);
@@ -140,6 +143,8 @@ const FormUser = (props: Props) => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
+            } finally {
+                setIsLoading(false);
             }
         } else {
             const upload = await handleRegister(formData);
@@ -199,7 +204,11 @@ const FormUser = (props: Props) => {
                         className=" px-3 w-fit  py-2 border-2 border-lanh_green rounded-md"
                     >
                         {adminUser.map((item) => (
-                            <option key={item.id} value={item.value.toString()}>
+                            <option
+                                key={item.id}
+                                value={item.value.toString()}
+                                selected={values.isAdmin}
+                            >
                                 {item.name}
                             </option>
                         ))}
@@ -207,9 +216,21 @@ const FormUser = (props: Props) => {
                 </div>
                 <button
                     type="submit"
-                    className="py-4 w-full rounded-md border-2 border-lanh_green bg-lanh_green text-white hover:text-lanh_green hover:bg-white"
+                    disabled={isLoading}
+                    className="gap-2 py-4 w-full disabled:bg-slate-200 disabled:border-slate-200 rounded-md border-2 border-lanh_green bg-lanh_green text-white hover:text-lanh_green hover:bg-white"
                 >
-                    Lưu
+                    {isLoading ? (
+                        <div className="relative w-6 h-6 pr-10 mx-auto">
+                            <Image
+                                src={"/loading.png"}
+                                alt="loadings"
+                                fill
+                                className="animate-spin object-contain"
+                            />
+                        </div>
+                    ) : (
+                        <span>Lưu</span>
+                    )}
                 </button>
             </form>
         </div>

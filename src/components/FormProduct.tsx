@@ -25,6 +25,7 @@ const FormProduct = (props: Props) => {
     };
 
     const [values, setValues] = useState(product || initialProductState);
+    const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
 
@@ -133,6 +134,8 @@ const FormProduct = (props: Props) => {
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
+        setIsLoading(true);
+
         if (values.imgs.length > 3) {
             Swal.fire({
                 position: "top-end",
@@ -141,6 +144,7 @@ const FormProduct = (props: Props) => {
                 showConfirmButton: false,
                 timer: 1500,
             });
+            setIsLoading(false);
             return;
         }
         const formData = new FormData();
@@ -190,27 +194,42 @@ const FormProduct = (props: Props) => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
+            } finally {
+                setIsLoading(false);
             }
         } else {
             const upload = await uploadProduct(formData);
-            if (!upload) {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Thêm sản phẩm thành công",
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
-                router.push("/dashboard/products");
-                router.refresh();
-            } else {
+            try {
+                if (!upload) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Thêm sản phẩm thành công",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    router.push("/dashboard/products");
+                    router.refresh();
+                } else {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Trùng tên sản phẩm!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            } catch (error) {
+                console.log(error);
                 Swal.fire({
                     position: "top-end",
                     icon: "error",
-                    title: "Trùng tên sản phẩm!",
+                    title: "Có lỗi xảy ra!",
                     showConfirmButton: false,
                     timer: 1500,
                 });
+            } finally {
+                setIsLoading(false);
             }
         }
     };
@@ -270,12 +289,27 @@ const FormProduct = (props: Props) => {
                         )}
                     </div>
                 ))}
-                <button
-                    type="submit"
-                    className="py-4 w-full rounded-md border-2 border-lanh_green bg-lanh_green text-white hover:text-lanh_green hover:bg-white"
-                >
-                    Save
-                </button>
+                <div className="flex">
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="gap-2 py-4 w-full disabled:bg-slate-200 disabled:border-slate-200 rounded-md border-2 border-lanh_green bg-lanh_green text-white hover:text-lanh_green hover:bg-white"
+                    >
+                        {isLoading ? (
+                            <div className="relative w-6 h-6 pr-10 mx-auto">
+                                <Image
+                                    src={"/loading.png"}
+                                    alt="loadings"
+                                    fill
+                                    className="animate-spin object-contain"
+                                />
+                            </div>
+                        ) : (
+                            <span>Lưu</span>
+                        )}
+                    </button>
+                    
+                </div>
             </form>
         </div>
     );

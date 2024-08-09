@@ -194,10 +194,12 @@ const UserList = (props: Props) => {
                             >
                                 <div className="space-y-5">
                                     <div className="flex justify-between">
-                                        <div className="space-x-4">
-                                            <button>
+                                        <div className="space-x-4 flex items-center">
+                                            <Link
+                                                href={`/dashboard/users/${user._id}`}
+                                            >
                                                 <PencilSquareIcon className="w-6 h-6 text-lanh_green" />
-                                            </button>
+                                            </Link>
                                             <button
                                                 onClick={() =>
                                                     handleRemove(user._id || "")

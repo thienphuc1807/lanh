@@ -15,15 +15,15 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(true);
     const pathName = usePathname();
     return (
-        <div className="flex min-h-screen">
+        <div className="relative flex min-h-screen">
             <div
                 className={`flex flex-col ${
                     open
                         ? "md:w-[250px] md:relative w-[60%] fixed z-30"
                         : "md:w-[250px] md:relative w-[60%] fixed z-30 ml-[-60%] md:ml-[-250px]"
-                } bg-lanh_green min-h-full transition-all py-5 `}
+                } bg-lanh_green min-h-full transition-all py-5`}
             >
-                <div className="px-5">
+                <div className="px-5 fixed md:w-[250px] w-[60%]">
                     <Link href="/dashboard">
                         <div className="relative w-full h-20">
                             <Image
