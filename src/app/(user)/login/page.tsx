@@ -11,7 +11,7 @@ const LoginPage = async () => {
                         <div className="relative w-1/2 h-full mx-auto z-20">
                             <Image
                                 alt="logo_lanh"
-                                src="/logo.png"
+                                src="/public/logo.png"
                                 objectFit="contain"
                                 fill
                             />
