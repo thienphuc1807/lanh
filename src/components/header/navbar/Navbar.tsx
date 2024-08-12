@@ -54,6 +54,14 @@ const NavBar = ({ session }: any) => {
                                         >
                                             Đơn hàng của bạn
                                         </Link>
+                                        {session.user.isAdmin && (
+                                            <Link
+                                                href={"/dashboard"}
+                                                className="hover:bg-white hover:text-lanh_green p-4 w-full"
+                                            >
+                                                Quản lí
+                                            </Link>
+                                        )}
                                         <form action={handleLogout}>
                                             <button className="hover:bg-white hover:text-lanh_green p-4 w-full">
                                                 Đăng xuất
@@ -183,6 +191,18 @@ const NavBar = ({ session }: any) => {
                                         >
                                             Thông tin tài khoản
                                         </Link>
+                                        {session.user.isAdmin && (
+                                            <Link
+                                                href={"/dashboard"}
+                                                className={` ${
+                                                    pathName === "/account"
+                                                        ? "text-black"
+                                                        : "text-white"
+                                                } uppercase px-2 flex flex-col gap-2 py-4 text-left `}
+                                            >
+                                                Quản lí
+                                            </Link>
+                                        )}
                                         <Link
                                             href={"/orders"}
                                             className={` ${

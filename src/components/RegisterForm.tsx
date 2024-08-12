@@ -114,18 +114,11 @@ function RegiterForm() {
     return (
         <form
             onSubmit={handleUpload}
-            className=" flex flex-col gap-6 md:w-[400px]"
+            className="flex flex-col gap-4 md:p-8 p-5"
         >
-            <div className="w-full h-[140px] relative mx-auto">
-                <Image
-                    alt="logo_lanh"
-                    src="/defaultImg.png"
-                    objectFit="contain"
-                    fill
-                />
-            </div>
+            <h1 className="text-2xl font-bold text-lanh_green">Đăng ký</h1>
             {registerForm.map((field) => (
-                <div className="flex flex-col gap-2" key={field.name}>
+                <div className="flex flex-col gap-4" key={field.name}>
                     <FormInput
                         key={field.id}
                         {...field}

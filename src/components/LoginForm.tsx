@@ -45,65 +45,76 @@ function LoginForm() {
     };
 
     return (
-        <form onSubmit={handleLoginUser} className="flex flex-col gap-4">
-            <label htmlFor="username">Tên đăng nhập</label>
-            <input
-                type="text"
-                className="py-2 px-3 border-2 border-lanh_green rounded-md"
-                name="username"
-                id="username"
-                onChange={onChangeValues}
-                required
-            />
-            <label htmlFor="password">Mật khẩu</label>
-            <div className="relative">
+        <div className="flex flex-col gap-2 md:p-8 p-5 justify-center">
+            <h1 className="text-lanh_green font-bold text-2xl">Đăng nhập</h1>
+            <form onSubmit={handleLoginUser} className="flex flex-col gap-4">
+                <label htmlFor="username">Tên đăng nhập</label>
                 <input
-                    type={show ? "text" : "password"}
+                    type="text"
                     className="py-2 px-3 border-2 border-lanh_green rounded-md w-full"
-                    name="password"
-                    id="password"
+                    name="username"
+                    id="username"
                     onChange={onChangeValues}
                     required
                 />
+                <label htmlFor="password">Mật khẩu</label>
+                <div className="relative">
+                    <input
+                        type={show ? "text" : "password"}
+                        className="py-2 px-3 border-2 border-lanh_green rounded-md w-full"
+                        name="password"
+                        id="password"
+                        onChange={onChangeValues}
+                        required
+                    />
+                    <button
+                        onMouseDown={() => setShow(!show)}
+                        className="absolute right-2 top-1/2 translate-y-[-50%]"
+                    >
+                        {show ? (
+                            <EyeIcon className="h-6 w-6" />
+                        ) : (
+                            <EyeSlashIcon className="w-6 h-6" />
+                        )}
+                    </button>
+                </div>
                 <button
-                    onMouseDown={() => setShow(!show)}
-                    className="absolute right-2 top-1/2 translate-y-[-50%]"
+                    disabled={isLoading}
+                    type="submit"
+                    className="disabled:opacity-50 flex justify-center p-2 font-bold bg-lanh_green border-2 border-lanh_green rounded-md text-white hover:bg-white hover:text-lanh_green"
                 >
-                    {show ? (
-                        <EyeIcon className="h-6 w-6" />
-                    ) : (
-                        <EyeSlashIcon className="w-6 h-6" />
+                    {isLoading && (
+                        <div className="relative w-6 h-6 pr-10">
+                            <Image
+                                src={"/loading.png"}
+                                alt="loadings"
+                                fill
+                                className="animate-spin object-contain"
+                            />
+                        </div>
                     )}
+                    <span>Đăng nhập</span>
                 </button>
-            </div>
-            <button
-                disabled={isLoading}
-                type="submit"
-                className="disabled:opacity-50 flex justify-center p-2 font-bold bg-lanh_green border-2 border-lanh_green rounded-md text-white hover:bg-white hover:text-lanh_green"
-            >
-                {isLoading && (
-                    <div className="relative w-6 h-6 pr-10">
-                        <Image
-                            src={"/loading.png"}
-                            alt="loadings"
-                            fill
-                            className="animate-spin object-contain"
-                        />
-                    </div>
-                )}
-                <span>Đăng nhập</span>
-            </button>
-            <p className="text-red-500">{errMess}</p>
-            <span>
-                Bạn chưa có tài khoản ?
-                <Link
-                    href="/register"
-                    className="pl-2 text-lanh_green font-bold hover:underline"
-                >
-                    Đăng ký
-                </Link>
-            </span>
-        </form>
+                <p className="text-red-500">{errMess}</p>
+                <span>
+                    Bạn chưa có tài khoản ?
+                    <Link
+                        href="/register"
+                        className="pl-2 text-lanh_green font-bold hover:underline"
+                    >
+                        Đăng ký
+                    </Link>
+                </span>
+                <span>
+                    Tài khoản User <p>username: lanhuser</p>
+                    <p>password: lanhuser123</p>
+                </span>
+                <span>
+                    Tài khoản Admin <p>username: lanhadmin123</p>
+                    <p>password: lanhadmin123</p>
+                </span>
+            </form>
+        </div>
     );
 }
 

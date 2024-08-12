@@ -171,7 +171,7 @@ const FormUser = (props: Props) => {
     };
 
     return (
-        <div className="md:py-6 md:px-0 md:flex md:justify-center container mx-auto">
+        <div className="md:py-6 md:px-6 lg:flex lg:justify-center md:my-0 my-7">
             <form
                 onSubmit={handleUpload}
                 className="lg:min-w-[600px] space-y-5 md:p-10 md:items-stretch items-center p-4 border-2 border-gray-200 shadow-md rounded-md bg-white"

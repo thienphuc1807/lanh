@@ -142,6 +142,7 @@ const ProductList = (props: Props) => {
                         <table className="w-full text-center border-separate border-spacing-4">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Tên</th>
                                     <th>Giá</th>
                                     <th>Giảm giá</th>
@@ -149,7 +150,7 @@ const ProductList = (props: Props) => {
                                     <th>Kích cỡ</th>
                                     <th>Nguyên liệu</th>
                                     <th>Số lượng</th>
-                                    <th>Chỉnh sửa/Xoá</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -158,6 +159,14 @@ const ProductList = (props: Props) => {
                                         key={product._id}
                                         className="even:bg-gray-100"
                                     >
+                                        <td>
+                                            <Link
+                                                href={`/dashboard/products/${product._id}`}
+                                                className="inline-block text-lanh_green px-4 py-2"
+                                            >
+                                                <PencilSquareIcon className="w-6 h-6" />
+                                            </Link>
+                                        </td>
                                         <td>{product.name}</td>
                                         <td>
                                             {Intl.NumberFormat("vi-VN", {
@@ -201,24 +210,14 @@ const ProductList = (props: Props) => {
                                         <td>{product.ingredient}</td>
                                         <td>{product.inStock}</td>
                                         <td>
-                                            <div className="flex gap-4 justify-center">
-                                                <Link
-                                                    href={`/dashboard/products/${product._id}`}
-                                                    className="px-4 py-2 text-white bg-lanh_green rounded-md"
-                                                >
-                                                    Chỉnh sửa
-                                                </Link>
-                                                <button
-                                                    onClick={() =>
-                                                        handleRemove(
-                                                            product?._id
-                                                        )
-                                                    }
-                                                    className="px-4 py-2 text-white bg-lanh_green rounded-md"
-                                                >
-                                                    Xoá
-                                                </button>
-                                            </div>
+                                            <button
+                                                onClick={() =>
+                                                    handleRemove(product?._id)
+                                                }
+                                                className="px-4 py-2 text-lanh_green  rounded-md"
+                                            >
+                                                <TrashIcon className="w-6 h-6" />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -271,20 +270,39 @@ const ProductList = (props: Props) => {
                                     </div>
 
                                     <div className="flex md:flex-row flex-col justify-between">
-                                        <h1>Name:</h1>
-                                        {product.name}
+                                        <h1>Tên sản phẩm:</h1>
+                                        <b>{product.name}</b>
                                     </div>
                                     <div className="flex md:flex-row flex-col justify-between">
-                                        <h1>Price:</h1>
-                                        <p>{product.price}</p>
+                                        <h1>Giá gốc:</h1>
+                                        <b>
+                                            {" "}
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(product.price)}
+                                        </b>
                                     </div>
                                     <div className="flex md:flex-row flex-col justify-between">
-                                        <h1>Sale Price:</h1>
-                                        <p>{product.salePrice}</p>
+                                        <h1>Giá giảm:</h1>
+                                        <b>
+                                            {Intl.NumberFormat("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }).format(product.salePrice)}
+                                        </b>
                                     </div>
                                     <div className="flex md:flex-row flex-col justify-between">
-                                        <h1>Ingredient:</h1>
-                                        <p>{product.ingredient}</p>
+                                        <h1>Nguyên liệu:</h1>
+                                        <b>{product.ingredient}</b>
+                                    </div>
+                                    <div className="flex md:flex-row flex-col justify-between">
+                                        <h1>Kích cỡ:</h1>
+                                        <b>{product.size.toString()}</b>
+                                    </div>
+                                    <div className="flex md:flex-row flex-col justify-between">
+                                        <h1>Số lượng:</h1>
+                                        <b>{product.inStock}</b>
                                     </div>
                                 </div>
                             </div>

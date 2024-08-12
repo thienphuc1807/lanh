@@ -1,6 +1,8 @@
 "use client";
 import { CircleStackIcon } from "@heroicons/react/24/outline";
 import {
+    ArrowLeftStartOnRectangleIcon,
+    ArrowUturnRightIcon,
     Bars3Icon,
     HomeIcon,
     UserGroupIcon,
@@ -10,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 import { usePathname } from "next/navigation";
+import { handleLogout } from "@/lib/serveraction";
 
 const Sidebar = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(true);
@@ -19,11 +22,11 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
             <div
                 className={`flex flex-col ${
                     open
-                        ? "md:w-[250px] md:relative w-[60%] fixed z-30"
-                        : "md:w-[250px] md:relative w-[60%] fixed z-30 ml-[-60%] md:ml-[-250px]"
+                        ? "md:w-[250px] md:relative w-[80%] fixed z-30"
+                        : "md:w-[250px] md:relative w-[80%] fixed z-30 ml-[-80%] md:ml-[-250px]"
                 } bg-lanh_green min-h-full transition-all py-5`}
             >
-                <div className="px-5 fixed md:w-[250px] w-[60%]">
+                <div className="px-5 fixed md:w-[250px] w-[80%]">
                     <Link href="/dashboard">
                         <div className="relative w-full h-20">
                             <Image
@@ -38,7 +41,7 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                     </Link>
                     <div className="flex flex-col pt-4">
                         <Link
-                            className={` flex gap-2 p-4 rounded-md ${
+                            className={` flex gap-2 p-4 rounded-md hover:bg-white hover:text-lanh_green   ${
                                 pathName === "/dashboard"
                                     ? "bg-white text-lanh_green"
                                     : "text-white"
@@ -46,10 +49,10 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                             href="/dashboard"
                         >
                             <HomeIcon className="h-6 w-6 " />
-                            <p>Dashboard</p>
+                            <p>Quản lí</p>
                         </Link>
                         <Link
-                            className={` flex gap-2 p-4 rounded-md ${
+                            className={` flex gap-2 p-4 rounded-md hover:bg-white hover:text-lanh_green ${
                                 pathName === "/dashboard/products"
                                     ? "bg-white text-lanh_green"
                                     : "text-white"
@@ -57,10 +60,10 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                             href="/dashboard/products"
                         >
                             <CircleStackIcon className="h-6 w-6 " />
-                            <p>Products</p>
+                            <p>Sản phẩm</p>
                         </Link>
                         <Link
-                            className={` flex gap-2 p-4 rounded-md ${
+                            className={` flex gap-2 p-4 rounded-md hover:bg-white hover:text-lanh_green ${
                                 pathName === "/dashboard/users"
                                     ? "bg-white text-lanh_green"
                                     : "text-white"
@@ -68,8 +71,21 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
                             href="/dashboard/users"
                         >
                             <UserGroupIcon className="h-6 w-6 " />
-                            <p>Users</p>
+                            <p>Tài khoản</p>
                         </Link>
+                        <Link
+                            className="flex gap-2 p-4 rounded-md hover:bg-white hover:text-lanh_green text-white"
+                            href="/"
+                        >
+                            <ArrowUturnRightIcon className="h-6 w-6 " />
+                            <p>Về trang chủ</p>
+                        </Link>
+                        <form action={handleLogout}>
+                            <button className="w-full flex gap-2 p-4 rounded-md  hover:bg-white hover:text-lanh_green text-white">
+                                <ArrowLeftStartOnRectangleIcon className="h-6 w-6 " />
+                                <p>Đăng xuất</p>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

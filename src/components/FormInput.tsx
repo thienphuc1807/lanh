@@ -63,7 +63,7 @@ const FormInput = (props: Props) => {
 
                 {name === "password" && (
                     <span
-                        className="absolute right-[10px] top-2 cursor-pointer"
+                        className="absolute right-[10px] top-[50%] translate-x-[-50%] translate-y-[-50%] cursor-pointer"
                         onClick={() => setShow(!show)}
                     >
                         {show ? (

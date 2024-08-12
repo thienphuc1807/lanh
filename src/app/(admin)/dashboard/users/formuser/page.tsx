@@ -1,4 +1,4 @@
-import FormUser from "@/components/FromUser";
+import FormUser from "@/components/FormUser";
 
 const page = () => {
     return <FormUser />;

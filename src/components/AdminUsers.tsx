@@ -198,14 +198,14 @@ const UserList = (props: Props) => {
                                             <Link
                                                 href={`/dashboard/users/${user._id}`}
                                             >
-                                                <PencilSquareIcon className="w-6 h-6 text-lanh_green" />
+                                                <PencilSquareIcon className="w-8 h-8 text-lanh_green" />
                                             </Link>
                                             <button
                                                 onClick={() =>
                                                     handleRemove(user._id || "")
                                                 }
                                             >
-                                                <TrashIcon className="w-6 h-6 text-lanh_green" />
+                                                <TrashIcon className="w-8 h-8 text-lanh_green" />
                                             </button>
                                         </div>
                                     </div>

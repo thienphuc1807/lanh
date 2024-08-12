@@ -1,4 +1,4 @@
-import FormUser from "@/components/FromUser";
+import FormUser from "@/components/FormUser";
 import { getUser } from "@/lib/data";
 
 // const getData = async (id: string) => {
