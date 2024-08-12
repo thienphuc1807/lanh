@@ -10,10 +10,11 @@ const RegisterPage = async () => {
                     <div className="bg-lanh_green md:block hidden">
                         <div className="relative w-1/2 h-full mx-auto z-20">
                             <Image
-                                alt="logo_lanh"
-                                src="/public/logo.png"
-                                objectFit="contain"
+                                src="/Logo.png"
+                                alt="LanhLogo"
                                 fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                className="object-contain"
                             />
                         </div>
                     </div>
