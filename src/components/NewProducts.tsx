@@ -5,7 +5,6 @@ import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { addCart } from "@/app/Redux/cartSlice";
 
 interface Props {
     products: Products[];
@@ -157,11 +156,6 @@ const NewProducts = (props: Props) => {
                                                     <Link
                                                         href={`products/${item.name}`}
                                                         className="bg-[#f35a69] hover:bg-white hover:text-[#f35a69] border-2 border-[#f35a69] disabled:bg-gray-400 text-white md:rounded-full py-2 md:px-10 px-5 "
-                                                        onClick={() =>
-                                                            dispatch(
-                                                                addCart(item)
-                                                            )
-                                                        }
                                                     >
                                                         {item.inStock === 0
                                                             ? "Hết hàng"

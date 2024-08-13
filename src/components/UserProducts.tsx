@@ -6,8 +6,6 @@ import PaginationControl from "@/components/PaginationControl";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { FunnelIcon } from "@heroicons/react/24/outline";
-import { useDispatch } from "react-redux";
-import RatingStar from "./RatingStar";
 import { StarIcon } from "@heroicons/react/24/solid";
 interface Props {
     data: Products[];
@@ -120,7 +118,7 @@ const UserProducts = (props: Props) => {
                             <span>Sắp xếp theo :</span>
                         </button>
                         {openSort && (
-                            <div className="absolute flex flex-col z-10 rounded-md bg-white shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)] mt-2 lg:right-0 left-0 overflow-hidden">
+                            <div className="absolute flex flex-col z-20 rounded-md bg-white shadow-[1px_1px_6px_2px_rgba(151,186,121,0.3)] mt-2 lg:right-0 left-0 overflow-hidden">
                                 {sortList.map((sort) => (
                                     <button
                                         key={sort.name}
@@ -144,7 +142,7 @@ const UserProducts = (props: Props) => {
                         {entries.map((item: Products) => (
                             <div
                                 key={item.name}
-                                className="bg-white shadow-[0_0_7px_rgba(151,186,121,0.3)] border-[1px]"
+                                className=" bg-white shadow-[0_0_7px_rgba(151,186,121,0.3)] border-[1px]"
                             >
                                 {isLoading ? (
                                     <>
@@ -164,7 +162,7 @@ const UserProducts = (props: Props) => {
                                 ) : (
                                     <>
                                         <div className="relative">
-                                            <div className="relative md:h-80 h-60 w-full">
+                                            <div className="relative md:h-80 h-60 w-full ">
                                                 <Link
                                                     href={`products/${item.name}`}
                                                 >

@@ -7,16 +7,6 @@ import ProductsSwiper from "@/components/Swiper";
 import NewProducts from "@/components/NewProducts";
 import { getProducts } from "@/lib/data";
 
-// const getProducts = async () => {
-//     const res = await fetch(`http://${process.env.DOMAIN}/api/products`, {
-//         cache: "no-store",
-//     });
-//     if (!res.ok) {
-//         throw new Error("Something went wrong");
-//     }
-//     return res.json();
-// };
-
 async function Home() {
     const products = await getProducts();
     return (
@@ -26,7 +16,6 @@ async function Home() {
             </div>
             <div className="lg:mt-10 mt-6 ">
                 <ProductsSwiper />
-                {/* <Introduction /> */}
                 <NewProducts products={JSON.parse(JSON.stringify(products))} />
                 <div
                     className="lg:py-10 container mx-auto px-5"

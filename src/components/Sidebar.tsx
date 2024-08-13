@@ -22,8 +22,8 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
             <div
                 className={`flex flex-col ${
                     open
-                        ? "md:w-[250px] md:relative w-[80%] fixed z-30"
-                        : "md:w-[250px] md:relative w-[80%] fixed z-30 ml-[-80%] md:ml-[-250px]"
+                        ? "md:w-[250px] md:relative w-[80%] fixed z-50"
+                        : "md:w-[250px] md:relative w-[80%] fixed z-50 ml-[-80%] md:ml-[-250px]"
                 } bg-lanh_green min-h-full transition-all py-5`}
             >
                 <div className="px-5 fixed md:w-[250px] w-[80%]">

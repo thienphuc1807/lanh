@@ -151,7 +151,7 @@ const NavBar = ({ session }: any) => {
 
                 <div className="flex">
                     <div
-                        className={`flex flex-col md:w-[250px] top-0 bottom-0 w-[80%] fixed z-20 ${
+                        className={`flex flex-col md:w-[250px] top-0 bottom-0 w-[80%] fixed z-50 ${
                             !open && "ml-[-80%] md:ml-[-250px]"
                         } bg-lanh_green min-h-screen duration-500 transition-all`}
                     >
